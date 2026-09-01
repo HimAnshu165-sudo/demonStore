@@ -1,0 +1,336 @@
+.checkoutContainer {
+  min-height: 100vh;
+  background-color: #060508;
+  color: #dfe7e0;
+  padding: calc(var(--nav-h, 84px) + clamp(2rem, 5vh, 4rem)) clamp(20px, 4.5vw, 64px) clamp(6rem, 10vh, 10rem);
+  position: relative;
+  overflow-x: hidden;
+}
+
+.checkoutHeader {
+  max-width: 1300px;
+  margin: 0 auto clamp(2.5rem, 5vh, 4rem);
+  border-bottom: 1px solid rgba(223, 231, 224, 0.08);
+  padding-bottom: 2rem;
+}
+
+.headerMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.35em;
+  color: #8f9a93;
+  text-transform: uppercase;
+}
+
+.headerMeta b {
+  color: #ffd700;
+}
+
+.checkoutTitle {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2.4rem, 5.5vw, 5.5rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0.1em;
+  color: #f7f9f8;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Minimal Editorial Checkout Grid */
+.checkoutLayout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(3rem, 6vw, 7rem);
+  max-width: 1300px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.formSection {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 5vh, 4rem);
+}
+
+.formBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  border-top: 1px solid rgba(223, 231, 224, 0.08);
+  padding-top: 1.8rem;
+}
+
+.blockHeading {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  color: #f7f9f8;
+  text-transform: uppercase;
+}
+
+.blockNumber {
+  color: #ffd700;
+  font-size: 1.2rem;
+}
+
+.inputGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem 2rem;
+}
+
+.fullCol {
+  grid-column: span 2;
+}
+
+.fieldWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.fieldLabel {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.25em;
+  color: #88938c;
+  text-transform: uppercase;
+}
+
+.minimalInput {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(223, 231, 224, 0.2);
+  color: #ffffff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  padding: 0.6rem 0;
+  outline: none;
+  transition: border-color 0.3s ease;
+  border-radius: 0;
+}
+
+.minimalInput:focus {
+  border-color: #ffd700;
+}
+
+.minimalInput::placeholder {
+  color: rgba(223, 231, 224, 0.2);
+}
+
+/* Order Summary Column */
+.summaryCol {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: sticky;
+  top: calc(var(--nav-h, 84px) + 2rem);
+  border-left: 1px solid rgba(223, 231, 224, 0.08);
+  padding-left: clamp(2rem, 4vw, 4rem);
+}
+
+.summaryTitle {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.15em;
+  color: #ffffff;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.itemsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.summaryItem {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 1.2rem;
+  align-items: center;
+}
+
+.summaryThumb {
+  width: 56px;
+  height: 70px;
+  object-fit: cover;
+  background: #0d0c12;
+  border: 1px solid rgba(223, 231, 224, 0.1);
+}
+
+.summaryItemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.summaryItemName {
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  color: #f7f9f8;
+  font-weight: 500;
+}
+
+.summaryItemMeta {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.68rem;
+  color: #88938c;
+  letter-spacing: 0.15em;
+}
+
+.summaryItemPrice {
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  color: #dfe7e0;
+}
+
+/* Cost Calculation */
+.costBreakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  border-top: 1px solid rgba(223, 231, 224, 0.08);
+  padding-top: 1.5rem;
+}
+
+.costRow {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: #88938c;
+  text-transform: uppercase;
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Cinzel', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffffff;
+  border-top: 1px solid rgba(223, 231, 224, 0.15);
+  padding-top: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* Checkout Action */
+.confirmOrderCta {
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  letter-spacing: 0.3em;
+  color: #f7f9f8;
+  text-transform: uppercase;
+  margin-top: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.ctaLine {
+  width: 50px;
+  height: 1px;
+  background: rgba(223, 231, 224, 0.4);
+  transition: width 0.4s ease, background 0.3s ease;
+}
+
+.confirmOrderCta:hover {
+  color: #ffd700;
+}
+
+.confirmOrderCta:hover .ctaLine {
+  width: 80px;
+  background: #ffd700;
+}
+
+.confirmOrderCta:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Publication Confirmation Success Screen */
+.successContainer {
+  max-width: 800px;
+  margin: 4rem auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.8rem;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  padding: clamp(3rem, 6vh, 5rem) 2rem;
+  background: #0d0c12;
+}
+
+.successKanji {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 3.5rem;
+  color: #ffd700;
+  line-height: 1;
+}
+
+.successTitle {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  color: #f7f9f8;
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+.successDesc {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #9aa5a0;
+  max-width: 540px;
+}
+
+.returnHomeLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+  color: #ffd700;
+  text-decoration: none;
+  margin-top: 1rem;
+}
+
+@media (max-width: 990px) {
+  .checkoutLayout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .summaryCol {
+    border-left: none;
+    border-top: 1px solid rgba(223, 231, 224, 0.08);
+    padding-left: 0;
+    padding-top: 2rem;
+    position: static;
+  }
+
+  .inputGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .fullCol {
+    grid-column: span 1;
+  }
+}

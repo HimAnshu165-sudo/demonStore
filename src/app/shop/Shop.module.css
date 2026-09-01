@@ -1,0 +1,314 @@
+.shopContainer {
+  min-height: 100vh;
+  background-color: #060508;
+  color: #dfe7e0;
+  padding: calc(var(--nav-h, 84px) + clamp(2rem, 5vh, 4rem)) clamp(20px, 4.5vw, 64px) clamp(4rem, 8vh, 8rem);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Background Atmosphere */
+.shopBgKanji {
+  position: absolute;
+  right: -2rem;
+  top: 10%;
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(12rem, 25vw, 25rem);
+  font-weight: 900;
+  color: #ffffff;
+  opacity: 0.02;
+  user-select: none;
+  pointer-events: none;
+  writing-mode: vertical-rl;
+  z-index: 0;
+}
+
+.shopHeader {
+  position: relative;
+  z-index: 2;
+  max-width: 1300px;
+  margin: 0 auto clamp(2rem, 5vh, 4rem);
+  border-bottom: 1px solid rgba(223, 231, 224, 0.08);
+  padding-bottom: 2rem;
+}
+
+.headerMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.35em;
+  color: #8f9a93;
+  text-transform: uppercase;
+}
+
+.headerMeta b {
+  color: #ffd700;
+  font-weight: 500;
+}
+
+.shopTitle {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2.8rem, 6.5vw, 6.5rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0.1em;
+  color: #f5f7f6;
+  text-transform: uppercase;
+  margin: 0 0 1rem 0;
+}
+
+.shopSubtitle {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(0.75rem, 1vw, 0.9rem);
+  letter-spacing: 0.3em;
+  color: #9aa5a0;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Minimal Editorial Category Filter */
+.filterNav {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.5rem, 3vw, 3.5rem);
+  margin: clamp(2rem, 4vh, 3.5rem) auto;
+  max-width: 1300px;
+  position: relative;
+  z-index: 2;
+}
+
+.filterBtn {
+  background: transparent;
+  border: none;
+  font-family: 'Space Grotesk', monospace;
+  font-size: clamp(0.72rem, 0.85vw, 0.82rem);
+  letter-spacing: 0.3em;
+  color: #727d76;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0.4rem 0;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.filterBtn:hover {
+  color: #dfe7e0;
+}
+
+.filterBtnActive {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.filterBtnActive::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: #ffd700;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+/* Editorial Asymmetric Catalog Layout */
+.editorialCatalog {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(2rem, 4vw, 4.5rem) clamp(1.5rem, 2.5vw, 3rem);
+  max-width: 1300px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Asymmetric Span Classes */
+.spanHero {
+  grid-column: span 12;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 3rem;
+  align-items: center;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(223, 231, 224, 0.08);
+}
+
+.spanWide {
+  grid-column: span 7;
+}
+
+.spanTall {
+  grid-column: span 5;
+}
+
+.spanHalf {
+  grid-column: span 6;
+}
+
+/* Individual Editorial Item */
+.editorialItem {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  cursor: pointer;
+}
+
+.imageFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: #0d0c12;
+  overflow: hidden;
+  border: 1px solid rgba(223, 231, 224, 0.08);
+  transition: border-color 0.4s ease;
+}
+
+.spanHero .imageFrame {
+  aspect-ratio: 16 / 11;
+}
+
+.itemImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+}
+
+.itemImageAlt {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.editorialItem:hover .imageFrame {
+  border-color: rgba(255, 215, 0, 0.3);
+}
+
+.editorialItem:hover .itemImage {
+  transform: scale(1.03);
+}
+
+.editorialItem:hover .itemImageAlt {
+  opacity: 1;
+  transform: scale(1.03);
+}
+
+.rankBadge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  color: #ffd700;
+  background: rgba(6, 5, 8, 0.75);
+  backdrop-filter: blur(8px);
+  padding: 0.3rem 0.7rem;
+  text-transform: uppercase;
+  z-index: 3;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+/* Item Typography & Specs */
+.itemMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.2rem;
+}
+
+.itemCharacter {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: #88938c;
+  text-transform: uppercase;
+}
+
+.itemTitle {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  color: #f2f5f3;
+  text-transform: uppercase;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.editorialItem:hover .itemTitle {
+  color: #ffd700;
+}
+
+.itemPriceRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.4rem;
+}
+
+.itemPrice {
+  font-family: 'Cinzel', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #dfe7e0;
+}
+
+.itemSpecs {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  color: #6a756f;
+  text-transform: uppercase;
+}
+
+.inspectLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  color: #a5b0a8;
+  text-transform: uppercase;
+  margin-top: 0.6rem;
+  transition: color 0.3s ease;
+}
+
+.inspectLine {
+  width: 24px;
+  height: 1px;
+  background: rgba(223, 231, 224, 0.25);
+  transition: width 0.35s ease, background 0.3s ease;
+}
+
+.editorialItem:hover .inspectLink {
+  color: #ffd700;
+}
+
+.editorialItem:hover .inspectLine {
+  width: 44px;
+  background: #ffd700;
+}
+
+/* Responsive Rules */
+@media (max-width: 990px) {
+  .spanHero {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .spanWide, .spanTall, .spanHalf {
+    grid-column: span 12;
+  }
+}

@@ -1,0 +1,345 @@
+.overlayContainer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 20;
+  overflow: hidden;
+}
+
+/* Individual Chapter Stage */
+.chapterStage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: clamp(2rem, 5vw, 5.5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  opacity: 0;
+  will-change: transform, opacity;
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+/* 3 Parallax Depth Planes */
+.farLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  will-change: transform;
+}
+
+.midLayer {
+  position: relative;
+  z-index: 2;
+  will-change: transform;
+  display: flex;
+  flex-direction: column;
+  max-width: 660px;
+}
+
+.nearLayer {
+  position: relative;
+  z-index: 3;
+  will-change: transform;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: auto;
+  width: 100%;
+}
+
+/* Depth 01: Japanese Vertical Background Watermark */
+.kanjiWatermark {
+  position: absolute;
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(9rem, 22vw, 22rem);
+  font-weight: 300;
+  line-height: 0.9;
+  color: #ffffff;
+  opacity: 0.032;
+  user-select: none;
+  pointer-events: none;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 80px rgba(255, 255, 255, 0.05);
+}
+
+.kanjiRight {
+  right: clamp(1rem, 4vw, 5rem);
+  top: 50%;
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+}
+
+.kanjiCenter {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.kanjiLeft {
+  left: clamp(1rem, 4vw, 5rem);
+  top: 45%;
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+}
+
+/* Depth 03: Micro Chapter Eyebrow */
+.microHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.4em;
+  color: #9aa5a0;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+
+.chapterNumber {
+  font-family: 'Cinzel', serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: #ffd700;
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+.goldDot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #ffd700;
+  box-shadow: 0 0 8px #ffd700;
+}
+
+/* Japanese Chapter Headline Subtitle */
+.heroJapanese {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(1.1rem, 1.8vw, 1.6rem);
+  font-weight: 300;
+  color: rgba(223, 231, 224, 0.75);
+  letter-spacing: 0.45em;
+  margin-bottom: 0.8rem;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.9);
+}
+
+/* Depth 02: Primary High-Fashion Display Title */
+.mainTitle {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(2.4rem, 5.2vw, 5.2rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0.12em;
+  color: #f2f5f3;
+  text-transform: uppercase;
+  margin: 0 0 1.2rem 0;
+  text-shadow: 0 4px 34px rgba(3, 6, 8, 0.95);
+}
+
+.secondaryTitle {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(0.72rem, 0.95vw, 0.88rem);
+  font-weight: 400;
+  letter-spacing: 0.28em;
+  color: #c2cdc5;
+  text-transform: uppercase;
+  margin: 0 0 0.8rem 0;
+  text-shadow: 0 2px 18px rgba(3, 6, 8, 0.95);
+}
+
+.editorialBody {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(0.75rem, 0.9vw, 0.84rem);
+  font-weight: 300;
+  line-height: 1.75;
+  letter-spacing: 0.12em;
+  color: #88938c;
+  max-width: 420px;
+  margin: 0 0 1.5rem 0;
+  text-transform: uppercase;
+  text-shadow: 0 2px 16px rgba(3, 6, 8, 0.95);
+}
+
+/* High-Fashion Editorial CTA Link — NO BUTTON BOXES */
+.editorialCta {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 1.2rem;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(0.75rem, 0.9vw, 0.85rem);
+  letter-spacing: 0.32em;
+  color: #dfe7e0;
+  text-transform: uppercase;
+  text-decoration: none;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: color 0.35s ease;
+  width: fit-content;
+}
+
+.ctaLine {
+  display: inline-block;
+  width: 44px;
+  height: 1px;
+  background: rgba(223, 231, 224, 0.35);
+  transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1), background 0.35s ease, box-shadow 0.35s ease;
+}
+
+.ctaArrow {
+  font-size: 0.9rem;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.editorialCta:hover {
+  color: #ffd700;
+}
+
+.editorialCta:hover .ctaLine {
+  width: 74px;
+  background: #ffd700;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.7);
+}
+
+.editorialCta:hover .ctaArrow {
+  transform: translateX(4px);
+}
+
+/* Depth 03: Technical Specification Rule */
+.techSpecs {
+  display: flex;
+  gap: clamp(1.4rem, 3vw, 3.5rem);
+  font-family: 'Space Grotesk', monospace;
+  font-size: clamp(0.6rem, 0.75vw, 0.7rem);
+  letter-spacing: 0.28em;
+  color: #68736d;
+  text-transform: uppercase;
+  border-top: 1px solid rgba(223, 231, 224, 0.1);
+  padding-top: 1rem;
+  width: 100%;
+}
+
+.techSpecs span b {
+  color: #b4bfb7;
+  font-weight: 500;
+}
+
+/* Asymmetric Positioning Variations */
+
+/* 01 Entrance: Left-Aligned */
+.stageEntrance {
+  justify-content: space-between;
+}
+
+.stageEntrance .midLayer {
+  margin-top: clamp(2rem, 10vh, 8rem);
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* 02 Main Castle Hall: Elegant Upper-Right Anchor */
+.stageMainHall {
+  justify-content: space-between;
+}
+
+.stageMainHall .midLayer {
+  margin-left: auto;
+  margin-top: clamp(2rem, 8vh, 6rem);
+  align-items: flex-end;
+  text-align: right;
+}
+
+.stageMainHall .editorialBody {
+  margin-left: auto;
+}
+
+/* 03 Infinite Corridor: Deep Left Anchor */
+.stageCorridor {
+  justify-content: space-between;
+}
+
+.stageCorridor .midLayer {
+  margin-top: clamp(3rem, 12vh, 10rem);
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* 04 Floating Staircase: Upper Diagonal Anchor */
+.stageStaircase {
+  justify-content: space-between;
+}
+
+.stageStaircase .midLayer {
+  margin-left: auto;
+  margin-top: clamp(1rem, 6vh, 4rem);
+  align-items: flex-end;
+  text-align: right;
+}
+
+.stageStaircase .editorialBody {
+  margin-left: auto;
+}
+
+/* 05 Vertical Void: Subtle Centered Quiet Anchor */
+.stageVoid {
+  justify-content: space-between;
+}
+
+.stageVoid .midLayer {
+  margin: auto auto clamp(3rem, 10vh, 7rem) 0;
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* 06 Final Demon Chamber: Left Sanctum Anchor */
+.stageChamber {
+  justify-content: space-between;
+}
+
+.stageChamber .midLayer {
+  margin-top: clamp(2rem, 10vh, 8rem);
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* Responsive Mobile Rules */
+@media (max-width: 768px) {
+  .chapterStage {
+    padding: 1.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .stageMainHall .midLayer,
+  .stageStaircase .midLayer {
+    margin-left: 0;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .stageMainHall .editorialBody,
+  .stageStaircase .editorialBody {
+    margin-left: 0;
+  }
+
+  .techSpecs {
+    flex-wrap: wrap;
+    gap: 0.6rem 1.2rem;
+  }
+
+  .mainTitle {
+    font-size: 2.2rem;
+    line-height: 1.1;
+  }
+}

@@ -1,0 +1,151 @@
+.cinematicWrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #000000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+.sceneLayer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out, transform 1.2s ease-out;
+  transform: scale(1.04);
+}
+
+.sceneActive {
+  opacity: 1;
+  transform: scale(1.0);
+}
+
+/* Lightning & Shockwave Overlays */
+.lightningOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0;
+  background: radial-gradient(circle at center, rgba(255, 230, 100, 0.95), transparent 75%);
+  z-index: 10;
+}
+
+.lightningFlash {
+  animation: flashFlicker 0.4s ease-out infinite;
+}
+
+@keyframes flashFlicker {
+  0% { opacity: 0.1; }
+  25% { opacity: 0.85; }
+  50% { opacity: 0.2; }
+  75% { opacity: 0.95; }
+  100% { opacity: 0.3; }
+}
+
+/* Speed lines effect */
+.speedLines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle, transparent 20%, rgba(255, 215, 0, 0.25) 80%),
+              repeating-linear-gradient(0deg, transparent, transparent 4px, rgba(255, 240, 150, 0.15) 5px, transparent 8px);
+  mix-blend-mode: color-dodge;
+  opacity: 0.7;
+  animation: speedDrift 0.15s linear infinite;
+  z-index: 12;
+}
+
+@keyframes speedDrift {
+  0% { transform: scale(1) translateY(0); }
+  50% { transform: scale(1.03) translateY(-4px); }
+  100% { transform: scale(1) translateY(0); }
+}
+
+/* Screen Shake Effect */
+.screenShake {
+  animation: shake 0.25s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+}
+
+@keyframes shake {
+  10%, 90% { transform: translate3d(-3px, 2px, 0); }
+  20%, 80% { transform: translate3d(4px, -3px, 0); }
+  30%, 50%, 70% { transform: translate3d(-5px, 4px, 0); }
+  40%, 60% { transform: translate3d(5px, -2px, 0); }
+}
+
+/* White Out Flash */
+.whiteOut {
+  position: absolute;
+  inset: 0;
+  background: #ffffff;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-out;
+}
+
+.whiteOutActive {
+  opacity: 1;
+}
+
+/* Zenitsu Title Reveal (Kanji: 雷) */
+.titleRevealLayer {
+  position: absolute;
+  inset: 0;
+  background: #050507;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 110;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.titleRevealActive {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.kanjiGold {
+  font-family: var(--font-cinzel), 'Cinzel', serif;
+  font-size: clamp(5rem, 12vw, 10rem);
+  color: #ffd700;
+  text-shadow: 0 0 40px rgba(255, 215, 0, 0.8), 0 0 80px rgba(255, 170, 0, 0.5);
+  line-height: 1;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5rem;
+  animation: kanjiGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes kanjiGlow {
+  0% { transform: scale(0.98); filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6)); }
+  100% { transform: scale(1.02); filter: drop-shadow(0 0 50px rgba(255, 215, 0, 0.9)); }
+}
+
+.titleText {
+  font-family: var(--font-cinzel), 'Cinzel', serif;
+  font-size: clamp(1rem, 2.2vw, 1.8rem);
+  letter-spacing: 0.35em;
+  color: #f5f5f5;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.subtitleText {
+  font-family: var(--font-space), monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.25em;
+  color: #a0a0a5;
+  text-transform: uppercase;
+}

@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@300;400;600;900&display=swap');
+
+:root {
+  --bg-abyss: #060508;
+  --bg-castle-dark: #0a080d;
+  --bg-card: rgba(14, 11, 18, 0.85);
+  
+  --color-crimson: #e71d36;
+  --color-crimson-glow: #ff2a55;
+  --color-lantern-amber: #ff9f43;
+  --color-moon-violet: #8e44ad;
+  --color-bone-white: #f5f5f7;
+  --color-muted-grey: #8a8594;
+  --color-dark-border: rgba(255, 255, 255, 0.08);
+  --color-crimson-border: rgba(231, 29, 54, 0.35);
+
+  --font-display: 'Cinzel', serif;
+  --font-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-kanji: 'Noto Serif JP', serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--bg-abyss);
+  color: var(--color-bone-white);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #060508;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(231, 29, 54, 0.4);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-crimson);
+}
+
+/* Editorial Typography Helpers */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.08em;
+}
+
+.font-kanji {
+  font-family: var(--font-kanji);
+}
+
+.font-mono {
+  font-family: var(--font-sans);
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.12em;
+}
+
+/* Vertical Japanese Text */
+.vertical-text {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  letter-spacing: 0.35em;
+}
+
+/* Hairline Editorial Borders */
+.border-editorial {
+  border: 1px solid var(--color-dark-border);
+}
+
+.border-crimson-subtle {
+  border: 1px solid var(--color-crimson-border);
+}
+
+/* Glass & Texture Backdrops */
+.backdrop-editorial {
+  background: rgba(10, 8, 13, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Selection */
+::selection {
+  background: var(--color-crimson);
+  color: #ffffff;
+}
+
+/* Utility Animations */
+@keyframes subtlePulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.animate-pulse-subtle {
+  animation: subtlePulse 4s ease-in-out infinite;
+}
+
+/* Accessible focus rings */
+button:focus-visible, a:focus-visible {
+  outline: 1px solid var(--color-crimson);
+  outline-offset: 2px;
+}

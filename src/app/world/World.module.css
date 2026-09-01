@@ -1,0 +1,224 @@
+.worldContainer {
+  min-height: 100vh;
+  background-color: #060508;
+  color: #dfe7e0;
+  padding: calc(var(--nav-h, 84px) + clamp(2rem, 5vh, 4rem)) clamp(20px, 4.5vw, 64px) clamp(6rem, 10vh, 12rem);
+  position: relative;
+  overflow-x: hidden;
+}
+
+.bgKanji {
+  position: fixed;
+  left: -2rem;
+  top: 15%;
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(14rem, 32vw, 32rem);
+  font-weight: 900;
+  color: #ffffff;
+  opacity: 0.015;
+  user-select: none;
+  pointer-events: none;
+  writing-mode: vertical-rl;
+  z-index: 0;
+}
+
+.worldHeader {
+  max-width: 1200px;
+  margin: 0 auto clamp(4rem, 8vh, 8rem);
+  position: relative;
+  z-index: 2;
+  border-bottom: 1px solid rgba(223, 231, 224, 0.08);
+  padding-bottom: 3rem;
+}
+
+.headerMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.35em;
+  color: #8f9a93;
+  text-transform: uppercase;
+}
+
+.headerMeta b {
+  color: #ffd700;
+}
+
+.title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(3rem, 7.5vw, 7.5rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: 0.1em;
+  color: #f7f9f8;
+  text-transform: uppercase;
+  margin: 0 0 1.2rem 0;
+}
+
+.subtitle {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(0.8rem, 1.1vw, 1rem);
+  letter-spacing: 0.3em;
+  color: #9aa5a0;
+  text-transform: uppercase;
+}
+
+/* Editorial Manifesto Layout */
+.manifestoContent {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(5rem, 10vh, 10rem);
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.manifestoSection {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: clamp(2rem, 5vw, 6rem);
+  align-items: start;
+  border-top: 1px solid rgba(223, 231, 224, 0.08);
+  padding-top: clamp(2.5rem, 5vh, 4rem);
+}
+
+.sectionHeading {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.sectionNumber {
+  font-family: 'Cinzel', serif;
+  font-size: 1.6rem;
+  color: #ffd700;
+  line-height: 1;
+}
+
+.sectionTitle {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 0.08em;
+  color: #f5f7f6;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.sectionJapanese {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  color: rgba(223, 231, 224, 0.6);
+  letter-spacing: 0.35em;
+}
+
+.sectionBody {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.leadText {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  color: #dfe7e0;
+}
+
+.bodyText {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.85;
+  letter-spacing: 0.06em;
+  color: #8f9a93;
+}
+
+.craftPillars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+  border-top: 1px solid rgba(223, 231, 224, 0.08);
+  padding-top: 2rem;
+}
+
+.pillarItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pillarTitle {
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  color: #ffd700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.pillarText {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.72rem;
+  line-height: 1.6;
+  letter-spacing: 0.15em;
+  color: #78837c;
+  text-transform: uppercase;
+}
+
+.footerCtaBox {
+  text-align: center;
+  padding: 6rem 0 2rem;
+  border-top: 1px solid rgba(223, 231, 224, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.ctaLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.2rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.35em;
+  color: #dfe7e0;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.ctaLine {
+  width: 48px;
+  height: 1px;
+  background: rgba(223, 231, 224, 0.35);
+  transition: width 0.45s ease, background 0.3s ease;
+}
+
+.ctaLink:hover {
+  color: #ffd700;
+}
+
+.ctaLink:hover .ctaLine {
+  width: 80px;
+  background: #ffd700;
+}
+
+@media (max-width: 900px) {
+  .manifestoSection {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .craftPillars {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}

@@ -1,0 +1,268 @@
+.collectionContainer {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: #060508;
+  color: #ffffff;
+  padding: 6rem 2rem 8rem 2rem;
+  z-index: 50;
+  overflow: hidden;
+}
+
+.heroDropBanner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  max-width: 1300px;
+  margin: 0 auto 8rem auto;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .heroDropBanner {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+.productShowcase {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.15);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  background: #0e0d14;
+}
+
+.productImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.productShowcase:hover .productImage {
+  transform: scale(1.04);
+}
+
+.dropMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.dropTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-space), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  color: #ffd700;
+  text-transform: uppercase;
+}
+
+.dropTitle {
+  font-family: var(--font-cinzel), 'Cinzel', serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+}
+
+.dropSubtitle {
+  font-family: var(--font-space), monospace;
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  color: #c0c0c8;
+}
+
+.dropDesc {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #909098;
+  max-width: 480px;
+}
+
+.specsList {
+  display: flex;
+  gap: 1.5rem;
+  margin: 1rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 0;
+}
+
+.specItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.specLabel {
+  font-size: 0.65rem;
+  font-family: var(--font-space), monospace;
+  color: #707078;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.specValue {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffd700;
+}
+
+.priceAction {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.priceTag {
+  font-family: var(--font-cinzel), 'Cinzel', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.primaryCta {
+  background: linear-gradient(135deg, #ffd700, #ffaa00);
+  color: #000000;
+  font-family: var(--font-cinzel), 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.2em;
+  padding: 1.1rem 2.8rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+}
+
+.primaryCta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(255, 215, 0, 0.6);
+}
+
+/* Catalog Grid Section */
+.catalogHeader {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 4rem auto;
+}
+
+.sectionEyebrow {
+  font-family: var(--font-space), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  color: #ffd700;
+  text-transform: uppercase;
+  margin-bottom: 0.8rem;
+}
+
+.sectionTitle {
+  font-family: var(--font-cinzel), 'Cinzel', serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+}
+
+.productsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2.5rem;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.productCard {
+  background: #0d0c12;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: all 0.4s ease;
+}
+
+.productCard:hover {
+  border-color: rgba(255, 215, 0, 0.4);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
+}
+
+.cardImageWrapper {
+  aspect-ratio: 1;
+  background: #14121a;
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.productCard:hover .cardImage {
+  transform: scale(1.06);
+}
+
+.cardInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cardTitle {
+  font-family: var(--font-cinzel), 'Cinzel', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.cardMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-space), monospace;
+  font-size: 0.8rem;
+  color: #888890;
+}
+
+.cardPrice {
+  color: #ffd700;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.cardButton {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  padding: 0.8rem;
+  border-radius: 4px;
+  font-family: var(--font-space), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.cardButton:hover {
+  background: #ffd700;
+  border-color: #ffd700;
+  color: #000000;
+}
