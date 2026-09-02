@@ -2,8 +2,7 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  max-width: 100vw;
+  width: 100%;
   height: clamp(64px, 8vh, 80px);
   display: flex;
   justify-content: space-between;
@@ -111,38 +110,6 @@
   color: #ffd700;
 }
 
-.soundActive {
-  border-color: var(--color-crimson);
-  background: rgba(231, 29, 54, 0.15);
-}
-
-.bars {
-  display: flex;
-  align-items: flex-end;
-  gap: 2px;
-  height: 10px;
-}
-
-.bar {
-  width: 2px;
-  height: 100%;
-  background: var(--color-crimson);
-  animation: soundBar 1.2s infinite ease-in-out alternate;
-}
-
-.bar:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.bar:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
-@keyframes soundBar {
-  0% { height: 2px; }
-  100% { height: 10px; }
-}
-
 .cartButton {
   background: transparent;
   border: 1px solid var(--color-dark-border);
@@ -211,7 +178,7 @@
 .mobileOverlay {
   position: fixed;
   inset: 0;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   height: 100dvh;
   background: rgba(5, 5, 8, 0.98);
@@ -338,3 +305,50 @@
   letter-spacing: 0.25em;
   text-transform: uppercase;
 }
+
+/* Ultra-Compact Viewports (320px - 420px) */
+@media (max-width: 420px) {
+  .header {
+    padding: 0 0.75rem;
+    padding-top: max(0px, env(safe-area-inset-top));
+    padding-left: max(0.75rem, env(safe-area-inset-left));
+    padding-right: max(0.75rem, env(safe-area-inset-right));
+  }
+
+  .brand {
+    gap: 0.35rem;
+  }
+
+  .logoTitle {
+    font-size: clamp(0.72rem, 3.2vw, 0.95rem);
+    letter-spacing: 0.1em;
+  }
+
+  .kanjiSub {
+    font-size: 0.72rem;
+  }
+
+  .actions {
+    gap: 0.25rem;
+  }
+
+  .actionBtn,
+  .cartButton,
+  .mobileMenuBtn {
+    padding: 0.35rem 0.5rem;
+    min-width: 36px;
+    min-height: 38px;
+  }
+
+  .mobileOverlay {
+    padding: 1.25rem;
+    padding-top: max(1.25rem, env(safe-area-inset-top));
+    padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
+  }
+
+  .mobileMeta {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+}
+

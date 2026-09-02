@@ -347,3 +347,20 @@
     position: static;
   }
 }
+
+@media (max-width: 500px) {
+  .detailPageContainer {
+    padding: calc(var(--nav-h, 64px) + 1.25rem) 1rem 4rem 1rem;
+  }
+
+  .heroImageFrame {
+    padding: 1.5rem;
+  }
+
+  .addToBagCta {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem 1.5rem;
+  }
+}
+

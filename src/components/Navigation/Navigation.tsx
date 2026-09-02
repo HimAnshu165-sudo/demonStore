@@ -2,15 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Volume2, VolumeX, ShoppingBag, Search, Menu, X, ArrowRight } from 'lucide-react';
+import { ShoppingBag, Search, Menu, X, ArrowRight } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
-import { useSoundscape } from '@/hooks/useSoundscape';
 import { SearchModal } from '@/components/SearchModal/SearchModal';
 import styles from './Navigation.module.css';
 
 export function Navigation() {
   const { totalItems, setIsCartOpen } = useCart();
-  const { isPlaying, toggleSound } = useSoundscape();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -78,22 +76,6 @@ export function Navigation() {
           >
             <Search size={14} />
             <span className={styles.actionLabel}>SEARCH</span>
-          </button>
-
-          <button
-            onClick={toggleSound}
-            className={`${styles.actionBtn} ${isPlaying ? styles.soundActive : ''}`}
-            aria-label={isPlaying ? 'Mute Castle Soundscape' : 'Enable Castle Soundscape'}
-          >
-            {isPlaying ? <Volume2 size={14} /> : <VolumeX size={14} />}
-            <span className={styles.actionLabel}>{isPlaying ? 'AUDIO ON' : 'AUDIO OFF'}</span>
-            {isPlaying && (
-              <div className={styles.bars}>
-                <div className={styles.bar} />
-                <div className={styles.bar} />
-                <div className={styles.bar} />
-              </div>
-            )}
           </button>
 
           <button
