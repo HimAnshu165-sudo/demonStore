@@ -1,0 +1,55 @@
+import mongoose, { Schema, Model } from 'mongoose';
+
+export interface IUser {
+  _id?: mongoose.Types.ObjectId;
+  name: string;
+  email: string;
+  passwordHash: string;
+  role?: 'user' | 'admin';
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+const UserSchema = new Schema<IUser>(
+  {
+    name: {
+      type: String,
+      required: [true, 'User name is required'],
+      trim: true,
+      minlength: [2, 'Name must be at least 2 characters'],
+      maxlength: [100, 'Name cannot exceed 100 characters'],
+    },
+    email: {
+      type: String,
+      required: [true, 'Email address is required'],
+      unique: true,
+      index: true,
+      lowercase: true,
+      trim: true,
+      match: [
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        'Please provide a valid email address',
+      ],
+    },
+    passwordHash: {
+      type: String,
+      required: [true, 'Password hash is required'],
+      select: false, // Prevents passwordHash from being returned in queries by default
+    },
+    role: {
+      type: String,
+      enum: ['user', 'admin'],
+      default: 'user',
+    },
+  },
+  {
+    timestamps: true,
+    collection: 'users',
+  }
+);
+
+// Safe model retrieval with Next.js HMR caching
+const UserModel: Model<IUser> =
+  mongoose.models.User || mongoose.model<IUser>('User', UserSchema);
+
+export default UserModel;

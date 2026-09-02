@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/mongodb';
 import { Product } from '@/models/Product';
 import { Order, IOrderItem } from '@/models/Order';
+import { getAuthenticatedUser } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -316,10 +317,14 @@ export async function POST(request: Request) {
       });
     }
 
-    // 6. Create and Save the Order
+    // 6. Create and Save the Order (associating with authenticated user if session exists)
     try {
+      const session = await getAuthenticatedUser(request);
+      const userId = session?.userId || null;
+
       const newOrder = new Order({
         orderId,
+        userId,
         customer: {
           firstName: customer.firstName.trim(),
           lastName: customer.lastName.trim(),

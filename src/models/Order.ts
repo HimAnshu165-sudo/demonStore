@@ -25,6 +25,7 @@ export interface IShippingAddress {
 
 export interface IOrder {
   orderId: string;
+  userId?: string;
   customer: ICustomer;
   shippingAddress: IShippingAddress;
   items: IOrderItem[];
@@ -134,6 +135,11 @@ const OrderSchema = new Schema<IOrder>(
       unique: true,
       index: true,
       trim: true,
+    },
+    userId: {
+      type: String,
+      index: true,
+      default: null,
     },
     customer: {
       type: CustomerSchema,
