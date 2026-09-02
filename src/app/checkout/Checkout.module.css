@@ -162,9 +162,11 @@
 .summaryThumb {
   width: 56px;
   height: 70px;
-  object-fit: cover;
-  background: #0d0c12;
+  object-fit: contain;
+  background: radial-gradient(circle at center, #171524 0%, #0c0b12 80%);
   border: 1px solid rgba(223, 231, 224, 0.1);
+  border-radius: 4px;
+  padding: 0.25rem;
 }
 
 .summaryItemInfo {

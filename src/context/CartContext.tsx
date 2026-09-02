@@ -5,7 +5,7 @@ import { Product, CartItem } from '@/types';
 
 interface CartContextType {
   cart: CartItem[];
-  addToCart: (product: Product, selectedSize: 'S' | 'M' | 'L' | 'XL' | 'XXL', quantity?: number) => void;
+  addToCart: (product: Product, selectedSize: string, quantity?: number) => void;
   removeFromCart: (productId: string, selectedSize: string) => void;
   updateQuantity: (productId: string, selectedSize: string, quantity: number) => void;
   clearCart: () => void;
@@ -43,7 +43,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, [cart]);
 
-  const addToCart = (product: Product, selectedSize: 'S' | 'M' | 'L' | 'XL' | 'XXL', quantity = 1) => {
+  const addToCart = (product: Product, selectedSize: string, quantity = 1) => {
     setCart((prev) => {
       const existingIndex = prev.findIndex(
         (item) => item.product.id === product.id && item.selectedSize === selectedSize

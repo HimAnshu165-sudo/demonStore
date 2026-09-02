@@ -34,11 +34,10 @@ export function useScrollProgress() {
 
     const handleScroll = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop;
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      if (maxScroll > 0) {
-        targetProgress.current = Math.min(Math.max(scrollY / maxScroll, 0), 1);
-        startLoop();
-      }
+      // Fixed 5 viewports of scroll = 600vh total castle height - 100vh viewport
+      const castleTrackHeight = Math.max(window.innerHeight * 5, 1);
+      targetProgress.current = Math.min(Math.max(scrollY / castleTrackHeight, 0), 1);
+      startLoop();
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });

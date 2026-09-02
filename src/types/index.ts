@@ -1,7 +1,11 @@
+export type ProductCategory = 'Hoodies' | 'T-Shirts' | 'Shoes' | 'Jackets' | 'Coats' | 'Cargos';
+
 export interface Product {
   id: string;
   slug: string;
   name: string;
+  category: ProductCategory;
+  imagePath: string;
   japaneseTitle: string;
   character: string;
   rank: string;
@@ -15,7 +19,7 @@ export interface Product {
   gsm: number;
   fit: string;
   color: string;
-  sizes: ('S' | 'M' | 'L' | 'XL' | 'XXL')[];
+  sizes: string[];
   images: string[];
   lookbookImages: string[];
   stock: number;
@@ -25,6 +29,6 @@ export interface Product {
 
 export interface CartItem {
   product: Product;
-  selectedSize: 'S' | 'M' | 'L' | 'XL' | 'XXL';
+  selectedSize: string;
   quantity: number;
 }

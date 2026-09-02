@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Product } from '@/types';
 import { useCart } from '@/context/CartContext';
+import { FooterCinematic } from '@/components/FooterCinematic/FooterCinematic';
 import styles from './ProductDetail.module.css';
 
 interface ProductDetailClientProps {
@@ -13,7 +14,7 @@ interface ProductDetailClientProps {
 
 export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const { addToCart } = useCart();
-  const [selectedSize, setSelectedSize] = useState<'S' | 'M' | 'L' | 'XL' | 'XXL'>('L');
+  const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0] || 'L');
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [added, setAdded] = useState(false);
 
@@ -35,6 +36,8 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         <span>/</span>
         <Link href="/shop">COLLECTION</Link>
         <span>/</span>
+        <span>{product.category}</span>
+        <span>/</span>
         <span>{product.character}</span>
       </div>
 
@@ -46,7 +49,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
               src={allImages[activeImageIndex] || product.images[0]}
               alt={product.name}
               width={900}
-              height={1125}
+              height={900}
               className={styles.heroImage}
               priority
             />
@@ -65,7 +68,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                     src={img}
                     alt=""
                     width={80}
-                    height={100}
+                    height={80}
                     className={styles.thumbImg}
                   />
                 </button>
@@ -78,8 +81,8 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         <div className={styles.infoSection}>
           <div className={styles.headerCluster}>
             <div className={styles.characterMeta}>
-              <span>{product.character} // {product.rank}</span>
-              <span>{product.collection}</span>
+              <span>{product.category} // {product.character}</span>
+              <span>{product.rank}</span>
             </div>
 
             <div className={styles.kanjiSubtitle}>{product.japaneseTitle}</div>
@@ -123,12 +126,13 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           {/* Minimal Expandable Specs */}
           <div className={styles.specsContainer}>
             <div className={styles.specRow}>
-              <div className={styles.specRowTitle}>GARMENT SPECIFICATIONS</div>
+              <div className={styles.specRowTitle}>GARMENT & OBJECT SPECIFICATIONS</div>
               <ul className={styles.specBullets}>
-                <li>FABRIC WEIGHT: {product.gsm} GSM</li>
+                <li>CATEGORY: {product.category.toUpperCase()}</li>
+                {product.gsm > 0 && <li>FABRIC WEIGHT: {product.gsm} GSM</li>}
                 <li>MATERIAL: {product.material}</li>
-                <li>SILHOUETTE: {product.fit}</li>
-                <li>COLOR: {product.color}</li>
+                <li>SILHOUETTE / FIT: {product.fit}</li>
+                <li>COLORWAY: {product.color}</li>
               </ul>
             </div>
 
@@ -150,6 +154,8 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           </div>
         </div>
       </div>
+
+      <FooterCinematic />
     </main>
   );
 }

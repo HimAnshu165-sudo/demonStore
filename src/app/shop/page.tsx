@@ -3,24 +3,25 @@
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { PRODUCTS } from '@/data/products';
+import { CATEGORIES, CategoryFilter, getProductsByCategory, PRODUCTS } from '@/data/products';
+import { FooterCinematic } from '@/components/FooterCinematic/FooterCinematic';
+import { useCart } from '@/context/CartContext';
+import { ArrowRight, ShoppingBag } from 'lucide-react';
 import styles from './Shop.module.css';
 
 export default function ShopPage() {
-  const [activeCategory, setActiveCategory] = useState<'ALL' | 'OUTERWEAR' | 'HOODIES' | 'TEES' | 'LIMITED'>('ALL');
-
-  const categories = ['ALL', 'OUTERWEAR', 'HOODIES', 'TEES', 'LIMITED'] as const;
+  const { addToCart } = useCart();
+  const [activeCategory, setActiveCategory] = useState<CategoryFilter>('ALL');
 
   const filteredProducts = useMemo(() => {
-    return PRODUCTS.filter((p) => {
-      if (activeCategory === 'ALL') return true;
-      if (activeCategory === 'OUTERWEAR') return p.tags.includes('Outerwear') || p.tags.includes('Bomber') || p.tags.includes('Trench');
-      if (activeCategory === 'HOODIES') return p.tags.includes('Hoodie') || p.tags.includes('Knitwear');
-      if (activeCategory === 'TEES') return p.tags.includes('T-Shirt');
-      if (activeCategory === 'LIMITED') return p.tags.includes('Limited') || p.tags.includes('Final Form') || p.tags.includes('Statement');
-      return true;
-    });
+    return getProductsByCategory(activeCategory);
   }, [activeCategory]);
+
+  const handleQuickAdd = (e: React.MouseEvent, prod: typeof PRODUCTS[0]) => {
+    e.preventDefault();
+    const defaultSize = prod.sizes[0] || 'L';
+    addToCart(prod, defaultSize, 1);
+  };
 
   return (
     <main className={styles.shopContainer}>
@@ -29,82 +30,91 @@ export default function ShopPage() {
       <header className={styles.shopHeader}>
         <div className={styles.headerMeta}>
           <span>DROP 001 // ARCHIVE 2026</span>
-          <span><b>UPPER MOON</b> COLLECTION</span>
+          <span><b>INFINITY CASTLE</b> STREETWEAR UNIVERSE</span>
         </div>
         <h1 className={styles.shopTitle}>
           SHOP<br />THE COLLECTION
         </h1>
         <p className={styles.shopSubtitle}>
-          ARCHITECTURAL HEAVYWEIGHT STREETWEAR // 420–600 GSM
+          ARCHITECTURAL HEAVYWEIGHT STREETWEAR, FOOTWEAR & GEAR // {PRODUCTS.length} OBJECTS
         </p>
       </header>
 
-      {/* Minimal Editorial Category Filter */}
+      {/* Category Filter Tabs */}
       <nav className={styles.filterNav} aria-label="Category Filters">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setActiveCategory(cat)}
-            className={`${styles.filterBtn} ${activeCategory === cat ? styles.filterBtnActive : ''}`}
-          >
-            {cat}
-          </button>
-        ))}
-      </nav>
-
-      {/* Asymmetric Editorial Catalog Layout */}
-      <div className={styles.editorialCatalog}>
-        {filteredProducts.map((p, index) => {
-          // Asymmetric layout span rule based on index
-          let spanClass = styles.spanHalf;
-          if (index === 0) spanClass = styles.spanHero;
-          else if (index % 3 === 1) spanClass = styles.spanWide;
-          else if (index % 3 === 2) spanClass = styles.spanTall;
-
-          const altImage = p.images[1] || p.lookbookImages[0] || p.images[0];
+        {CATEGORIES.map((cat) => {
+          const count = getProductsByCategory(cat).length;
+          const isActive = activeCategory === cat;
 
           return (
-            <article key={p.id} className={`${styles.editorialItem} ${spanClass}`}>
+            <button
+              key={cat}
+              type="button"
+              onClick={() => setActiveCategory(cat)}
+              className={`${styles.filterBtn} ${isActive ? styles.filterBtnActive : ''}`}
+            >
+              <span>{cat}</span>
+              <span className={styles.filterCount}>[{count}]</span>
+            </button>
+          );
+        })}
+      </nav>
+
+      {/* Structured Clean Uniform Catalog Grid */}
+      <div className={styles.structuredCatalog}>
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((p) => (
+            <article key={p.id} className={styles.productCard}>
               <Link href={`/product/${p.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div className={styles.imageFrame}>
                   <div className={styles.rankBadge}>{p.rank}</div>
+                  <div className={styles.categoryBadge}>{p.category}</div>
                   <Image
                     src={p.images[0]}
                     alt={p.name}
-                    width={800}
-                    height={1000}
+                    width={600}
+                    height={600}
                     className={styles.itemImage}
-                    priority={index === 0}
-                  />
-                  <Image
-                    src={altImage}
-                    alt={`${p.name} alternate angle`}
-                    width={800}
-                    height={1000}
-                    className={styles.itemImageAlt}
                   />
                 </div>
 
                 <div className={styles.itemMeta}>
                   <span className={styles.itemCharacter}>{p.character} // {p.collection}</span>
                   <h2 className={styles.itemTitle}>{p.name}</h2>
-                  
+
                   <div className={styles.itemPriceRow}>
                     <span className={styles.itemPrice}>{p.formattedPrice}</span>
-                    <span className={styles.itemSpecs}>{p.gsm} GSM // {p.fit}</span>
-                  </div>
-
-                  <div className={styles.inspectLink}>
-                    <span>VIEW OBJECT</span>
-                    <span className={styles.inspectLine} />
-                    <span>→</span>
+                    <span className={styles.itemSpecs}>
+                      {p.gsm > 0 ? `${p.gsm} GSM // ` : ''}{p.fit}
+                    </span>
                   </div>
                 </div>
               </Link>
+
+              <div className={styles.cardActions}>
+                <Link href={`/product/${p.slug}`} className={styles.inspectBtn}>
+                  <span>INSPECT</span>
+                  <ArrowRight size={14} />
+                </Link>
+                <button
+                  type="button"
+                  onClick={(e) => handleQuickAdd(e, p)}
+                  className={styles.quickAddBtn}
+                  aria-label={`Add ${p.name} to bag`}
+                >
+                  <ShoppingBag size={15} />
+                </button>
+              </div>
             </article>
-          );
-        })}
+          ))
+        ) : (
+          <div className={styles.emptyState}>
+            <p>NO OBJECTS FOUND IN THIS CATEGORY ARCHIVE.</p>
+          </div>
+        )}
       </div>
+
+      <FooterCinematic />
     </main>
   );
 }

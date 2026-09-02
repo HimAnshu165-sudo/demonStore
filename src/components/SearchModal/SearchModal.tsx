@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { X, Search } from 'lucide-react';
+import { X } from 'lucide-react';
 import { PRODUCTS } from '@/data/products';
 import styles from './SearchModal.module.css';
 
@@ -45,8 +45,10 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
     if (!q) return true;
     return (
       p.name.toLowerCase().includes(q) ||
+      p.category.toLowerCase().includes(q) ||
       p.character.toLowerCase().includes(q) ||
       p.japaneseTitle.toLowerCase().includes(q) ||
+      p.collection.toLowerCase().includes(q) ||
       p.tags.some((t) => t.toLowerCase().includes(q))
     );
   });
@@ -96,7 +98,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   />
                 </div>
                 <div className={styles.resultMeta}>
-                  <span className={styles.resultSubtitle}>{prod.character} // {prod.collection}</span>
+                  <span className={styles.resultSubtitle}>{prod.category} // {prod.character}</span>
                   <div className={styles.resultTitle}>{prod.name}</div>
                   <div className={styles.resultPrice}>{prod.formattedPrice}</div>
                 </div>
