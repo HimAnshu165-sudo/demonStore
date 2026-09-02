@@ -1,12 +1,10 @@
 import { notFound } from 'next/navigation';
-import { PRODUCTS } from '@/data/products';
+import { connectToDatabase } from '@/lib/mongodb';
+import { Product as ProductModel } from '@/models/Product';
+import { Product } from '@/types';
 import { ProductDetailClient } from './ProductDetailClient';
 
-export function generateStaticParams() {
-  return PRODUCTS.map((product) => ({
-    slug: product.slug,
-  }));
-}
+export const dynamic = 'force-dynamic';
 
 interface ProductPageProps {
   params: Promise<{
@@ -16,11 +14,23 @@ interface ProductPageProps {
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { slug } = await params;
-  const product = PRODUCTS.find((p) => p.slug === slug);
 
-  if (!product) {
+  if (!slug || typeof slug !== 'string') {
     notFound();
   }
+
+  await connectToDatabase();
+
+  const productDoc = await ProductModel.findOne(
+    { slug: slug.trim().toLowerCase() },
+    { _id: 0, __v: 0 }
+  ).lean();
+
+  if (!productDoc) {
+    notFound();
+  }
+
+  const product = JSON.parse(JSON.stringify(productDoc)) as Product;
 
   return <ProductDetailClient product={product} />;
 }

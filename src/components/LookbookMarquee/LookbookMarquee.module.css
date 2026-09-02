@@ -1,0 +1,326 @@
+.lookbookSection {
+  position: relative;
+  width: 100%;
+  padding: 6rem 0 7rem 0;
+  background: #060509;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* Ambient Subtle Lighting */
+.ambientGlow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70vw;
+  height: 350px;
+  background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.04) 0%, rgba(138, 43, 226, 0.02) 45%, transparent 75%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.headerContainer {
+  max-width: 1400px;
+  margin: 0 auto 3.5rem auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .headerContainer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+}
+
+.headerMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-space), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  color: #ffd700;
+  text-transform: uppercase;
+}
+
+.goldSquare {
+  width: 6px;
+  height: 6px;
+  background: #ffd700;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+}
+
+.mainTitle {
+  font-family: var(--font-cinzel), 'Cinzel', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  margin: 0;
+}
+
+.japaneseSub {
+  font-family: var(--font-space), monospace;
+  font-size: 0.9rem;
+  color: #8a8a95;
+  letter-spacing: 0.15em;
+}
+
+.headerAction {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.lookbookLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-family: var(--font-space), monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 0.6rem 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lookbookLink:hover {
+  background: #ffd700;
+  color: #000000;
+  border-color: #ffd700;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.35);
+  transform: translateY(-2px);
+}
+
+/* Continuous Infinite Marquee Track */
+.marqueeWrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  user-select: none;
+  z-index: 2;
+  mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+}
+
+.marqueeTrack {
+  display: flex;
+  width: max-content;
+  gap: 2rem;
+  padding: 1.5rem 0;
+  animation: marqueeScroll 48s linear infinite;
+  will-change: transform;
+}
+
+.marqueeWrapper:hover .marqueeTrack {
+  animation-play-state: paused;
+}
+
+@keyframes marqueeScroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Editorial Fashion Cards */
+.editorialCard {
+  position: relative;
+  flex: 0 0 auto;
+  border-radius: 8px;
+  background: #0d0c13;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  overflow: hidden;
+  transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+.editorialCard:hover {
+  border-color: rgba(255, 215, 0, 0.5);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 215, 0, 0.18);
+}
+
+/* Varied Composition Aspect Ratios for High-Fashion Editorial Feel */
+.aspectPortrait {
+  width: 340px;
+}
+.aspectPortrait .imageFrame {
+  height: 420px;
+}
+
+.aspectTall {
+  width: 320px;
+}
+.aspectTall .imageFrame {
+  height: 460px;
+}
+
+.aspectWide {
+  width: 440px;
+}
+.aspectWide .imageFrame {
+  height: 380px;
+}
+
+.aspectSquare {
+  width: 360px;
+}
+.aspectSquare .imageFrame {
+  height: 360px;
+}
+
+@media (max-width: 768px) {
+  .aspectPortrait,
+  .aspectTall,
+  .aspectWide,
+  .aspectSquare {
+    width: 280px;
+  }
+  .aspectPortrait .imageFrame,
+  .aspectTall .imageFrame,
+  .aspectWide .imageFrame,
+  .aspectSquare .imageFrame {
+    height: 340px;
+  }
+}
+
+.imageFrame {
+  position: relative;
+  width: 100%;
+  background: radial-gradient(circle at center, #181622 0%, #0c0b11 80%);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.7));
+}
+
+.editorialCard:hover .cardImage {
+  transform: scale(1.06);
+}
+
+.numberBadge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  font-family: var(--font-space), monospace;
+  font-size: 0.7rem;
+  color: #ffd700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 3px;
+  letter-spacing: 0.15em;
+  z-index: 3;
+}
+
+.categoryTag {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 215, 0, 0.12);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  font-family: var(--font-space), monospace;
+  font-size: 0.65rem;
+  color: #ffd700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 3px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  z-index: 3;
+}
+
+.cardContent {
+  padding: 1.25rem 1.4rem;
+  background: #0d0c13;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.japaneseLabel {
+  font-family: var(--font-space), monospace;
+  font-size: 0.75rem;
+  color: #888895;
+  letter-spacing: 0.1em;
+}
+
+.cardTitle {
+  font-family: var(--font-cinzel), 'Cinzel', serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+.detailTag {
+  font-family: var(--font-space), monospace;
+  font-size: 0.65rem;
+  color: #d0d0d8;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.detailTag::before {
+  content: '';
+  width: 4px;
+  height: 4px;
+  background: #ffd700;
+  border-radius: 50%;
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .marqueeTrack {
+    animation: none;
+    overflow-x: auto;
+    width: 100%;
+    padding: 1.5rem 2rem;
+  }
+}

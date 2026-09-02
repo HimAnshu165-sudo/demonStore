@@ -1,0 +1,103 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#060609"/>
+      <stop offset="60%" stop-color="#0a0a12"/>
+      <stop offset="100%" stop-color="#050507"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#80d8ff"/>
+      <stop offset="100%" stop-color="#e040fb"/>
+    </linearGradient>
+    <!-- Glow Filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+      <pattern id="pat" width="90" height="90" patternUnits="userSpaceOnUse">
+        <rect width="90" height="90" fill="#08151f"/>
+        <polygon points="45,10 80,45 45,80 10,45" fill="none" stroke="#80d8ff" stroke-width="2" opacity="0.3"/>
+        <polygon points="45,25 65,45 45,65 25,45" fill="#e040fb" opacity="0.2"/>
+      </pattern>
+    
+  </defs>
+
+  <!-- Base Dark Canvas -->
+  <rect width="800" height="800" fill="url(#bgGrad)"/>
+
+  <!-- Character Haori Motif Pattern Background -->
+  <rect x="30" y="30" width="740" height="740" rx="12" fill="url(#pat)" opacity="0.65"/>
+  <rect x="30" y="30" width="740" height="740" rx="12" fill="none" stroke="#80d8ff" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- Large Faint Japanese Watermark Behind Centerpiece -->
+  <text x="400" y="470" font-family="'Cinzel', 'Noto Sans JP', 'Hiragino Mincho ProN', serif" font-size="340" font-weight="900" fill="#80d8ff" opacity="0.08" text-anchor="middle">氷</text>
+
+  <!-- Technical Framing Marks -->
+  <path d="M50,80 L50,50 L80,50 M720,50 L750,50 L750,80 M750,720 L750,750 L720,750 M80,750 L50,750 L50,720" fill="none" stroke="#80d8ff" stroke-width="2" opacity="0.8"/>
+
+  <!-- Header Cluster -->
+  <g transform="translate(60, 75)">
+    <text x="0" y="0" font-family="'Outfit', sans-serif" font-size="12" font-weight="800" letter-spacing="4" fill="#80d8ff">
+      INFINITY CASTLE // DEMON SLAYER ARCHIVE 2026
+    </text>
+    <text x="0" y="24" font-family="'Cinzel', serif" font-size="20" font-weight="900" letter-spacing="2" fill="#ffffff">
+      DOUMA // <tspan fill="#80d8ff">UPPER MOON TWO</tspan>
+    </text>
+    <text x="0" y="44" font-family="'Noto Sans JP', serif" font-size="14" font-weight="500" letter-spacing="1" fill="#8e8e9f">
+      童磨 蓮葉氷 極楽教主 結晶
+    </text>
+  </g>
+
+  <!-- Drop Badge Top Right -->
+  <g transform="translate(620, 60)">
+    <rect width="120" height="32" rx="4" fill="#000000" stroke="#80d8ff" stroke-width="1.5"/>
+    <text x="60" y="20" font-family="'Outfit', sans-serif" font-size="11" font-weight="800" letter-spacing="2" fill="#80d8ff" text-anchor="middle">
+      LOOKBOOK 03
+    </text>
+  </g>
+
+  <!-- Central Streetwear Object Silhouette -->
+  
+      <g transform="translate(235, 180) scale(1.15)" filter="url(#glow)">
+        <!-- Flight Bomber / Coat Body -->
+        <path d="M90,55 L170,55 L225,95 L265,180 L220,195 L190,165 L190,330 L70,330 L70,165 L40,195 L-5,180 L35,95 Z" fill="#111116" stroke="#80d8ff" stroke-width="3"/>
+        <!-- Dual Way Heavy YKK Zipper / Lapel -->
+        <line x1="130" y1="55" x2="130" y2="330" stroke="#e040fb" stroke-width="3.5"/>
+        <circle cx="130" cy="180" r="10" fill="#80d8ff"/>
+        <!-- 180,000 Stitch Emblem Spine / Chest -->
+        <polygon points="130,90 160,130 130,170 100,130" fill="#08080c" stroke="#80d8ff" stroke-width="2"/>
+        <text x="130" y="139" font-family="'Cinzel', 'Noto Sans JP', serif" font-size="24" font-weight="900" fill="#80d8ff" text-anchor="middle">氷</text>
+        <!-- Tactical Arm Pocket & Utility Straps -->
+        <rect x="15" y="125" width="22" height="35" fill="#08080c" stroke="#80d8ff" stroke-width="1.5"/>
+        <line x1="10" y1="142" x2="42" y2="142" stroke="#e040fb" stroke-width="2"/>
+      </g>
+    
+
+  <!-- Footer Product Title & Technical Specs -->
+  <g transform="translate(60, 680)">
+    <!-- Accent Line Indicator -->
+    <rect x="0" y="-15" width="680" height="1" fill="url(#accentGrad)" opacity="0.5"/>
+    <rect x="0" y="-16" width="60" height="3" fill="#80d8ff"/>
+
+    <text x="0" y="15" font-family="'Outfit', sans-serif" font-size="22" font-weight="900" letter-spacing="1" fill="#ffffff">
+      LOOK 03 // DOUMA LOTUS FROST BOMBER
+    </text>
+
+    <text x="0" y="40" font-family="'Outfit', sans-serif" font-size="12" font-weight="600" letter-spacing="2" fill="#a0a0b2">
+      280 GSM MILITARY FLIGHT BOMBER + BLOOD-RED CUPRA LINING
+    </text>
+
+    <!-- Serialized Authenticity Seal -->
+    <g transform="translate(560, -5)">
+      <circle cx="45" cy="20" r="22" fill="#08080c" stroke="#80d8ff" stroke-width="1.5"/>
+      <text x="45" y="24" font-family="'Cinzel', serif" font-size="11" font-weight="800" fill="#80d8ff" text-anchor="middle">GENUINE</text>
+    </g>
+  </g>
+</svg>
+  
