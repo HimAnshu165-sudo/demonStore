@@ -3,8 +3,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { X, Search } from 'lucide-react';
-import { PRODUCTS } from '@/data/products';
+import { X } from 'lucide-react';
+import { Product } from '@/types';
 import styles from './SearchModal.module.css';
 
 interface SearchModalProps {
@@ -14,12 +14,25 @@ interface SearchModalProps {
 
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [query, setQuery] = useState('');
+  const [products, setProducts] = useState<Product[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
       setTimeout(() => inputRef.current?.focus(), 50);
+
+      // Fetch latest products from MongoDB API
+      fetch('/api/products')
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success && Array.isArray(data.products)) {
+            setProducts(data.products);
+          }
+        })
+        .catch((err) => {
+          console.error('Error loading search catalog:', err);
+        });
     } else {
       document.body.style.overflow = '';
       setQuery('');
@@ -40,14 +53,16 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
   if (!isOpen) return null;
 
-  const filtered = PRODUCTS.filter((p) => {
+  const filtered = products.filter((p) => {
     const q = query.toLowerCase().trim();
     if (!q) return true;
     return (
-      p.name.toLowerCase().includes(q) ||
-      p.character.toLowerCase().includes(q) ||
-      p.japaneseTitle.toLowerCase().includes(q) ||
-      p.tags.some((t) => t.toLowerCase().includes(q))
+      (p.name && p.name.toLowerCase().includes(q)) ||
+      (p.category && p.category.toLowerCase().includes(q)) ||
+      (p.character && p.character.toLowerCase().includes(q)) ||
+      (p.japaneseTitle && p.japaneseTitle.toLowerCase().includes(q)) ||
+      (p.collection && p.collection.toLowerCase().includes(q)) ||
+      (p.tags && p.tags.some((t) => t.toLowerCase().includes(q)))
     );
   });
 
@@ -96,7 +111,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   />
                 </div>
                 <div className={styles.resultMeta}>
-                  <span className={styles.resultSubtitle}>{prod.character} // {prod.collection}</span>
+                  <span className={styles.resultSubtitle}>{prod.category} // {prod.character}</span>
                   <div className={styles.resultTitle}>{prod.name}</div>
                   <div className={styles.resultPrice}>{prod.formattedPrice}</div>
                 </div>

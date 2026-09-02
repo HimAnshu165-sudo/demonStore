@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   gap: 0.8rem;
-  font-family: 'Space Grotesk', monospace;
+  font-family: var(--font-space), monospace;
   font-size: 0.72rem;
   letter-spacing: 0.3em;
   color: #7d8781;
@@ -56,21 +56,29 @@
 .heroImageFrame {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 5;
-  background: #0d0c12;
-  border: 1px solid rgba(223, 231, 224, 0.1);
+  aspect-ratio: 1 / 1;
+  background: radial-gradient(circle at center, #171524 0%, #0c0b12 85%);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 8px;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 215, 0, 0.08);
 }
 
 .heroImage {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 15px 35px rgba(0, 0, 0, 0.85));
 }
 
 .heroImageFrame:hover .heroImage {
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 
 .galleryThumbs {
@@ -80,14 +88,18 @@
 
 .thumbBtn {
   width: 80px;
-  height: 100px;
-  background: #0d0c12;
-  border: 1px solid rgba(223, 231, 224, 0.1);
-  padding: 0;
+  height: 80px;
+  background: radial-gradient(circle at center, #151320 0%, #0c0b12 80%);
+  border: 1px solid rgba(223, 231, 224, 0.12);
+  border-radius: 6px;
+  padding: 0.4rem;
   cursor: pointer;
   overflow: hidden;
   position: relative;
-  transition: border-color 0.3s ease, transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
 }
 
 .thumbBtn:hover {
@@ -96,13 +108,13 @@
 
 .thumbBtnActive {
   border-color: #ffd700;
-  box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.35);
 }
 
 .thumbImg {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 /* Right: Asymmetric Fashion Information */
@@ -124,7 +136,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: 'Space Grotesk', monospace;
+  font-family: var(--font-space), monospace;
   font-size: 0.72rem;
   letter-spacing: 0.35em;
   color: #ffd700;
@@ -132,37 +144,37 @@
 }
 
 .productTitle {
-  font-family: 'Cinzel', serif;
-  font-size: clamp(2rem, 3.8vw, 3.8rem);
-  font-weight: 400;
-  line-height: 1.05;
-  letter-spacing: 0.08em;
+  font-family: var(--font-cinzel), 'Cinzel', serif;
+  font-size: clamp(1.8rem, 3.2vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.06em;
   color: #f7f9f8;
   text-transform: uppercase;
   margin: 0;
 }
 
 .kanjiSubtitle {
-  font-family: 'Noto Serif JP', serif;
-  font-size: 1.1rem;
-  font-weight: 300;
+  font-family: var(--font-space), monospace;
+  font-size: 0.95rem;
+  font-weight: 400;
   color: rgba(223, 231, 224, 0.65);
-  letter-spacing: 0.4em;
+  letter-spacing: 0.25em;
 }
 
 .priceDisplay {
-  font-family: 'Cinzel', serif;
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: #ffffff;
+  font-family: var(--font-cinzel), 'Cinzel', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffd700;
   margin-top: 0.4rem;
 }
 
 .productDescription {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.9rem;
+  font-family: var(--font-space), sans-serif;
+  font-size: 0.95rem;
   line-height: 1.75;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.04em;
   color: #9aa5a0;
   margin: 0;
 }
@@ -181,7 +193,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: 'Space Grotesk', monospace;
+  font-family: var(--font-space), monospace;
   font-size: 0.72rem;
   letter-spacing: 0.3em;
   color: #88938c;
@@ -191,17 +203,20 @@
 .sizeOptions {
   display: flex;
   gap: 0.8rem;
+  flex-wrap: wrap;
 }
 
 .sizeButton {
-  width: 48px;
+  min-width: 48px;
   height: 48px;
+  padding: 0 0.8rem;
   background: transparent;
   border: 1px solid rgba(223, 231, 224, 0.15);
+  border-radius: 4px;
   color: #dfe7e0;
-  font-family: 'Cinzel', serif;
+  font-family: var(--font-cinzel), 'Cinzel', serif;
   font-size: 0.85rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
   display: grid;
@@ -215,53 +230,58 @@
 
 .sizeButtonActive {
   border-color: #ffd700;
-  color: #ffd700;
-  background: rgba(255, 215, 0, 0.08);
-  box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
+  color: #000000;
+  background: #ffd700;
+  box-shadow: 0 0 16px rgba(255, 215, 0, 0.4);
 }
 
 /* Editorial Add to Bag CTA */
 .addToBagCta {
-  background: transparent;
+  background: linear-gradient(135deg, #ffd700, #ffaa00);
+  color: #000000;
+  font-family: var(--font-cinzel), 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.2em;
+  padding: 1.1rem 2.8rem;
   border: none;
-  padding: 0;
+  border-radius: 4px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 1.5rem;
-  font-family: 'Cinzel', serif;
-  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
-  letter-spacing: 0.3em;
-  color: #f5f7f6;
+  gap: 1.2rem;
   text-transform: uppercase;
   margin: 1rem 0;
-  transition: color 0.35s ease;
+  transition: all 0.35s ease;
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+}
+
+.addToBagCta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
 }
 
 .ctaRule {
   display: inline-block;
-  width: 60px;
-  height: 1px;
-  background: rgba(223, 231, 224, 0.4);
-  transition: width 0.45s cubic-bezier(0.16, 1, 0.3, 1), background 0.35s ease, box-shadow 0.35s ease;
-}
-
-.addToBagCta:hover {
-  color: #ffd700;
+  width: 30px;
+  height: 2px;
+  background: #000000;
+  transition: width 0.45s ease;
 }
 
 .addToBagCta:hover .ctaRule {
-  width: 100px;
-  background: #ffd700;
-  box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+  width: 50px;
 }
 
 .addedFeedback {
   color: #ffd700;
-  font-family: 'Space Grotesk', monospace;
+  font-family: var(--font-space), monospace;
   font-size: 0.8rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 /* Minimal Expandable Specs */
@@ -278,7 +298,7 @@
 }
 
 .specRowTitle {
-  font-family: 'Space Grotesk', monospace;
+  font-family: var(--font-space), monospace;
   font-size: 0.75rem;
   letter-spacing: 0.3em;
   color: #88938c;
@@ -287,7 +307,7 @@
 }
 
 .specRowContent {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-space), sans-serif;
   font-size: 0.85rem;
   line-height: 1.7;
   color: #c2cdc5;

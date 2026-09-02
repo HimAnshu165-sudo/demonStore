@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic';
 interface OrderItemRequest {
   slug?: string;
   productId?: string;
-  selectedSize?: 'S' | 'M' | 'L' | 'XL' | 'XXL';
+  selectedSize?: string;
   quantity?: number;
 }
 
@@ -188,11 +188,11 @@ export async function POST(request: Request) {
       );
     }
 
-    if (item.selectedSize && !VALID_SIZES.includes(item.selectedSize as (typeof VALID_SIZES)[number])) {
+    if (item.selectedSize && typeof item.selectedSize !== 'string') {
       return NextResponse.json(
         {
           success: false,
-          message: `Invalid size "${item.selectedSize}" for item "${identifier}". Allowed sizes: ${VALID_SIZES.join(', ')}`,
+          message: `Invalid size format for item "${identifier}".`,
         },
         { status: 400 }
       );
@@ -209,7 +209,7 @@ export async function POST(request: Request) {
     const preparedItems: {
       dbProduct: InstanceType<typeof Product>;
       requestedQty: number;
-      selectedSize?: 'S' | 'M' | 'L' | 'XL' | 'XXL';
+      selectedSize?: string;
     }[] = [];
 
     for (const item of items) {

@@ -13,24 +13,24 @@ export default function HomePage() {
   const [isPlayingCinema, setIsPlayingCinema] = useState(false);
   const [showEcommerce, setShowEcommerce] = useState(false);
 
-  // Trigger Zenitsu Final Form 10s sequence when scroll reaches Demon Chamber (0.97+)
+  // Trigger Zenitsu Final Form 10s sequence when scroll reaches Demon Chamber (0.96+)
   useEffect(() => {
-    if (lerpedProgress >= 0.97 && !hasTriggeredCinema) {
+    if (lerpedProgress >= 0.96 && !hasTriggeredCinema && !isPlayingCinema) {
       setHasTriggeredCinema(true);
       setIsPlayingCinema(true);
     }
-  }, [lerpedProgress, hasTriggeredCinema]);
+  }, [lerpedProgress, hasTriggeredCinema, isPlayingCinema]);
 
   const handleCinemaComplete = () => {
     setIsPlayingCinema(false);
     setShowEcommerce(true);
-    // Smoothly scroll down to the collection
+    // Smoothly scroll down to the collection landing
     setTimeout(() => {
       const el = document.getElementById('collection-landing');
       if (el) {
         el.scrollIntoView({ behavior: 'smooth' });
       }
-    }, 100);
+    }, 150);
   };
 
   const handleExploreCollection = () => {

@@ -4,7 +4,7 @@ export interface IOrderItem {
   productId: string;
   slug: string;
   name: string;
-  selectedSize?: 'S' | 'M' | 'L' | 'XL' | 'XXL';
+  selectedSize?: string;
   quantity: number;
   price: number;
   image?: string;
@@ -56,10 +56,7 @@ const OrderItemSchema = new Schema<IOrderItem>(
     },
     selectedSize: {
       type: String,
-      enum: {
-        values: ['S', 'M', 'L', 'XL', 'XXL'],
-        message: '{VALUE} is not a valid size',
-      },
+      trim: true,
     },
     quantity: {
       type: Number,

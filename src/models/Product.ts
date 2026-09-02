@@ -4,6 +4,8 @@ export interface IProduct {
   id: string;
   slug: string;
   name: string;
+  category?: string;
+  imagePath?: string;
   japaneseTitle?: string;
   character: string;
   rank?: string;
@@ -17,7 +19,7 @@ export interface IProduct {
   gsm?: number;
   fit?: string;
   color?: string;
-  sizes: ('S' | 'M' | 'L' | 'XL' | 'XXL')[];
+  sizes: string[];
   images: string[];
   lookbookImages: string[];
   stock: number;
@@ -46,6 +48,16 @@ const ProductSchema = new Schema<IProduct>(
     name: {
       type: String,
       required: [true, 'Product name is required'],
+      trim: true,
+    },
+    category: {
+      type: String,
+      default: '',
+      trim: true,
+    },
+    imagePath: {
+      type: String,
+      default: '',
       trim: true,
     },
     japaneseTitle: {
@@ -115,10 +127,6 @@ const ProductSchema = new Schema<IProduct>(
     },
     sizes: {
       type: [String],
-      enum: {
-        values: ['S', 'M', 'L', 'XL', 'XXL'],
-        message: '{VALUE} is not a supported size',
-      },
       default: [],
     },
     images: {

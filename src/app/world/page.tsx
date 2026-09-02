@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { FooterCinematic } from '@/components/FooterCinematic/FooterCinematic';
 import styles from './World.module.css';
 
 export default function WorldPage() {
@@ -98,6 +99,8 @@ export default function WorldPage() {
           </Link>
         </div>
       </div>
+
+      <FooterCinematic />
     </main>
   );
 }

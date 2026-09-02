@@ -124,9 +124,11 @@
 .itemThumb {
   width: 80px;
   height: 95px;
-  object-fit: cover;
-  border: 1px solid var(--color-dark-border);
-  background: #060508;
+  object-fit: contain;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: radial-gradient(circle at center, #171524 0%, #0c0b12 80%);
+  border-radius: 4px;
+  padding: 0.35rem;
 }
 
 .itemDetails {

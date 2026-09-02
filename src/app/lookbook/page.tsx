@@ -3,54 +3,73 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { PRODUCTS } from '@/data/products';
+import { LookbookMarquee } from '@/components/LookbookMarquee/LookbookMarquee';
+import { FooterCinematic } from '@/components/FooterCinematic/FooterCinematic';
 import styles from './Lookbook.module.css';
 
 const LOOKBOOK_ITEMS = [
   {
     number: 'LOOK 01',
-    title: 'THE PROGENITOR SILHOUETTE',
-    japanese: '原初 // 虚空の衣',
-    product: PRODUCTS.find((p) => p.slug === 'zenitsu-thunder-breathing-hoodie') || PRODUCTS[0],
-    image: '/assets/products/zenitsu-thunder-hoodie.jpg',
-    description: '520 GSM loopback cotton with high-density metallic gold lightning embroidery across the shoulders. A silhouette engineered for unstoppable velocity.',
+    title: 'HINOKAMI KAGURA FLAME HOODIE',
+    japanese: '竈門炭治郎 // ヒノカミ神楽 円舞',
+    productSlug: 'tanjiro-hinokami-kagura-flame-hoodie',
+    image: '/assets/products/hoodie_01.png',
+    description: '520 GSM loopback cotton hoodie with high-build Hinokami Kagura flame samurai back graphic. Paired with Flame Stride tactical combat sneakers.',
     layoutClass: styles.layoutLeft,
   },
   {
     number: 'LOOK 02',
-    title: 'KIMONO MOON BREATHING',
-    japanese: '黒死牟 // 壱ノ型',
-    product: PRODUCTS.find((p) => p.slug === 'kokushibo-moon-breathing-hoodie') || PRODUCTS[1],
-    image: '/assets/castle/02-main-hall.png',
-    description: 'Structural hybrid kimono draped sleeves merged into 500 GSM French terry. Tonal crescent moon trail embroidery down the spine.',
+    title: 'CRESCENT MOON SANCTUM HOODIE',
+    japanese: '黒死牟 // 月の呼吸 壱ノ型 新月',
+    productSlug: 'kokushibo-crescent-moon-sanctum-hoodie',
+    image: '/assets/products/hoodie_02.png',
+    description: 'Minimalist luxury bone white hoodie with 120,000-stitch crescent moon warrior embroidery on chest. Paired with Lunar Phase sand tech cargos.',
     layoutClass: styles.layoutRight,
   },
   {
     number: 'LOOK 03',
-    title: 'LOTUS FROST MILITARY NYLON',
-    japanese: '蓮葉氷 // 氷晶',
-    product: PRODUCTS.find((p) => p.slug === 'douma-lotus-frost-bomber') || PRODUCTS[2],
-    image: '/assets/castle/04-floating-staircase.png',
-    description: '280 GSM flight nylon shell with 180,000-stitch crystalline ice lotus embroidery. Blood-red cupra lining with oxidized gunmetal hardware.',
+    title: 'BLOOD FLAME MA-1 FLIGHT BOMBER',
+    japanese: '童磨 // 血炎 軍用フライトボンバー',
+    productSlug: 'douma-blood-flame-ma1-flight-bomber',
+    image: '/assets/products/jacket_01.png',
+    description: '280 GSM military flight nylon shell with 180,000-stitch crimson armored samurai knight embroidery and blood-red satin lining.',
     layoutClass: styles.layoutFull,
   },
   {
     number: 'LOOK 04',
-    title: 'DESTRUCTIVE DEATH HEAVY TEE',
-    japanese: '破壊殺 // 羅針盤',
-    product: PRODUCTS.find((p) => p.slug === 'akaza-destructive-death-tee') || PRODUCTS[1],
-    image: '/assets/castle/03-infinite-corridor.png',
-    description: '420 GSM combed cotton vintage stone-washed jersey with geometric high-density compass prints engineered for fluid motion.',
+    title: 'DESTRUCTIVE DEATH MINERAL TEE',
+    japanese: '猗窩座 // 破壊殺 鉱物洗',
+    productSlug: 'akaza-destructive-death-mineral-wash-tee',
+    image: '/assets/products/hoodie_07.png',
+    description: '420 GSM combed cotton vintage mineral stone-washed oversized jersey with high-impact battle aura samurai back print.',
     layoutClass: styles.layoutLeft,
   },
   {
     number: 'LOOK 05',
-    title: 'TAILORED PROGENITOR OVERCOAT',
-    japanese: '支配 // 原初の影',
-    product: PRODUCTS.find((p) => p.slug === 'muzan-infinity-tailored-trench') || PRODUCTS[3],
-    image: '/assets/castle/06-demon-chamber.png',
-    description: '600 GSM virgin wool-cashmere blend tailored overcoat featuring laser-engraved demon crest closures and monochrome jacquard castle lining.',
+    title: 'PROGENITOR WINGED DEMON TRENCH',
+    japanese: '鬼舞辻無惨 // 始祖 翼魔 コート',
+    productSlug: 'muzan-progenitor-winged-demon-trench-coat',
+    image: '/assets/products/coat_01.png',
+    description: '600 GSM Italian virgin wool tailored overcoat featuring winged armored demon knight embroidery and custom jacquard lining.',
     layoutClass: styles.layoutRight,
+  },
+  {
+    number: 'LOOK 06',
+    title: 'THUNDER-X 24K GOLD LUXURY RUNNERS',
+    japanese: '我妻善逸 // 迅雷 24K金箔',
+    productSlug: 'zenitsu-thunder-x-24k-gold-luxury-runners',
+    image: '/assets/products/shoes_02.png',
+    description: 'Handcrafted Italian calfskin court runners with metallic 24K gold lightning streaks and translucent gum air cushioning.',
+    layoutClass: styles.layoutFull,
+  },
+  {
+    number: 'LOOK 07',
+    title: 'HASHIRA MULTI-POCKET UTILITY CARGOS',
+    japanese: '鬼殺隊 // 柱 戦術 10ポケット',
+    productSlug: 'hashira-combat-multi-pocket-utility-cargos',
+    image: '/assets/products/cargo_01.png',
+    description: '340 GSM heavy ripstop combat cargo pants engineered with 10 ergonomic 3D modular pockets and dual thigh buckle harnesses.',
+    layoutClass: styles.layoutLeft,
   },
 ];
 
@@ -68,9 +87,19 @@ export default function LookbookPage() {
           LOOKBOOK<br />VOLUME 01
         </h1>
         <p className={styles.subtitle}>
-          VISUAL CAMPAIGN SHOT ACROSS THE SIX DIMENSIONAL MILESTONES
+          VISUAL CAMPAIGN SHOT ACROSS STREETWEAR, FOOTWEAR & ARCHITECTURAL APPAREL
         </p>
       </header>
+
+      {/* Seamless Continuous Infinite Moving Editorial Track */}
+      <div className={styles.marqueeWrapper}>
+        <LookbookMarquee
+          title="THE SLAYER ARCHIVES"
+          subtitle="CONTINUOUS EDITORIAL CAMPAIGN TRACK"
+          eyebrow="LIVE GALLERY // VOLUME 01"
+          showExploreLink={false}
+        />
+      </div>
 
       <div className={styles.looksStack}>
         {LOOKBOOK_ITEMS.map((item, idx) => (
@@ -91,8 +120,8 @@ export default function LookbookPage() {
               <div className={styles.lookJapanese}>{item.japanese}</div>
               <h2 className={styles.lookTitle}>{item.title}</h2>
               <p className={styles.lookDescription}>{item.description}</p>
-              
-              <Link href={`/product/${item.product.slug}`} className={styles.lookCta}>
+
+              <Link href={`/product/${item.productSlug}`} className={styles.lookCta}>
                 <span>INSPECT PIECE</span>
                 <span className={styles.lookCtaLine} />
                 <span>→</span>
@@ -101,6 +130,8 @@ export default function LookbookPage() {
           </section>
         ))}
       </div>
+
+      <FooterCinematic />
     </main>
   );
 }
