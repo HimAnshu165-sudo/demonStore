@@ -166,6 +166,7 @@ export function FooterCinematic() {
               <li><Link href="/shop" className={styles.dirLink}>ALL COLLECTIONS (28 OBJECTS)</Link></li>
               <li><Link href="/lookbook" className={styles.dirLink}>SLAYER ARCHIVES LOOKBOOK</Link></li>
               <li><Link href="/world" className={styles.dirLink}>PHILOSOPHY & MANIFESTO</Link></li>
+              <li><Link href="/admin" className={styles.dirLink}>CITADEL ADMIN // 無限城</Link></li>
             </ul>
           </div>
 

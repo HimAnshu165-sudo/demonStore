@@ -7,6 +7,19 @@
   overflow-x: hidden;
 }
 
+@media (max-width: 768px) {
+  .collectionContainer {
+    padding: 3rem 1.25rem 0rem 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .collectionContainer {
+    padding: 2rem 0.85rem 0rem 0.85rem;
+  }
+}
+
+
 /* 1. Hero Drop Banner */
 .heroDropBanner {
   max-width: 1400px;
@@ -30,6 +43,15 @@
     padding: 2rem;
   }
 }
+
+@media (max-width: 600px) {
+  .heroDropBanner {
+    padding: 1.25rem;
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+  }
+}
+
 
 .productShowcase {
   position: relative;
@@ -81,12 +103,14 @@
 
 .dropTitle {
   font-family: var(--font-cinzel), 'Cinzel', serif;
-  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  font-size: clamp(2rem, 4.5vw, 3.8rem);
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: 0.05em;
   color: #ffffff;
   margin: 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .dropSubtitle {
@@ -149,6 +173,24 @@
   margin-top: 0.5rem;
   flex-wrap: wrap;
 }
+
+@media (max-width: 500px) {
+  .priceAction {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .priceTag {
+    font-size: 1.6rem;
+  }
+
+  .primaryCta {
+    width: 100%;
+    text-align: center;
+  }
+}
+
 
 .priceTag {
   font-family: var(--font-cinzel), 'Cinzel', serif;
@@ -231,6 +273,28 @@
   margin-bottom: 3.5rem;
   flex-wrap: wrap;
 }
+
+@media (max-width: 768px) {
+  .filterNav {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.8rem;
+    margin-bottom: 2.5rem;
+    scrollbar-width: none;
+  }
+
+  .filterNav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filterBtn {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
+
 
 .filterBtn {
   background: rgba(255, 255, 255, 0.03);

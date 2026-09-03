@@ -2,10 +2,11 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Product, CartItem } from '@/types';
+import { useAuth } from '@/context/AuthContext';
 
 interface CartContextType {
   cart: CartItem[];
-  addToCart: (product: Product, selectedSize: string, quantity?: number) => void;
+  addToCart: (product: Product, selectedSize: string, quantity?: number, bypassAuthCheck?: boolean) => void;
   removeFromCart: (productId: string, selectedSize: string) => void;
   updateQuantity: (productId: string, selectedSize: string, quantity: number) => void;
   clearCart: () => void;
@@ -19,31 +20,47 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
+  const { user, isAuthenticated, openAuthModal } = useAuth();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Load cart from localStorage if present
+  // Load user-scoped cart or guest cart
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('infinity_castle_cart');
+      const storageKey = user ? `demonstore_cart_${user.id}` : 'demonstore_guest_cart';
+      const saved = localStorage.getItem(storageKey);
       if (saved) {
         setCart(JSON.parse(saved));
+      } else {
+        setCart([]);
       }
     } catch (e) {
       console.warn('Could not read cart from localStorage', e);
     }
-  }, []);
+  }, [user?.id]);
 
-  // Sync cart to localStorage
+  // Sync cart to localStorage whenever cart changes
   useEffect(() => {
     try {
-      localStorage.setItem('infinity_castle_cart', JSON.stringify(cart));
+      const storageKey = user ? `demonstore_cart_${user.id}` : 'demonstore_guest_cart';
+      localStorage.setItem(storageKey, JSON.stringify(cart));
     } catch (e) {
       console.warn('Could not save cart to localStorage', e);
     }
-  }, [cart]);
+  }, [cart, user?.id]);
 
-  const addToCart = (product: Product, selectedSize: string, quantity = 1) => {
+  const addToCart = (product: Product, selectedSize: string, quantity = 1, bypassAuthCheck = false) => {
+    // GUEST INTERCEPTION: If guest tries to add to cart, open Login/Signup dialog with intended action
+    if (!isAuthenticated && !bypassAuthCheck) {
+      openAuthModal('login', {
+        type: 'ADD_TO_CART',
+        product,
+        selectedSize,
+        quantity,
+      });
+      return;
+    }
+
     setCart((prev) => {
       const existingIndex = prev.findIndex(
         (item) => item.product.id === product.id && item.selectedSize === selectedSize

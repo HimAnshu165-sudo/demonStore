@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { AuthProvider } from '@/context/AuthContext';
 import { CartProvider } from '@/context/CartContext';
 import { Navigation } from '@/components/Navigation/Navigation';
 import { CartDrawer } from '@/components/CartDrawer/CartDrawer';
+import { AuthModal } from '@/components/AuthModal/AuthModal';
 import { CustomCursor } from '@/components/CustomCursor/CustomCursor';
 
 export const metadata: Metadata = {
@@ -25,12 +27,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <CartProvider>
-          <CustomCursor />
-          <Navigation />
-          {children}
-          <CartDrawer />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <CustomCursor />
+            <Navigation />
+            {children}
+            <CartDrawer />
+            <AuthModal />
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

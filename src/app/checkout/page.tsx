@@ -1,13 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
 import styles from './Checkout.module.css';
 
 export default function CheckoutPage() {
   const { cart, subtotal, formattedSubtotal, clearCart } = useCart();
+  const { user } = useAuth();
   const [submitted, setSubmitted] = useState(false);
   const [orderCode, setOrderCode] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -17,9 +19,25 @@ export default function CheckoutPage() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [streetAddress, setStreetAddress] = useState('');
+  const [street, setStreet] = useState('');
   const [city, setCity] = useState('');
   const [postalCode, setPostalCode] = useState('');
+
+  useEffect(() => {
+    if (user) {
+      if (user.name) {
+        const parts = user.name.split(' ');
+        setFirstName(parts[0] || '');
+        setLastName(parts.slice(1).join(' ') || '');
+      }
+      if (user.email) setEmail(user.email);
+      if (user.shippingAddress) {
+        setStreet(user.shippingAddress.street || '');
+        setCity(user.shippingAddress.city || '');
+        setPostalCode(user.shippingAddress.postalCode || '');
+      }
+    }
+  }, [user]);
 
   const shippingCost = 0; // Complimentary Global Courier for Drop 001
   const total = subtotal + shippingCost;
@@ -40,7 +58,7 @@ export default function CheckoutPage() {
           email: email.trim(),
         },
         shippingAddress: {
-          streetAddress: streetAddress.trim(),
+          streetAddress: street.trim(),
           city: city.trim(),
           postalCode: postalCode.trim(),
           country: 'Japan',
@@ -158,8 +176,8 @@ export default function CheckoutPage() {
                     required
                     placeholder="Nakano 4-Chome 10-1"
                     className={styles.minimalInput}
-                    value={streetAddress}
-                    onChange={(e) => setStreetAddress(e.target.value)}
+                    value={street}
+                    onChange={(e) => setStreet(e.target.value)}
                   />
                 </div>
                 <div className={styles.fieldWrapper}>

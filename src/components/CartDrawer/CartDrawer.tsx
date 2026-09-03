@@ -3,11 +3,13 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { X, Trash2, ArrowRight } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import styles from './CartDrawer.module.css';
 
 export function CartDrawer() {
+  const pathname = usePathname();
   const {
     cart,
     isCartOpen,
@@ -17,6 +19,10 @@ export function CartDrawer() {
     totalItems,
     formattedSubtotal,
   } = useCart();
+
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
 
   return (
     <>

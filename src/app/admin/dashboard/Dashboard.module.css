@@ -1,0 +1,321 @@
+.dashboardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.welcomeHeading {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.06em;
+}
+
+.welcomeSub {
+  font-size: 0.8rem;
+  color: #8a8594;
+  margin-top: 0.2rem;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.primaryActionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #e71d36;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.primaryActionBtn:hover {
+  background: #ff2a55;
+  box-shadow: 0 0 16px rgba(231, 29, 54, 0.5);
+}
+
+.secondaryActionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: #f5f5f7;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.75rem 1.25rem;
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.secondaryActionBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+/* KPI GRID */
+.kpiGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+/* DASHBOARD MAIN SPLIT */
+.dashboardMainGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+}
+
+.panel {
+  background: rgba(14, 11, 18, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  position: relative;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panelTitle {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.panelLink {
+  font-size: 0.74rem;
+  color: #e71d36;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: color 0.2s ease;
+}
+
+.panelLink:hover {
+  color: #ff2a55;
+}
+
+/* TABLE STYLING */
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.adminTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.8rem;
+}
+
+.adminTable th {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: #8a8594;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  text-transform: uppercase;
+}
+
+.adminTable td {
+  padding: 0.95rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  color: #f5f5f7;
+}
+
+.adminTable tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 2px;
+}
+
+.statusDelivered {
+  background: rgba(46, 204, 113, 0.12);
+  border: 1px solid rgba(46, 204, 113, 0.3);
+  color: #2ecc71;
+}
+
+.statusShipped {
+  background: rgba(52, 152, 219, 0.12);
+  border: 1px solid rgba(52, 152, 219, 0.3);
+  color: #3498db;
+}
+
+.statusProcessing {
+  background: rgba(241, 196, 15, 0.12);
+  border: 1px solid rgba(241, 196, 15, 0.3);
+  color: #f1c40f;
+}
+
+.statusCancelled {
+  background: rgba(231, 29, 54, 0.12);
+  border: 1px solid rgba(231, 29, 54, 0.3);
+  color: #ff556e;
+}
+
+/* SIDE PANELS */
+.sideColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.presenceList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.presenceItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.presenceAvatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #14111a;
+}
+
+.presenceInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.presenceName {
+  font-size: 0.82rem;
+  color: #ffffff;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.presenceSub {
+  font-size: 0.7rem;
+  color: #8a8594;
+}
+
+.presenceDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.dotOnline {
+  background-color: #2ecc71;
+  box-shadow: 0 0 8px #2ecc71;
+}
+
+.dotOffline {
+  background-color: #555060;
+}
+
+.stockAlertList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.stockAlertItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.85rem;
+  background: rgba(231, 29, 54, 0.06);
+  border: 1px solid rgba(231, 29, 54, 0.25);
+}
+
+.stockAlertName {
+  font-size: 0.78rem;
+  color: #f5f5f7;
+  font-weight: 600;
+}
+
+.stockAlertMeta {
+  font-size: 0.68rem;
+  color: #8a8594;
+}
+
+.stockBadge {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  font-weight: 700;
+  font-family: var(--font-mono, monospace);
+  background: rgba(231, 29, 54, 0.2);
+  color: #ff556e;
+  border: 1px solid rgba(231, 29, 54, 0.4);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+  .kpiGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboardMainGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .kpiGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .topBar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

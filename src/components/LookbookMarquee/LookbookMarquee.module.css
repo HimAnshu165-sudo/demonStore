@@ -8,6 +8,13 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
+@media (max-width: 768px) {
+  .lookbookSection {
+    padding: 4rem 0 5rem 0;
+  }
+}
+
+
 /* Ambient Subtle Lighting */
 .ambientGlow {
   position: absolute;
@@ -210,6 +217,22 @@
     height: 340px;
   }
 }
+
+@media (max-width: 480px) {
+  .aspectPortrait,
+  .aspectTall,
+  .aspectWide,
+  .aspectSquare {
+    width: clamp(230px, 75vw, 260px);
+  }
+  .aspectPortrait .imageFrame,
+  .aspectTall .imageFrame,
+  .aspectWide .imageFrame,
+  .aspectSquare .imageFrame {
+    height: clamp(260px, 60vw, 300px);
+  }
+}
+
 
 .imageFrame {
   position: relative;

@@ -79,13 +79,15 @@ Commands:
     }
 
     const existing = await UserModel.findOne({ email: targetEmail });
+    const passwordHash = await hashPassword(password);
     if (existing) {
       existing.role = 'admin';
       existing.status = 'active';
+      existing.passwordHash = passwordHash;
+      if (name) existing.name = name;
       await existing.save();
-      console.log(`✓ User with email "${targetEmail}" already existed and has been updated to admin.`);
+      console.log(`✓ Administrator "${targetEmail}" updated with new password and role: "admin".`);
     } else {
-      const passwordHash = await hashPassword(password);
       const newAdmin = await UserModel.create({
         name,
         email: targetEmail,

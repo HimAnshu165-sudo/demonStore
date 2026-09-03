@@ -169,7 +169,11 @@ export async function POST(req: Request) {
       );
     }
 
-    if (!slug || typeof slug !== 'string' || slug.trim().length === 0) {
+    const cleanSlug = (slug && typeof slug === 'string' && slug.trim().length > 0)
+      ? slug.trim().toLowerCase()
+      : name.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+
+    if (!cleanSlug) {
       return NextResponse.json(
         { success: false, message: 'Product slug is required' },
         { status: 400 }
@@ -190,7 +194,6 @@ export async function POST(req: Request) {
       );
     }
 
-    const cleanSlug = slug.trim().toLowerCase();
     const cleanId = (id && typeof id === 'string' && id.trim().length > 0)
       ? id.trim()
       : `prod-${Date.now()}`;

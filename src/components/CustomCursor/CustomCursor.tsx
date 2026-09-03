@@ -1,14 +1,17 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import styles from './CustomCursor.module.css';
 
 export function CustomCursor() {
+  const pathname = usePathname();
   const containerRef = useRef<HTMLDivElement>(null);
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (pathname?.startsWith('/admin')) return;
     // Only enable on desktop/fine-pointer devices
     if (typeof window === 'undefined' || window.matchMedia('(pointer: coarse)').matches) return;
 
@@ -84,7 +87,11 @@ export function CustomCursor() {
       document.removeEventListener('mouseleave', handleMouseLeave);
       cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [pathname]);
+
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
 
   return (
     <div ref={containerRef} style={{ opacity: 0, transition: 'opacity 0.3s ease' }}>

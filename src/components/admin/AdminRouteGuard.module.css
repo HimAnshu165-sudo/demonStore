@@ -1,0 +1,161 @@
+.guardLoadingContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-abyss, #060508);
+  color: var(--color-bone-white, #f5f5f7);
+  padding: 2rem;
+  text-align: center;
+}
+
+.loaderSpinner {
+  width: 54px;
+  height: 54px;
+  border: 2px solid rgba(231, 29, 54, 0.2);
+  border-top-color: var(--color-crimson, #e71d36);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  margin-bottom: 1.5rem;
+}
+
+.loaderKanji {
+  font-family: var(--font-kanji, 'Noto Serif JP', serif);
+  font-size: 1.75rem;
+  color: var(--color-crimson, #e71d36);
+  letter-spacing: 0.2em;
+  margin-bottom: 0.5rem;
+}
+
+.loaderText {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  color: var(--color-muted-grey, #8a8594);
+  text-transform: uppercase;
+}
+
+/* 403 Forbidden Access State */
+.forbiddenContainer {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #060508;
+  padding: 2rem;
+}
+
+.forbiddenCard {
+  max-width: 520px;
+  width: 100%;
+  background: rgba(14, 11, 18, 0.95);
+  border: 1px solid rgba(231, 29, 54, 0.4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(231, 29, 54, 0.15);
+  padding: 3rem 2.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.forbiddenCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #e71d36, transparent);
+}
+
+.forbiddenIconWrapper {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 1.5rem auto;
+  border-radius: 50%;
+  background: rgba(231, 29, 54, 0.1);
+  border: 1px solid rgba(231, 29, 54, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e71d36;
+}
+
+.forbiddenKanji {
+  font-family: var(--font-kanji, 'Noto Serif JP', serif);
+  font-size: 2.5rem;
+  color: #e71d36;
+  margin-bottom: 0.5rem;
+}
+
+.forbiddenTitle {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+}
+
+.forbiddenDescription {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: #8a8594;
+  margin-bottom: 2rem;
+}
+
+.forbiddenActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.adminElevateBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: #e71d36;
+  color: #ffffff;
+  border: none;
+  padding: 0.9rem 1.5rem;
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.adminElevateBtn:hover {
+  background: #ff2a55;
+  box-shadow: 0 0 20px rgba(231, 29, 54, 0.5);
+}
+
+.returnStoreBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: transparent;
+  color: #8a8594;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.85rem 1.5rem;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.returnStoreBtn:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

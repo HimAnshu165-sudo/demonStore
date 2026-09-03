@@ -1,0 +1,289 @@
+.loginPage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 50% 20%, rgba(231, 29, 54, 0.08) 0%, rgba(6, 5, 8, 1) 70%);
+  padding: 2rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.ambientNoise {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
+  background-size: 24px 24px;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.loginCard {
+  width: 100%;
+  max-width: 460px;
+  background: rgba(14, 11, 18, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(231, 29, 54, 0.12);
+  padding: 3rem 2.5rem;
+  position: relative;
+  z-index: 10;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.loginCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #e71d36, transparent);
+}
+
+.brandBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  border: 1px solid rgba(231, 29, 54, 0.3);
+  background: rgba(231, 29, 54, 0.08);
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  color: #e71d36;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.beaconDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #e71d36;
+  box-shadow: 0 0 8px #ff2a55;
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+.headerTitle {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 1.75rem;
+  letter-spacing: 0.08em;
+  color: #f5f5f7;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.kanjiSub {
+  font-family: var(--font-kanji, 'Noto Serif JP', serif);
+  font-size: 1rem;
+  color: #e71d36;
+  margin-left: 0.5rem;
+}
+
+.headerSubtitle {
+  font-size: 0.82rem;
+  color: #8a8594;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.quickAdminBanner {
+  background: rgba(231, 29, 54, 0.08);
+  border: 1px dashed rgba(231, 29, 54, 0.4);
+  padding: 1rem;
+  margin-bottom: 1.75rem;
+  text-align: center;
+}
+
+.quickAdminTitle {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  margin-bottom: 0.35rem;
+}
+
+.quickAdminDesc {
+  font-size: 0.72rem;
+  color: #8a8594;
+  margin-bottom: 0.75rem;
+}
+
+.quickAdminBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: #e71d36;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quickAdminBtn:hover {
+  background: #ff2a55;
+  box-shadow: 0 0 16px rgba(231, 29, 54, 0.6);
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 1.75rem 0;
+  color: #4a4555;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.divider span {
+  padding: 0 0.85rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.label {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: #d1cdd8;
+  text-transform: uppercase;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 1rem;
+  color: #6a6575;
+  pointer-events: none;
+}
+
+.input {
+  width: 100%;
+  background: rgba(10, 8, 13, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f5f5f7;
+  padding: 0.85rem 1rem 0.85rem 2.75rem;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.88rem;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.input:focus {
+  border-color: #e71d36;
+  box-shadow: 0 0 0 1px #e71d36;
+}
+
+.input::placeholder {
+  color: #4a4555;
+}
+
+.errorBanner {
+  background: rgba(231, 29, 54, 0.15);
+  border: 1px solid #e71d36;
+  color: #ff8598;
+  font-size: 0.78rem;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.submitBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: transparent;
+  color: #f5f5f7;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.95rem;
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.82rem;
+  letter-spacing: 0.16em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.submitBtn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: #f5f5f7;
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.footerActions {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+}
+
+.backLink {
+  color: #8a8594;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.2s ease;
+}
+
+.backLink:hover {
+  color: #f5f5f7;
+}
+
+.rolesHint {
+  color: #5a5565;
+  font-size: 0.7rem;
+}
+
+@keyframes pulseDot {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
