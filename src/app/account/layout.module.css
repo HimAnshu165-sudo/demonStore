@@ -1,0 +1,246 @@
+.accountShell {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg-abyss, #060508);
+  padding-top: 80px; /* nav height offset */
+}
+
+/* ─── Sidebar ────────────────────────────────────────────────────────────── */
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: rgba(10, 8, 14, 0.95);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  position: sticky;
+  top: 80px;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 0;
+}
+
+.sidebarUser {
+  padding: 0 1.5rem 1.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  margin-bottom: 1rem;
+}
+
+.sidebarAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(231, 29, 54, 0.15);
+  border: 1px solid rgba(231, 29, 54, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e71d36;
+  margin-bottom: 0.75rem;
+}
+
+.sidebarName {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.sidebarRole {
+  font-size: 0.68rem;
+  color: #e71d36;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-top: 0.2rem;
+}
+
+/* ─── Nav Items ───────────────────────────────────────────────────────────── */
+.sidebarNav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0 0.75rem;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0.85rem;
+  color: #8a8594;
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  position: relative;
+}
+
+.navItem:hover {
+  color: #f5f5f7;
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.navItemActive {
+  color: #ffffff;
+  background: rgba(231, 29, 54, 0.1);
+  border-color: rgba(231, 29, 54, 0.25);
+}
+
+.navItemActive::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #e71d36;
+}
+
+.navBadge {
+  margin-left: auto;
+  background: #e71d36;
+  color: #fff;
+  font-size: 0.6rem;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  font-family: var(--font-sans, sans-serif);
+  font-weight: 700;
+}
+
+.sidebarDivider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  margin: 0.75rem 0.75rem;
+}
+
+.signOutBtn {
+  color: #ff556e !important;
+}
+
+.signOutBtn:hover {
+  background: rgba(231, 29, 54, 0.08) !important;
+  border-color: rgba(231, 29, 54, 0.2) !important;
+}
+
+/* ─── Content Area ────────────────────────────────────────────────────────── */
+.contentArea {
+  flex: 1;
+  min-width: 0;
+  padding: 2.5rem 3rem;
+  overflow-y: auto;
+}
+
+/* ─── Mobile Navigation ───────────────────────────────────────────────────── */
+.mobileNav {
+  display: none;
+  position: sticky;
+  top: 80px;
+  z-index: 100;
+  background: rgba(10, 8, 14, 0.97);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 0 1rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.mobileNav::-webkit-scrollbar {
+  display: none;
+}
+
+.mobileNavInner {
+  display: flex;
+  gap: 0;
+  min-width: max-content;
+}
+
+.mobileNavItem {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.85rem 1rem;
+  color: #8a8594;
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  white-space: nowrap;
+  position: relative;
+}
+
+.mobileNavItem:hover {
+  color: #f5f5f7;
+}
+
+.mobileNavItemActive {
+  color: #ffffff;
+  border-bottom-color: #e71d36;
+}
+
+.mobileNavBadge {
+  background: #e71d36;
+  color: #fff;
+  font-size: 0.55rem;
+  min-width: 15px;
+  height: 15px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+  font-family: var(--font-sans, sans-serif);
+  font-weight: 700;
+}
+
+/* ─── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .contentArea {
+    padding: 2rem 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .accountShell {
+    flex-direction: column;
+    padding-top: 70px;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .mobileNav {
+    display: block;
+  }
+
+  .contentArea {
+    padding: 1.5rem 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contentArea {
+    padding: 1.25rem 1rem;
+  }
+}

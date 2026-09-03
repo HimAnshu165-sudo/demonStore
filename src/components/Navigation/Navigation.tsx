@@ -228,20 +228,36 @@ export function Navigation() {
                     /* CUSTOMER ONLY DROPDOWN MENU */
                     <>
                       <Link
-                        href="/shop"
+                        href="/account/profile"
+                        className={styles.dropdownItem}
+                        onClick={() => setAccountOpen(false)}
+                      >
+                        <User size={14} />
+                        <span>My Profile</span>
+                      </Link>
+                      <Link
+                        href="/account/orders"
                         className={styles.dropdownItem}
                         onClick={() => setAccountOpen(false)}
                       >
                         <Package size={14} />
-                        <span>Archival Collection</span>
+                        <span>My Orders</span>
                       </Link>
                       <Link
-                        href="/checkout"
+                        href="/account/wishlist"
                         className={styles.dropdownItem}
                         onClick={() => setAccountOpen(false)}
                       >
                         <BagIcon size={14} />
-                        <span>Order & Bag Ledger</span>
+                        <span>Wishlist</span>
+                      </Link>
+                      <Link
+                        href="/account/bag"
+                        className={styles.dropdownItem}
+                        onClick={() => setAccountOpen(false)}
+                      >
+                        <ShoppingBag size={14} />
+                        <span>My Bag</span>
                       </Link>
                     </>
                   )}
@@ -354,14 +370,32 @@ export function Navigation() {
 
           {/* CUSTOMER ONLY MOBILE LINKS */}
           {isAuthenticated && isCustomer && (
-            <Link
-              href="/checkout"
-              className={styles.mobileNavLink}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <span>05 // MY ORDERS & BAG</span>
-              <ArrowRight size={18} />
-            </Link>
+            <>
+              <Link
+                href="/account/profile"
+                className={styles.mobileNavLink}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span>05 // MY PROFILE</span>
+                <ArrowRight size={18} />
+              </Link>
+              <Link
+                href="/account/orders"
+                className={styles.mobileNavLink}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span>06 // MY ORDERS</span>
+                <ArrowRight size={18} />
+              </Link>
+              <Link
+                href="/account/bag"
+                className={styles.mobileNavLink}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span>07 // MY BAG</span>
+                <ArrowRight size={18} />
+              </Link>
+            </>
           )}
 
           {/* AUTH ACTION */}

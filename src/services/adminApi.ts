@@ -556,6 +556,28 @@ class LocalStore {
     }
   }
 
+  updateUser(id: string, data: { name?: string; phone?: string; japaneseTitle?: string }): AdminUser {
+    this.init();
+    const user = this.users.find((u) => u.id === id);
+    if (!user) throw new Error(`User ${id} not found`);
+    if (data.name) user.name = data.name.trim();
+    if (data.phone !== undefined) user.phone = data.phone.trim();
+    if (data.japaneseTitle !== undefined) user.japaneseTitle = data.japaneseTitle.trim();
+    this.saveUsers();
+    // Sync to auth user in localStorage if this is the current session user
+    try {
+      const storedUser = localStorage.getItem('demonstore_auth_user');
+      if (storedUser) {
+        const parsed = JSON.parse(storedUser);
+        if (parsed?.id === id) {
+          localStorage.setItem('demonstore_auth_user', JSON.stringify({ ...parsed, ...data }));
+          window.dispatchEvent(new Event('demonstore_auth_change'));
+        }
+      }
+    } catch { /* ignore */ }
+    return user;
+  }
+
   updateUserRole(id: string, role: UserRole): AdminUser {
     this.init();
     const user = this.users.find((u) => u.id === id);
@@ -721,6 +743,12 @@ class LocalStore {
   getOrder(id: string): AdminOrder | undefined {
     this.init();
     return this.orders.find((o) => o.id === id || o.orderNumber === id);
+  }
+
+  getOrdersByCustomerId(customerId: string): AdminOrder[] {
+    this.init();
+    return this.orders.filter((o) => o.customer.id === customerId)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   }
 
   updateOrderStatus(id: string, status: OrderStatus): AdminOrder {
@@ -926,6 +954,10 @@ export const adminApi = {
     return localStore.getUserByEmail(email);
   },
 
+  async updateUser(id: string, data: { name?: string; phone?: string; japaneseTitle?: string }): Promise<AdminUser> {
+    return localStore.updateUser(id, data);
+  },
+
   async registerCustomer(data: { name: string; email: string; avatar?: string; japaneseTitle?: string }): Promise<AdminUser> {
     return localStore.registerCustomer(data);
   },
@@ -1029,6 +1061,10 @@ export const adminApi = {
     const local = localStore.getOrder(id);
     if (!local) throw new Error(`Order ${id} not found`);
     return local;
+  },
+
+  async getOrdersByCustomerId(customerId: string): Promise<AdminOrder[]> {
+    return localStore.getOrdersByCustomerId(customerId);
   },
 
   async updateOrderStatus(id: string, status: OrderStatus): Promise<AdminOrder> {

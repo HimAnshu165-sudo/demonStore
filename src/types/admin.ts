@@ -7,6 +7,7 @@ export interface AdminUser {
   id: string;
   name: string;
   email: string;
+  phone?: string;
   role: UserRole;
   status: UserStatus;
   avatar?: string;
@@ -24,6 +25,19 @@ export interface AdminUser {
     postalCode: string;
     country: string;
   };
+}
+
+export interface SavedAddress {
+  id: string;
+  label: string; // e.g. 'HOME', 'OFFICE'
+  fullName: string;
+  phone: string;
+  street: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  country: string;
+  isDefault: boolean;
 }
 
 export type ProductStockStatus = 'in_stock' | 'low_stock' | 'out_of_stock';
