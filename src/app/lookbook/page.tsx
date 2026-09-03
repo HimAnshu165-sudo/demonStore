@@ -4,8 +4,13 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { LookbookMarquee } from '@/components/LookbookMarquee/LookbookMarquee';
-import { FooterCinematic } from '@/components/FooterCinematic/FooterCinematic';
+import dynamic from 'next/dynamic';
 import styles from './Lookbook.module.css';
+
+const FooterCinematic = dynamic(
+  () => import('@/components/FooterCinematic/FooterCinematic').then((m) => m.FooterCinematic),
+  { ssr: false }
+);
 
 const LOOKBOOK_ITEMS = [
   {

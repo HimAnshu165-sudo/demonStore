@@ -12,9 +12,9 @@
   --color-dark-border: rgba(255, 255, 255, 0.08);
   --color-crimson-border: rgba(231, 29, 54, 0.35);
 
-  --font-display: var(--font-display-next, 'Cinzel'), serif;
-  --font-sans: var(--font-sans-next, 'Space Grotesk'), -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-kanji: var(--font-kanji-next, 'Noto Serif JP'), serif;
+  --font-display: 'Cinzel', serif;
+  --font-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-kanji: 'Noto Serif JP', serif;
 }
 
 * {

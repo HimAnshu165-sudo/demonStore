@@ -31,10 +31,23 @@ export default function CheckoutPage() {
         setLastName(parts.slice(1).join(' ') || '');
       }
       if (user.email) setEmail(user.email);
-      if (user.shippingAddress) {
+      if (user.shippingAddress?.street) {
         setStreet(user.shippingAddress.street || '');
         setCity(user.shippingAddress.city || '');
         setPostalCode(user.shippingAddress.postalCode || '');
+      } else if (user.id) {
+        try {
+          const raw = localStorage.getItem(`demonstore_addresses_${user.id}`);
+          if (raw) {
+            const addrs = JSON.parse(raw);
+            const def = addrs.find((a: any) => a.isDefault) || addrs[0];
+            if (def) {
+              if (def.street) setStreet(def.street);
+              if (def.city) setCity(def.city);
+              if (def.postalCode) setPostalCode(def.postalCode);
+            }
+          }
+        } catch { /* ignore */ }
       }
     }
   }, [user]);

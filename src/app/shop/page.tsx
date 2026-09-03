@@ -5,10 +5,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { CATEGORIES, CategoryFilter } from '@/data/products';
 import { Product } from '@/types';
-import { FooterCinematic } from '@/components/FooterCinematic/FooterCinematic';
 import { useCart } from '@/context/CartContext';
 import { ArrowRight, ShoppingBag } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import styles from './Shop.module.css';
+
+const FooterCinematic = dynamic(
+  () => import('@/components/FooterCinematic/FooterCinematic').then((m) => m.FooterCinematic),
+  { ssr: false }
+);
 
 function filterProductsByCategory(products: Product[], category: CategoryFilter | string): Product[] {
   if (!category || category === 'ALL') {

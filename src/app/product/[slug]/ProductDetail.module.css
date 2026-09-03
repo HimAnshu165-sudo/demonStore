@@ -261,16 +261,15 @@
   box-shadow: 0 8px 30px rgba(255, 215, 0, 0.6);
 }
 
-.ctaRule {
+.ctaArrow {
   display: inline-block;
-  width: 30px;
-  height: 2px;
-  background: #000000;
-  transition: width 0.45s ease;
+  font-size: 1.15rem;
+  line-height: 1;
+  transition: transform 0.3s ease;
 }
 
-.addToBagCta:hover .ctaRule {
-  width: 50px;
+.addToBagCta:hover .ctaArrow {
+  transform: translateX(4px);
 }
 
 .addedFeedback {

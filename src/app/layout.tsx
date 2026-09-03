@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { Cinzel, Space_Grotesk, Noto_Serif_JP } from 'next/font/google';
 import './globals.css';
 import { AuthProvider } from '@/context/AuthContext';
 import { CartProvider } from '@/context/CartContext';
@@ -8,27 +7,6 @@ import { Navigation } from '@/components/Navigation/Navigation';
 import { CartDrawer } from '@/components/CartDrawer/CartDrawer';
 import { AuthModal } from '@/components/AuthModal/AuthModal';
 import { CustomCursor } from '@/components/CustomCursor/CustomCursor';
-
-const cinzel = Cinzel({
-  subsets: ['latin'],
-  weight: ['400', '600', '800', '900'],
-  variable: '--font-display-next',
-  display: 'swap',
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-sans-next',
-  display: 'swap',
-});
-
-const notoSerifJP = Noto_Serif_JP({
-  subsets: ['latin'],
-  weight: ['300', '400', '600', '900'],
-  variable: '--font-kanji-next',
-  display: 'swap',
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://infinitycastle.streetwear'),
@@ -48,7 +26,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${cinzel.variable} ${spaceGrotesk.variable} ${notoSerifJP.variable}`}>
+    <html lang="en">
+      <head>
+        {/* Asynchronous, non-blocking Google Fonts with instant local fallback */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@300;400;600;900&display=swap"
+        />
+      </head>
       <body>
         <AuthProvider>
           <CartProvider>

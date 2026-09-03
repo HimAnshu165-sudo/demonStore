@@ -1,11 +1,32 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { useScrollProgress } from '@/hooks/useScrollProgress';
-import { CastleWorld } from '@/components/CastleWorld/CastleWorld';
 import { EditorialTypography } from '@/components/EditorialTypography/EditorialTypography';
-import { FinalCinematicSequence } from '@/components/FinalCinematicSequence/FinalCinematicSequence';
-import { ThunderCollectionLanding } from '@/components/ThunderCollectionLanding/ThunderCollectionLanding';
+
+// Dynamic import with ssr: false eliminates 50,000 lines of Three.js from initial server SSR evaluation
+const CastleWorld = dynamic(
+  () => import('@/components/CastleWorld/CastleWorld').then((m) => m.CastleWorld),
+  { ssr: false }
+);
+
+// Code-split below-the-fold components to accelerate initial compilation and page load
+const FinalCinematicSequence = dynamic(
+  () =>
+    import('@/components/FinalCinematicSequence/FinalCinematicSequence').then(
+      (m) => m.FinalCinematicSequence
+    ),
+  { ssr: false }
+);
+
+const ThunderCollectionLanding = dynamic(
+  () =>
+    import('@/components/ThunderCollectionLanding/ThunderCollectionLanding').then(
+      (m) => m.ThunderCollectionLanding
+    ),
+  { ssr: false }
+);
 
 export default function HomePage() {
   const { lerpedProgress } = useScrollProgress();

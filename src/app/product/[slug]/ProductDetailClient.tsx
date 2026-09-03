@@ -121,8 +121,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           {/* Add to Bag Editorial CTA */}
           <button onClick={handleAdd} className={styles.addToBagCta}>
             <span>{added ? 'ACQUIRED TO BAG' : 'ADD TO BAG'}</span>
-            <span className={styles.ctaRule} />
-            <span>→</span>
+            <span className={styles.ctaArrow}>→</span>
           </button>
           {added && (
             <div className={styles.addedFeedback}>
