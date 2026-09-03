@@ -263,15 +263,13 @@ export default function CheckoutPage() {
               <div className={styles.itemsList}>
                 {cart.map((item) => (
                   <div key={`${item.product.id || item.product.slug}-${item.selectedSize}`} className={styles.summaryItem}>
-                    {item.product.images && item.product.images[0] && (
-                      <Image
-                        src={item.product.images[0]}
-                        alt={item.product.name}
-                        width={56}
-                        height={70}
-                        className={styles.summaryThumb}
-                      />
-                    )}
+                    <Image
+                      src={item.product.images?.[0] || item.product.imagePath || '/assets/products/hoodie_01.png'}
+                      alt={item.product.name}
+                      width={56}
+                      height={70}
+                      className={styles.summaryThumb}
+                    />
                     <div className={styles.summaryItemInfo}>
                       <div className={styles.summaryItemName}>{item.product.name}</div>
                       <div className={styles.summaryItemMeta}>

@@ -83,16 +83,14 @@ export function ThunderCollectionLanding() {
       {heroProduct && (
         <div className={styles.heroDropBanner}>
           <div className={styles.productShowcase}>
-            {heroProduct.images && heroProduct.images[0] && (
-              <Image
-                src={heroProduct.images[0]}
-                alt={heroProduct.name}
-                width={750}
-                height={750}
-                className={styles.productImage}
-                priority
-              />
-            )}
+            <Image
+              src={heroProduct.images?.[0] || heroProduct.imagePath || '/assets/products/hoodie_01.png'}
+              alt={heroProduct.name}
+              width={750}
+              height={750}
+              className={styles.productImage}
+              priority
+            />
           </div>
 
           <div className={styles.dropMeta}>
@@ -189,15 +187,13 @@ export function ThunderCollectionLanding() {
                 <Link href={`/product/${prod.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <div className={styles.cardImageWrapper}>
                     {prod.category && <span className={styles.cardCategoryBadge}>{prod.category}</span>}
-                    {prod.images && prod.images[0] && (
-                      <Image
-                        src={prod.images[0]}
-                        alt={prod.name}
-                        width={450}
-                        height={450}
-                        className={styles.cardImage}
-                      />
-                    )}
+                    <Image
+                      src={prod.images?.[0] || prod.imagePath || '/assets/products/hoodie_01.png'}
+                      alt={prod.name}
+                      width={450}
+                      height={450}
+                      className={styles.cardImage}
+                    />
                   </div>
 
                   <div className={styles.cardInfo}>

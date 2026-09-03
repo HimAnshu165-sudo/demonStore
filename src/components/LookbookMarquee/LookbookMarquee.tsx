@@ -80,7 +80,7 @@ export function LookbookMarquee({
                   <span className={styles.numberBadge}>{item.number}</span>
                   <span className={styles.categoryTag}>{item.category}</span>
                   <Image
-                    src={item.image}
+                    src={item.image || '/assets/products/hoodie_01.png'}
                     alt={item.title}
                     width={600}
                     height={750}

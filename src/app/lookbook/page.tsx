@@ -111,7 +111,7 @@ export default function LookbookPage() {
           <section key={idx} className={`${styles.lookCard} ${item.layoutClass}`}>
             <div className={styles.lookImageFrame}>
               <Image
-                src={item.image}
+                src={item.image || '/assets/products/hoodie_01.png'}
                 alt={item.title}
                 width={1200}
                 height={800}

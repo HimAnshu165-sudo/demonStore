@@ -140,17 +140,15 @@ export default function ShopPage() {
                 <div className={styles.imageFrame}>
                   {p.rank && <div className={styles.rankBadge}>{p.rank}</div>}
                   {p.category && <div className={styles.categoryBadge}>{p.category}</div>}
-                  {p.images && p.images[0] && (
-                    <Image
-                      src={p.images[0]}
-                      alt={p.name}
-                      width={600}
-                      height={600}
-                      className={styles.itemImage}
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      loading="lazy"
-                    />
-                  )}
+                  <Image
+                    src={p.images?.[0] || p.imagePath || '/assets/products/hoodie_01.png'}
+                    alt={p.name}
+                    width={600}
+                    height={600}
+                    className={styles.itemImage}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    loading="lazy"
+                  />
                 </div>
 
                 <div className={styles.itemMeta}>

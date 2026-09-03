@@ -265,7 +265,7 @@ export async function POST(request: Request) {
         selectedSize: item.selectedSize,
         quantity: item.quantity!,
         price: itemPrice,
-        image: product.images && product.images.length > 0 ? product.images[0] : '',
+        image: product.images?.[0] || product.imagePath || '/assets/products/hoodie_01.png',
       });
 
       preparedItems.push({

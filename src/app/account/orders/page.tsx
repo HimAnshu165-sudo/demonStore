@@ -98,7 +98,7 @@ export default function OrdersPage() {
                 {order.items.slice(0, 3).map((item, idx) => (
                   <div key={idx} className={styles.itemThumbWrapper}>
                     <Image
-                      src={item.image}
+                      src={item.image || '/assets/products/hoodie_01.png'}
                       alt={item.name}
                       width={56}
                       height={70}

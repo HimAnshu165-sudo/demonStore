@@ -28,6 +28,13 @@ async function seed() {
   const mongoose = await connectToDatabase();
   console.log(`✓ Connected to database: "${mongoose.connection.name}"`);
 
+  // Clean up obsolete / stale products not in the canonical source dataset
+  const validSlugs = PRODUCTS.map((p) => p.slug);
+  const deleteResult = await Product.deleteMany({ slug: { $nin: validSlugs } });
+  if (deleteResult.deletedCount > 0) {
+    console.log(`✓ Removed ${deleteResult.deletedCount} obsolete / legacy product records from database.`);
+  }
+
   let upsertedCount = 0;
   let modifiedCount = 0;
 

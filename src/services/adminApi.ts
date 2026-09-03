@@ -46,7 +46,7 @@ function normalizeUser(u: any): AdminUser {
     email: u.email || '',
     role,
     status,
-    avatar: u.avatar || (role === 'admin' ? '/assets/castle/01-entrance.png' : '/assets/castle/02-hall.png'),
+    avatar: u.avatar || (role === 'admin' ? '/assets/castle/01-entrance.png' : '/assets/castle/02-main-hall.png'),
     japaneseTitle: u.japaneseTitle || (role === 'admin' ? '鬼舞辻無惨 // LORD OF INFINITY' : '門弟 // CITADEL DISCIPLE'),
     createdAt: u.createdAt ? new Date(u.createdAt).toISOString() : new Date().toISOString(),
     lastActive: lastActiveStr,
@@ -123,7 +123,7 @@ function normalizeOrder(o: any): AdminOrder {
       id: o.userId || 'guest',
       name: customerName,
       email: o.customer?.email || '',
-      avatar: '/assets/castle/02-hall.png',
+      avatar: '/assets/castle/02-main-hall.png',
     },
     items: Array.isArray(o.items)
       ? o.items.map((item: any) => ({

@@ -104,7 +104,7 @@ export default function OrderDetailPage({ params }: { params: Promise<{ id: stri
               {order.items.map((item, idx) => (
                 <div key={idx} className={styles.orderItem}>
                   <Image
-                    src={item.image}
+                    src={item.image || '/assets/products/hoodie_01.png'}
                     alt={item.name}
                     width={64}
                     height={80}

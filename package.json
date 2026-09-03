@@ -9,6 +9,7 @@
     "lint": "next lint",
     "seed": "tsx --env-file=.env.local --conditions=react-server src/scripts/seed.ts",
     "test:admin": "tsx --env-file=.env.local --conditions=react-server src/scripts/test-admin-backend.ts",
+    "test:e2e": "tsx --env-file=.env.local --conditions=react-server src/scripts/test-e2e-fullstack.ts",
     "admin": "tsx --env-file=.env.local --conditions=react-server src/scripts/manage-admin.ts"
   },
   "dependencies": {

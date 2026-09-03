@@ -50,7 +50,7 @@ function normalizeUser(rawUser: any): AdminUser {
     email: rawUser.email || '',
     role,
     status: rawUser.status === 'disabled' ? 'suspended' : 'active',
-    avatar: rawUser.avatar || (role === 'admin' ? '/assets/castle/01-entrance.png' : '/assets/castle/02-hall.png'),
+    avatar: rawUser.avatar || (role === 'admin' ? '/assets/castle/01-entrance.png' : '/assets/castle/02-main-hall.png'),
     japaneseTitle: rawUser.japaneseTitle || (role === 'admin' ? '鬼舞辻無惨 // LORD OF INFINITY' : '門弟 // CITADEL DISCIPLE'),
     createdAt: rawUser.createdAt ? new Date(rawUser.createdAt).toISOString() : new Date().toISOString(),
     lastActive: rawUser.lastSeen ? new Date(rawUser.lastSeen).toISOString() : new Date().toISOString(),
