@@ -352,3 +352,128 @@
   }
 }
 
+/* Admin Nav Link & Account Dropdown */
+.adminNavLink {
+  color: #ff556e !important;
+  position: relative;
+}
+
+.adminNavLink:hover {
+  color: #ff2a55 !important;
+}
+
+.adminBadgeSmall {
+  font-size: 0.58rem;
+  padding: 0.1rem 0.35rem;
+  background: rgba(231, 29, 54, 0.2);
+  border: 1px solid rgba(231, 29, 54, 0.4);
+  color: #ff2a55;
+  margin-left: 0.4rem;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.accountWrapper {
+  position: relative;
+}
+
+.accountBtn {
+  background: transparent;
+  border: 1px solid var(--color-dark-border);
+  color: var(--color-bone-white);
+  padding: 0.4rem 0.8rem;
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.accountBtn:hover,
+.accountBtnActive {
+  border-color: var(--color-crimson);
+  color: #ffffff;
+  background: rgba(231, 29, 54, 0.08);
+}
+
+.accountDropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 240px;
+  background: rgba(14, 11, 18, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.85), 0 0 20px rgba(231, 29, 54, 0.15);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 0.6rem 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 150;
+  animation: fadeInMenu 0.2s ease-out;
+}
+
+.dropdownHeader {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dropdownName {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.dropdownRole {
+  font-size: 0.68rem;
+  color: var(--color-crimson);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 0.15rem;
+}
+
+.dropdownItem {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 1rem;
+  color: #b5b0c0;
+  text-decoration: none;
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  transition: all 0.2s ease;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdownItem:hover {
+  background: rgba(231, 29, 54, 0.12);
+  color: #ffffff;
+}
+
+.dropdownDivider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+  margin: 0.4rem 0;
+}
+
+@keyframes fadeInMenu {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+

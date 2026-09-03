@@ -1,15 +1,42 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
+import { useAuth } from '@/context/AuthContext';
+import { adminApi } from '@/services/adminApi';
+import { AdminOrder } from '@/types/admin';
 import styles from './Checkout.module.css';
 
 export default function CheckoutPage() {
   const { cart, subtotal, formattedSubtotal, clearCart } = useCart();
+  const { user } = useAuth();
   const [submitted, setSubmitted] = useState(false);
   const [orderCode, setOrderCode] = useState('');
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [street, setStreet] = useState('');
+  const [city, setCity] = useState('');
+  const [postalCode, setPostalCode] = useState('');
+
+  useEffect(() => {
+    if (user) {
+      if (user.name) {
+        const parts = user.name.split(' ');
+        setFirstName(parts[0] || '');
+        setLastName(parts.slice(1).join(' ') || '');
+      }
+      if (user.email) setEmail(user.email);
+      if (user.shippingAddress) {
+        setStreet(user.shippingAddress.street || '');
+        setCity(user.shippingAddress.city || '');
+        setPostalCode(user.shippingAddress.postalCode || '');
+      }
+    }
+  }, [user]);
 
   const shippingCost = 0; // Complimentary Global Courier for Drop 001
   const total = subtotal + shippingCost;
@@ -17,8 +44,50 @@ export default function CheckoutPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const generatedCode = `IC-2026-${Math.floor(100000 + Math.random() * 900000)}`;
+    const generatedCode = `DC-${Math.floor(10000 + Math.random() * 90000)}`;
     setOrderCode(generatedCode);
+
+    // Record order in real admin ledger & update customer stats
+    const newOrder: AdminOrder = {
+      id: `ord_${Date.now()}`,
+      orderNumber: generatedCode,
+      customer: {
+        id: user?.id || `usr_guest_${Date.now()}`,
+        name: `${firstName} ${lastName}`.trim() || user?.name || 'Archival Disciple',
+        email: email || user?.email || 'disciple@infinitycastle.jp',
+      },
+      items: cart.map((item) => ({
+        productId: item.product.id,
+        name: item.product.name,
+        slug: item.product.slug,
+        category: item.product.category,
+        image: item.product.images[0] || '/assets/castle/01-entrance.png',
+        size: item.selectedSize,
+        quantity: item.quantity,
+        unitPrice: item.product.price,
+        total: item.product.price * item.quantity,
+        gsm: item.product.gsm || 500,
+      })),
+      subtotal,
+      shippingFee: shippingCost,
+      tax: Math.round(subtotal * 0.1),
+      totalAmount: total,
+      paymentStatus: 'paid',
+      orderStatus: 'processing',
+      shippingAddress: {
+        name: `${firstName} ${lastName}`.trim() || user?.name || 'Archival Disciple',
+        street: street || 'Nakano 4-Chome 10-1',
+        city: city || 'Tokyo',
+        state: 'Tokyo',
+        postalCode: postalCode || '164-0001',
+        country: 'Japan',
+      },
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    adminApi.createOrder(newOrder);
+
     setSubmitted(true);
     clearCart();
   };
@@ -58,15 +127,34 @@ export default function CheckoutPage() {
               <div className={styles.inputGrid}>
                 <div className={styles.fieldWrapper}>
                   <label className={styles.fieldLabel}>FIRST NAME</label>
-                  <input required placeholder="Tanjuro" className={styles.minimalInput} />
+                  <input
+                    required
+                    placeholder="Tanjuro"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    className={styles.minimalInput}
+                  />
                 </div>
                 <div className={styles.fieldWrapper}>
                   <label className={styles.fieldLabel}>LAST NAME</label>
-                  <input required placeholder="Kamado" className={styles.minimalInput} />
+                  <input
+                    required
+                    placeholder="Kamado"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    className={styles.minimalInput}
+                  />
                 </div>
                 <div className={`${styles.fieldWrapper} ${styles.fullCol}`}>
                   <label className={styles.fieldLabel}>EMAIL ADDRESS</label>
-                  <input type="email" required placeholder="recipient@infinitycastle.jp" className={styles.minimalInput} />
+                  <input
+                    type="email"
+                    required
+                    placeholder="recipient@infinitycastle.jp"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={styles.minimalInput}
+                  />
                 </div>
               </div>
             </div>
@@ -80,15 +168,33 @@ export default function CheckoutPage() {
               <div className={styles.inputGrid}>
                 <div className={`${styles.fieldWrapper} ${styles.fullCol}`}>
                   <label className={styles.fieldLabel}>STREET ADDRESS</label>
-                  <input required placeholder="Nakano 4-Chome 10-1" className={styles.minimalInput} />
+                  <input
+                    required
+                    placeholder="Nakano 4-Chome 10-1"
+                    value={street}
+                    onChange={(e) => setStreet(e.target.value)}
+                    className={styles.minimalInput}
+                  />
                 </div>
                 <div className={styles.fieldWrapper}>
                   <label className={styles.fieldLabel}>CITY</label>
-                  <input required placeholder="Tokyo" className={styles.minimalInput} />
+                  <input
+                    required
+                    placeholder="Tokyo"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    className={styles.minimalInput}
+                  />
                 </div>
                 <div className={styles.fieldWrapper}>
                   <label className={styles.fieldLabel}>POSTAL CODE</label>
-                  <input required placeholder="164-0001" className={styles.minimalInput} />
+                  <input
+                    required
+                    placeholder="164-0001"
+                    value={postalCode}
+                    onChange={(e) => setPostalCode(e.target.value)}
+                    className={styles.minimalInput}
+                  />
                 </div>
               </div>
             </div>
