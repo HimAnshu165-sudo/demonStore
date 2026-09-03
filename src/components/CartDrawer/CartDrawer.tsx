@@ -58,7 +58,7 @@ export function CartDrawer() {
             cart.map((item) => (
               <div key={`${item.product.id}-${item.selectedSize}`} className={styles.cartItem}>
                 <Image
-                  src={item.product.images[0]}
+                  src={item.product.images?.[0] || item.product.imagePath || '/assets/products/hoodie_01.png'}
                   alt={item.product.name}
                   width={72}
                   height={90}

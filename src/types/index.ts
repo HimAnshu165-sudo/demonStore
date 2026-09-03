@@ -4,27 +4,29 @@ export interface Product {
   id: string;
   slug: string;
   name: string;
-  category: ProductCategory;
-  imagePath: string;
-  japaneseTitle: string;
+  category?: ProductCategory | string;
+  imagePath?: string;
+  japaneseTitle?: string;
   character: string;
-  rank: string;
+  rank?: string;
   collection: string;
   price: number;
-  currency: string;
+  currency?: string;
   formattedPrice: string;
   description: string;
-  details: string[];
-  material: string;
-  gsm: number;
-  fit: string;
-  color: string;
-  sizes: string[];
-  images: string[];
-  lookbookImages: string[];
+  details?: string[];
+  material?: string;
+  gsm?: number;
+  fit?: string;
+  color?: string;
+  sizes?: string[];
+  images?: string[];
+  lookbookImages?: string[];
   stock: number;
-  tags: string[];
+  tags?: string[];
   featured?: boolean;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
 }
 
 export interface CartItem {

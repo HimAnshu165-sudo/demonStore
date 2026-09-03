@@ -103,7 +103,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
               >
                 <div className={styles.resultImageWrapper}>
                   <Image
-                    src={prod.images[0]}
+                    src={prod.images?.[0] || prod.imagePath || '/assets/products/hoodie_01.png'}
                     alt={prod.name}
                     width={320}
                     height={320}

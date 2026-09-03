@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "tsx --env-file=.env.local --conditions=react-server src/scripts/seed.ts"
+    "seed": "tsx --env-file=.env.local --conditions=react-server src/scripts/seed.ts",
+    "test:admin": "tsx --env-file=.env.local --conditions=react-server src/scripts/test-admin-backend.ts",
+    "admin": "tsx --env-file=.env.local --conditions=react-server src/scripts/manage-admin.ts"
   },
   "dependencies": {
     "@react-three/drei": "^10.0.4",

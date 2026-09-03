@@ -6,6 +6,8 @@ export interface IUser {
   email: string;
   passwordHash: string;
   role?: 'user' | 'admin';
+  status?: 'active' | 'disabled';
+  lastSeen?: Date;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -40,6 +42,18 @@ const UserSchema = new Schema<IUser>(
       type: String,
       enum: ['user', 'admin'],
       default: 'user',
+      index: true,
+    },
+    status: {
+      type: String,
+      enum: ['active', 'disabled'],
+      default: 'active',
+      index: true,
+    },
+    lastSeen: {
+      type: Date,
+      default: Date.now,
+      index: true,
     },
   },
   {
@@ -48,8 +62,13 @@ const UserSchema = new Schema<IUser>(
   }
 );
 
+// Helpful indexes for admin user filtering and analytics
+UserSchema.index({ createdAt: -1 });
+UserSchema.index({ role: 1, status: 1 });
+
 // Safe model retrieval with Next.js HMR caching
 const UserModel: Model<IUser> =
   mongoose.models.User || mongoose.model<IUser>('User', UserSchema);
 
 export default UserModel;
+

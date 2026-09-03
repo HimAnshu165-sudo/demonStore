@@ -25,58 +25,8 @@ function buildOrderQuery(identifier: string) {
 }
 
 /**
- * GET /api/admin/orders/[orderId]
- * Retrieves single order details for any order in the database by orderId or ObjectId (Admin only).
- */
-export async function GET(req: Request, { params }: RouteParams) {
-  try {
-    const authResult = await requireAdmin(req);
-    if (!authResult.success) {
-      return NextResponse.json(
-        { success: false, message: authResult.message },
-        { status: authResult.status }
-      );
-    }
-
-    const { orderId } = await params;
-
-    if (!orderId || typeof orderId !== 'string' || !orderId.trim()) {
-      return NextResponse.json(
-        { success: false, message: 'Invalid order ID' },
-        { status: 400 }
-      );
-    }
-
-    await connectToDatabase();
-
-    const order = await Order.findOne(buildOrderQuery(orderId), { __v: 0 }).lean();
-
-    if (!order) {
-      return NextResponse.json(
-        { success: false, message: 'Order not found' },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json(
-      {
-        success: true,
-        order,
-      },
-      { status: 200 }
-    );
-  } catch (error) {
-    console.error('Error fetching admin order by ID:', error);
-    return NextResponse.json(
-      { success: false, message: 'Failed to retrieve order' },
-      { status: 500 }
-    );
-  }
-}
-
-/**
- * PATCH /api/admin/orders/[orderId]
- * Updates order status (Admin only).
+ * PATCH /api/admin/orders/[orderId]/status
+ * Dedicated endpoint to update order status (Admin only).
  */
 export async function PATCH(req: Request, { params }: RouteParams) {
   try {
@@ -136,17 +86,16 @@ export async function PATCH(req: Request, { params }: RouteParams) {
     return NextResponse.json(
       {
         success: true,
-        message: 'Order status updated successfully',
+        message: `Order status updated to "${status}" successfully`,
         order: updatedOrder,
       },
       { status: 200 }
     );
   } catch (error) {
-    console.error('Error updating order status:', error);
+    console.error('Error in PATCH /api/admin/orders/[orderId]/status:', error);
     return NextResponse.json(
       { success: false, message: 'Failed to update order status' },
       { status: 500 }
     );
   }
 }
-

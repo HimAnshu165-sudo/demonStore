@@ -78,6 +78,9 @@ export async function POST(req: Request) {
       name: trimmedName,
       email: normalizedEmail,
       passwordHash,
+      role: 'user',
+      status: 'active',
+      lastSeen: new Date(),
     });
 
     const safeUser = sanitizeUser(user);

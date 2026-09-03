@@ -56,6 +56,18 @@ export async function POST(req: Request) {
       );
     }
 
+    // Check if account is disabled
+    if (user.status === 'disabled') {
+      return NextResponse.json(
+        { success: false, message: 'Account is disabled. Please contact platform support.' },
+        { status: 403 }
+      );
+    }
+
+    // Update lastSeen timestamp
+    user.lastSeen = new Date();
+    await user.save();
+
     const safeUser = sanitizeUser(user);
 
     // Generate JWT session token

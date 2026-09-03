@@ -14,7 +14,8 @@ interface ProductDetailClientProps {
 
 export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const { addToCart } = useCart();
-  const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0] || 'L');
+  const availableSizes = product.sizes && product.sizes.length > 0 ? product.sizes : ['S', 'M', 'L', 'XL'];
+  const [selectedSize, setSelectedSize] = useState<string>(availableSizes[0] || 'L');
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [added, setAdded] = useState(false);
 
@@ -27,7 +28,10 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const allImages = [
     ...(product.images || []),
     ...(product.lookbookImages || []),
+    ...(product.imagePath ? [product.imagePath] : []),
   ].filter((v, i, a) => a.indexOf(v) === i);
+
+  const displayCategory = product.category || 'COLLECTION';
 
   return (
     <main className={styles.detailPageContainer}>
@@ -37,7 +41,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         <span>/</span>
         <Link href="/shop">COLLECTION</Link>
         <span>/</span>
-        <span>{product.category}</span>
+        <span>{displayCategory}</span>
         <span>/</span>
         <span>{product.character}</span>
       </div>
@@ -47,7 +51,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         <div className={styles.gallerySection}>
           <div className={styles.heroImageFrame}>
             <Image
-              src={allImages[activeImageIndex] || product.images[0]}
+              src={allImages[activeImageIndex] || product.images?.[0] || product.imagePath || '/assets/products/hoodie_01.png'}
               alt={product.name}
               width={900}
               height={900}
@@ -82,11 +86,13 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         <div className={styles.infoSection}>
           <div className={styles.headerCluster}>
             <div className={styles.characterMeta}>
-              <span>{product.category} // {product.character}</span>
-              <span>{product.rank}</span>
+              <span>{product.category ? `${product.category} // ` : ''}{product.character}</span>
+              {product.rank && <span>{product.rank}</span>}
             </div>
 
-            <div className={styles.kanjiSubtitle}>{product.japaneseTitle}</div>
+            {product.japaneseTitle && (
+              <div className={styles.kanjiSubtitle}>{product.japaneseTitle}</div>
+            )}
             <h1 className={styles.productTitle}>{product.name}</h1>
             <div className={styles.priceDisplay}>{product.formattedPrice}</div>
           </div>
@@ -97,10 +103,10 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           <div className={styles.sizeSelectionArea}>
             <div className={styles.sizeHeader}>
               <span>SELECT SIZE</span>
-              <span>{product.fit}</span>
+              {product.fit && <span>{product.fit}</span>}
             </div>
             <div className={styles.sizeOptions}>
-              {product.sizes.map((s) => (
+              {availableSizes.map((s) => (
                 <button
                   key={s}
                   onClick={() => setSelectedSize(s)}
@@ -129,22 +135,26 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
             <div className={styles.specRow}>
               <div className={styles.specRowTitle}>GARMENT & OBJECT SPECIFICATIONS</div>
               <ul className={styles.specBullets}>
-                <li>CATEGORY: {product.category.toUpperCase()}</li>
-                {product.gsm > 0 && <li>FABRIC WEIGHT: {product.gsm} GSM</li>}
-                <li>MATERIAL: {product.material}</li>
-                <li>SILHOUETTE / FIT: {product.fit}</li>
-                <li>COLORWAY: {product.color}</li>
+                <li>CATEGORY: {(product.category || 'ARCHIVE').toUpperCase()}</li>
+                {typeof product.gsm === 'number' && product.gsm > 0 && (
+                  <li>FABRIC WEIGHT: {product.gsm} GSM</li>
+                )}
+                {product.material && <li>MATERIAL: {product.material}</li>}
+                {product.fit && <li>SILHOUETTE / FIT: {product.fit}</li>}
+                {product.color && <li>COLORWAY: {product.color}</li>}
               </ul>
             </div>
 
-            <div className={styles.specRow}>
-              <div className={styles.specRowTitle}>CONSTRUCTION & CRAFT</div>
-              <ul className={styles.specBullets}>
-                {product.details.map((detail, idx) => (
-                  <li key={idx}>{detail}</li>
-                ))}
-              </ul>
-            </div>
+            {product.details && product.details.length > 0 && (
+              <div className={styles.specRow}>
+                <div className={styles.specRowTitle}>CONSTRUCTION & CRAFT</div>
+                <ul className={styles.specBullets}>
+                  {product.details.map((detail, idx) => (
+                    <li key={idx}>{detail}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             <div className={styles.specRow}>
               <div className={styles.specRowTitle}>SHIPPING & ARCHIVE DELIVERY</div>

@@ -4,7 +4,7 @@ import { connectToDatabase } from '@/lib/mongodb';
 import { Product } from '@/models/Product';
 import { Order } from '@/models/Order';
 import UserModel from '@/models/User';
-import { requireAdmin } from '@/lib/auth';
+import { requireAdmin, ACTIVE_USER_WINDOW_MINUTES, LOW_STOCK_THRESHOLD } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -24,21 +24,34 @@ export async function GET(req: Request) {
 
     await connectToDatabase();
 
+    const activeUserCutoff = new Date(
+      Date.now() - ACTIVE_USER_WINDOW_MINUTES * 60 * 1000
+    );
+
     const [
       totalProducts,
       totalOrders,
       totalUsers,
+      activeUsers,
       pendingOrders,
+      confirmedOrders,
       shippedOrders,
       deliveredOrders,
+      lowStockProducts,
       revenueResult,
     ] = await Promise.all([
       Product.countDocuments(),
       Order.countDocuments(),
       UserModel.countDocuments(),
+      UserModel.countDocuments({
+        lastSeen: { $gte: activeUserCutoff },
+        status: { $ne: 'disabled' },
+      }),
       Order.countDocuments({ status: 'pending' }),
+      Order.countDocuments({ status: 'confirmed' }),
       Order.countDocuments({ status: 'shipped' }),
       Order.countDocuments({ status: 'delivered' }),
+      Product.countDocuments({ stock: { $lte: LOW_STOCK_THRESHOLD } }),
       Order.aggregate([
         { $match: { status: { $ne: 'cancelled' } } },
         { $group: { _id: null, totalRevenue: { $sum: '$total' } } },
@@ -51,14 +64,20 @@ export async function GET(req: Request) {
       {
         success: true,
         stats: {
+          totalUsers,
+          activeUsers,
           totalProducts,
           totalOrders,
-          totalUsers,
-          pendingOrders,
-          shippedOrders,
-          deliveredOrders,
           totalRevenue,
           formattedRevenue: `₹${totalRevenue.toLocaleString('en-IN')}`,
+          pendingOrders,
+          confirmedOrders,
+          shippedOrders,
+          deliveredOrders,
+          completedOrders: deliveredOrders,
+          lowStockProducts,
+          activeWindowMinutes: ACTIVE_USER_WINDOW_MINUTES,
+          lowStockThreshold: LOW_STOCK_THRESHOLD,
         },
       },
       { status: 200 }
@@ -71,3 +90,4 @@ export async function GET(req: Request) {
     );
   }
 }
+

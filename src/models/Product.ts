@@ -159,6 +159,11 @@ const ProductSchema = new Schema<IProduct>(
   }
 );
 
+// Helpful indexes for catalog filtering, sorting, and low-stock analytics
+ProductSchema.index({ category: 1 });
+ProductSchema.index({ stock: 1 });
+ProductSchema.index({ createdAt: -1 });
+
 // Prevent model recompilation during Next.js hot module replacement (HMR)
 export const Product: Model<IProduct> =
   mongoose.models.Product || mongoose.model<IProduct>('Product', ProductSchema);

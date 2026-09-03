@@ -920,7 +920,7 @@ export function getProductsByCategory(category: CategoryFilter | string): Produc
     if (normalized === 'JACKETS' || normalized === 'OUTERWEAR') return p.category === 'Jackets';
     if (normalized === 'COATS') return p.category === 'Coats';
     if (normalized === 'CARGOS' || normalized === 'BOTTOMS') return p.category === 'Cargos';
-    return p.category.toUpperCase() === normalized;
+    return p.category?.toUpperCase() === normalized;
   });
 }
 

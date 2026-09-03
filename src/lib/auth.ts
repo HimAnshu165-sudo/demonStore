@@ -2,7 +2,8 @@ import 'server-only';
 import bcrypt from 'bcryptjs';
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
-import { IUser } from '@/models/User';
+import UserModel, { IUser } from '@/models/User';
+import { connectToDatabase } from '@/lib/mongodb';
 
 // Environment secret with development fallback
 const JWT_SECRET = new TextEncoder().encode(
@@ -11,6 +12,17 @@ const JWT_SECRET = new TextEncoder().encode(
 
 export const AUTH_COOKIE_NAME = 'demon_auth_token';
 export const TOKEN_EXPIRATION_SECONDS = 60 * 60 * 24 * 7; // 7 days
+
+// Configurable constants via environment variables
+export const ACTIVE_USER_WINDOW_MINUTES =
+  Number(process.env.ACTIVE_USER_WINDOW_MINUTES) > 0
+    ? Number(process.env.ACTIVE_USER_WINDOW_MINUTES)
+    : 5;
+
+export const LOW_STOCK_THRESHOLD =
+  Number(process.env.LOW_STOCK_THRESHOLD) >= 0
+    ? Number(process.env.LOW_STOCK_THRESHOLD)
+    : 5;
 
 export interface AuthUserPayload {
   userId: string;
@@ -22,7 +34,9 @@ export interface SafeUser {
   id: string;
   name: string;
   email: string;
-  role?: 'user' | 'admin';
+  role: 'user' | 'admin';
+  status: 'active' | 'disabled';
+  lastSeen?: Date;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -93,6 +107,7 @@ export function getAuthCookieOptions() {
 
 /**
  * Strips passwordHash and returns a clean, safe user representation.
+ * NEVER leaks passwords or sensitive secrets.
  */
 export function sanitizeUser(user: IUser & { _id?: any }): SafeUser {
   return {
@@ -100,26 +115,62 @@ export function sanitizeUser(user: IUser & { _id?: any }): SafeUser {
     name: user.name,
     email: user.email,
     role: user.role || 'user',
+    status: user.status || 'active',
+    lastSeen: user.lastSeen || (user.createdAt ? new Date(user.createdAt) : new Date()),
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
   };
 }
 
 /**
- * Reads and verifies the authenticated user from cookies or an optional Request object.
+ * Throttled helper to update a user's lastSeen timestamp without overwhelming the database.
+ * Only updates if lastSeen was more than 1 minute ago or missing.
+ */
+export async function touchUserLastSeen(userId: string): Promise<void> {
+  try {
+    await connectToDatabase();
+    const oneMinuteAgo = new Date(Date.now() - 60 * 1000);
+    await UserModel.updateOne(
+      {
+        _id: userId,
+        $or: [
+          { lastSeen: { $lt: oneMinuteAgo } },
+          { lastSeen: { $exists: false } },
+        ],
+      },
+      {
+        $set: { lastSeen: new Date() },
+      }
+    );
+  } catch {
+    // Non-blocking background touch error suppression
+  }
+}
+
+/**
+ * Reads and verifies the authenticated user from cookies or Authorization header.
  */
 export async function getAuthenticatedUser(req?: Request): Promise<AuthUserPayload | null> {
   try {
     let token: string | undefined;
 
     if (req) {
-      const cookieHeader = req.headers.get('cookie') || '';
-      const match = cookieHeader
-        .split(';')
-        .map((c) => c.trim())
-        .find((c) => c.startsWith(`${AUTH_COOKIE_NAME}=`));
-      if (match) {
-        token = match.substring(AUTH_COOKIE_NAME.length + 1);
+      // 1. Check Authorization: Bearer <token>
+      const authHeader = req.headers.get('authorization') || '';
+      if (authHeader.startsWith('Bearer ')) {
+        token = authHeader.substring(7).trim();
+      }
+
+      // 2. Fallback to Cookie header
+      if (!token) {
+        const cookieHeader = req.headers.get('cookie') || '';
+        const match = cookieHeader
+          .split(';')
+          .map((c) => c.trim())
+          .find((c) => c.startsWith(`${AUTH_COOKIE_NAME}=`));
+        if (match) {
+          token = match.substring(AUTH_COOKIE_NAME.length + 1);
+        }
       }
     } else {
       const cookieStore = await cookies();
@@ -137,10 +188,11 @@ export async function getAuthenticatedUser(req?: Request): Promise<AuthUserPaylo
 }
 
 /**
- * Verifies that the incoming request is authenticated and has 'admin' role.
+ * Authenticates any valid user request and checks account status.
+ * Automatically touches lastSeen.
  * Returns { success: true, user, session } or { success: false, status, message }.
  */
-export async function requireAdmin(req?: Request): Promise<
+export async function authenticateUser(req?: Request): Promise<
   | { success: true; user: IUser; session: AuthUserPayload }
   | { success: false; status: 401 | 403; message: string }
 > {
@@ -150,12 +202,9 @@ export async function requireAdmin(req?: Request): Promise<
     return {
       success: false,
       status: 401,
-      message: 'Unauthorized. Please log in.',
+      message: 'Unauthorized. Authentication token is missing or invalid.',
     };
   }
-
-  const UserModel = (await import('@/models/User')).default;
-  const { connectToDatabase } = await import('@/lib/mongodb');
 
   await connectToDatabase();
 
@@ -165,11 +214,44 @@ export async function requireAdmin(req?: Request): Promise<
     return {
       success: false,
       status: 401,
-      message: 'User account not found.',
+      message: 'User account not found. Please log in again.',
     };
   }
 
-  if (user.role !== 'admin') {
+  if (user.status === 'disabled') {
+    return {
+      success: false,
+      status: 403,
+      message: 'Account is disabled. Please contact platform support.',
+    };
+  }
+
+  // Non-blocking activity update
+  touchUserLastSeen(user._id ? user._id.toString() : session.userId).catch(() => {});
+
+  return {
+    success: true,
+    user,
+    session,
+  };
+}
+
+/**
+ * Verifies that the incoming request is authenticated, the account is active,
+ * and the user holds the 'admin' role.
+ * Returns { success: true, user, session } or { success: false, status: 401 | 403, message }.
+ */
+export async function requireAdmin(req?: Request): Promise<
+  | { success: true; user: IUser; session: AuthUserPayload }
+  | { success: false; status: 401 | 403; message: string }
+> {
+  const authResult = await authenticateUser(req);
+
+  if (!authResult.success) {
+    return authResult;
+  }
+
+  if (authResult.user.role !== 'admin') {
     return {
       success: false,
       status: 403,
@@ -179,7 +261,8 @@ export async function requireAdmin(req?: Request): Promise<
 
   return {
     success: true,
-    user,
-    session,
+    user: authResult.user,
+    session: authResult.session,
   };
 }
+

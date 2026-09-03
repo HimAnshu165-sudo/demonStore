@@ -1,5 +1,6 @@
 import 'server-only';
 import { NextResponse } from 'next/server';
+import mongoose from 'mongoose';
 import { connectToDatabase } from '@/lib/mongodb';
 import { Product } from '@/models/Product';
 import { requireAdmin } from '@/lib/auth';
@@ -12,8 +13,72 @@ interface RouteParams {
   }>;
 }
 
+function buildProductQuery(identifier: string) {
+  const clean = identifier.trim();
+  const orConditions: any[] = [
+    { slug: clean.toLowerCase() },
+    { id: clean },
+  ];
+
+  if (mongoose.Types.ObjectId.isValid(clean)) {
+    orConditions.push({ _id: new mongoose.Types.ObjectId(clean) });
+  }
+
+  return { $or: orConditions };
+}
+
 /**
- * PATCH /api/admin/products/[slug]
+ * GET /api/admin/products/[slug] (or by product ID)
+ * Retrieves complete single product details (Admin only).
+ */
+export async function GET(req: Request, { params }: RouteParams) {
+  try {
+    const authResult = await requireAdmin(req);
+    if (!authResult.success) {
+      return NextResponse.json(
+        { success: false, message: authResult.message },
+        { status: authResult.status }
+      );
+    }
+
+    const { slug } = await params;
+
+    if (!slug || typeof slug !== 'string' || !slug.trim()) {
+      return NextResponse.json(
+        { success: false, message: 'Invalid product identifier' },
+        { status: 400 }
+      );
+    }
+
+    await connectToDatabase();
+
+    const product = await Product.findOne(buildProductQuery(slug), { __v: 0 }).lean();
+
+    if (!product) {
+      return NextResponse.json(
+        { success: false, message: 'Product not found' },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        success: true,
+        product,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error('Error fetching admin product:', error);
+    return NextResponse.json(
+      { success: false, message: 'Failed to retrieve product' },
+      { status: 500 }
+    );
+  }
+}
+
+/**
+ * PATCH /api/admin/products/[slug] (or by product ID)
  * Updates an existing product (Admin only).
  */
 export async function PATCH(req: Request, { params }: RouteParams) {
@@ -28,9 +93,9 @@ export async function PATCH(req: Request, { params }: RouteParams) {
 
     const { slug } = await params;
 
-    if (!slug || typeof slug !== 'string') {
+    if (!slug || typeof slug !== 'string' || !slug.trim()) {
       return NextResponse.json(
-        { success: false, message: 'Invalid product slug' },
+        { success: false, message: 'Invalid product identifier' },
         { status: 400 }
       );
     }
@@ -108,7 +173,7 @@ export async function PATCH(req: Request, { params }: RouteParams) {
     }
 
     const updatedProduct = await Product.findOneAndUpdate(
-      { slug: slug.trim().toLowerCase() },
+      buildProductQuery(slug),
       { $set: allowedUpdates },
       { returnDocument: 'after', runValidators: true }
     );
@@ -138,8 +203,8 @@ export async function PATCH(req: Request, { params }: RouteParams) {
 }
 
 /**
- * DELETE /api/admin/products/[slug]
- * Deletes a product by slug (Admin only).
+ * DELETE /api/admin/products/[slug] (or by product ID)
+ * Deletes a product by slug, ID, or ObjectId (Admin only).
  */
 export async function DELETE(req: Request, { params }: RouteParams) {
   try {
@@ -153,16 +218,16 @@ export async function DELETE(req: Request, { params }: RouteParams) {
 
     const { slug } = await params;
 
-    if (!slug || typeof slug !== 'string') {
+    if (!slug || typeof slug !== 'string' || !slug.trim()) {
       return NextResponse.json(
-        { success: false, message: 'Invalid product slug' },
+        { success: false, message: 'Invalid product identifier' },
         { status: 400 }
       );
     }
 
     await connectToDatabase();
 
-    const deleted = await Product.findOneAndDelete({ slug: slug.trim().toLowerCase() });
+    const deleted = await Product.findOneAndDelete(buildProductQuery(slug));
 
     if (!deleted) {
       return NextResponse.json(
@@ -186,3 +251,4 @@ export async function DELETE(req: Request, { params }: RouteParams) {
     );
   }
 }
+
