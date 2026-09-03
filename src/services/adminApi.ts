@@ -54,6 +54,7 @@ function normalizeUser(u: any): AdminUser {
     isOnline: isUserOnline(u.lastSeen),
     ordersCount: typeof u.ordersCount === 'number' ? u.ordersCount : 0,
     totalSpent: typeof u.totalSpent === 'number' ? u.totalSpent : 0,
+    phone: u.phone || '',
     shippingAddress: u.shippingAddress || {
       street: '',
       city: '',
@@ -353,6 +354,23 @@ class AdminApiService {
     return normalizeUser(json.user);
   }
 
+  async updateUser(id: string, data: Partial<AdminUser>): Promise<AdminUser> {
+    if (data.name) {
+      const res = await fetch('/api/account/profile', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ name: data.name }),
+      });
+      const json = await res.json();
+      if (!res.ok || !json.success) {
+        throw new Error(json.message || 'Failed to update profile');
+      }
+      return normalizeUser(json.user);
+    }
+    return (await this.getUser(id)) || normalizeUser({ id, ...data });
+  }
+
   async updateUserPresence(_id: string, _isOnline: boolean): Promise<void> {
     await fetch('/api/users/heartbeat', {
       method: 'POST',
@@ -535,16 +553,56 @@ class AdminApiService {
     };
   }
 
-  async getOrder(orderId: string): Promise<AdminOrder | undefined> {
-    const res = await fetch(`/api/admin/orders/${orderId}`, {
+  async getOrdersByCustomerId(_customerId: string): Promise<AdminOrder[]> {
+    const res = await fetch('/api/account/orders', {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
     });
 
     const data = await res.json();
-    if (!res.ok || !data.success) return undefined;
-    return normalizeOrder(data.order);
+    if (!res.ok || !data.success) {
+      return [];
+    }
+
+    return (data.orders || []).map(normalizeOrder);
+  }
+
+  async getOrder(orderId: string): Promise<AdminOrder | undefined> {
+    // Try account orders first (for customer)
+    try {
+      const accRes = await fetch(`/api/account/orders/${orderId}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+      });
+      if (accRes.ok) {
+        const accData = await accRes.json();
+        if (accData.success && accData.order) {
+          return normalizeOrder(accData.order);
+        }
+      }
+    } catch {
+      // ignore
+    }
+
+    // Try admin orders endpoint
+    try {
+      const res = await fetch(`/api/admin/orders/${orderId}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success && data.order) {
+        return normalizeOrder(data.order);
+      }
+    } catch {
+      // ignore
+    }
+
+    return undefined;
   }
 
   async createOrder(orderData: Partial<AdminOrder>): Promise<AdminOrder> {

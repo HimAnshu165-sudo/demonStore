@@ -41,10 +41,13 @@ export function FooterCinematic() {
       pulse: Math.random() * Math.PI * 2,
     }));
 
+    let isVisible = true;
     let lightningTimer = 0;
     let lightningFlash = 0;
 
     const render = () => {
+      if (!isVisible) return;
+
       ctx.clearRect(0, 0, width, height);
 
       // Ambient subtle lightning glow
@@ -82,9 +85,26 @@ export function FooterCinematic() {
       animId = requestAnimationFrame(render);
     };
 
+    // Pause rendering when footer is scrolled offscreen
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const nowVisible = entry.isIntersecting;
+        if (nowVisible && !isVisible) {
+          isVisible = true;
+          animId = requestAnimationFrame(render);
+        } else if (!nowVisible && isVisible) {
+          isVisible = false;
+          cancelAnimationFrame(animId);
+        }
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(canvas);
     render();
 
     return () => {
+      observer.disconnect();
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animId);
     };

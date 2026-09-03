@@ -1,0 +1,127 @@
+.wishlistGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.wishCard {
+  background: rgba(14, 11, 18, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.wishCard:hover {
+  border-color: rgba(231, 29, 54, 0.25);
+  transform: translateY(-2px);
+}
+
+.imageLink {
+  display: block;
+  text-decoration: none;
+}
+
+.imageWrapper {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: rgba(8, 6, 12, 0.8);
+}
+
+.productImage {
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.wishCard:hover .productImage {
+  transform: scale(1.04);
+}
+
+.imageOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(6,5,8,0.7) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.cardBody {
+  padding: 1.1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.productMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.15rem;
+}
+
+.productCategory {
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  color: #e71d36;
+  font-family: var(--font-display, 'Cinzel', serif);
+  text-transform: uppercase;
+}
+
+.productRank {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: #6d6778;
+  font-family: var(--font-display, 'Cinzel', serif);
+}
+
+.productName {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+  text-decoration: none;
+  line-height: 1.4;
+  margin-top: 0.2rem;
+}
+
+.productName:hover {
+  color: #e71d36;
+}
+
+.productPrice {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: var(--font-display, 'Cinzel', serif);
+  letter-spacing: 0.06em;
+}
+
+.productGsm {
+  font-size: 0.65rem;
+  color: #6d6778;
+  letter-spacing: 0.1em;
+}
+
+.cardActions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+@media (max-width: 600px) {
+  .wishlistGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .wishlistGrid {
+    grid-template-columns: 1fr;
+  }
+}
