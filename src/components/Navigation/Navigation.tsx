@@ -20,8 +20,13 @@ import {
 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
-import { SearchModal } from '@/components/SearchModal/SearchModal';
+import dynamic from 'next/dynamic';
 import styles from './Navigation.module.css';
+
+const SearchModal = dynamic(
+  () => import('@/components/SearchModal/SearchModal').then((m) => m.SearchModal),
+  { ssr: false }
+);
 
 export function Navigation() {
   const pathname = usePathname();

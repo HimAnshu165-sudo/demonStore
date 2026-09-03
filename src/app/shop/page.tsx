@@ -4,10 +4,15 @@ import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { CATEGORIES, CategoryFilter, getProductsByCategory, PRODUCTS } from '@/data/products';
-import { FooterCinematic } from '@/components/FooterCinematic/FooterCinematic';
 import { useCart } from '@/context/CartContext';
 import { ArrowRight, ShoppingBag } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import styles from './Shop.module.css';
+
+const FooterCinematic = dynamic(
+  () => import('@/components/FooterCinematic/FooterCinematic').then((m) => m.FooterCinematic),
+  { ssr: false }
+);
 
 export default function ShopPage() {
   const { addToCart } = useCart();
