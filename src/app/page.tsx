@@ -42,6 +42,22 @@ export default function HomePage() {
     }
   }, [lerpedProgress, hasTriggeredCinema, isPlayingCinema]);
 
+  // Predictive preloading: buffer Zenitsu cinematic frames when approaching Demon Chamber (>= 0.70)
+  useEffect(() => {
+    if (lerpedProgress >= 0.70 && typeof window !== 'undefined') {
+      const frames = [
+        '/assets/cinematic/01-zenitsu-step-in.webp',
+        '/assets/cinematic/02-zenitsu-eyes-open.webp',
+        '/assets/cinematic/03-zenitsu-thunder-stance.webp',
+        '/assets/cinematic/04-zenitsu-final-strike.webp',
+      ];
+      frames.forEach((src) => {
+        const img = new window.Image();
+        img.src = src;
+      });
+    }
+  }, [lerpedProgress]);
+
   const handleCinemaComplete = () => {
     setIsPlayingCinema(false);
     setShowEcommerce(true);

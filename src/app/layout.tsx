@@ -3,10 +3,7 @@ import './globals.css';
 import { AuthProvider } from '@/context/AuthContext';
 import { CartProvider } from '@/context/CartContext';
 import { WishlistProvider } from '@/context/WishlistContext';
-import { Navigation } from '@/components/Navigation/Navigation';
-import { CartDrawer } from '@/components/CartDrawer/CartDrawer';
-import { AuthModal } from '@/components/AuthModal/AuthModal';
-import { CustomCursor } from '@/components/CustomCursor/CustomCursor';
+import { ClientOverlays } from '@/components/ClientOverlays/ClientOverlays';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://infinitycastle.streetwear'),
@@ -16,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'INFINITY CASTLE // 無限城',
     description: 'Immersive Japanese Gothic Streetwear Universe',
-    images: ['/assets/castle/01-entrance.png'],
+    images: ['/assets/castle/01-entrance.webp'],
   },
 };
 
@@ -28,6 +25,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Priority 1 Hero Castle Plate Preload */}
+        <link
+          rel="preload"
+          as="image"
+          href="/assets/castle/01-entrance.webp"
+          type="image/webp"
+          // @ts-ignore Next.js React 19 supports fetchPriority
+          fetchpriority="high"
+        />
+
         {/* Asynchronous, non-blocking Google Fonts with instant local fallback */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -40,11 +47,9 @@ export default function RootLayout({
         <AuthProvider>
           <CartProvider>
             <WishlistProvider>
-              <CustomCursor />
-              <Navigation />
-              {children}
-              <CartDrawer />
-              <AuthModal />
+              <ClientOverlays>
+                {children}
+              </ClientOverlays>
             </WishlistProvider>
           </CartProvider>
         </AuthProvider>

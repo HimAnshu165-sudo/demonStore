@@ -259,6 +259,8 @@ export default function CheckoutPage() {
                       width={56}
                       height={70}
                       className={styles.summaryThumb}
+                      sizes="56px"
+                      loading="lazy"
                     />
                     <div className={styles.summaryItemInfo}>
                       <div className={styles.summaryItemName}>{item.product.name}</div>

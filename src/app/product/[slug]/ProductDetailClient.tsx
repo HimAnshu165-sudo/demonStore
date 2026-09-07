@@ -51,6 +51,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
               width={900}
               height={900}
               className={styles.heroImage}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 700px"
               priority
             />
           </div>
@@ -70,6 +71,8 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                     width={80}
                     height={80}
                     className={styles.thumbImg}
+                    sizes="80px"
+                    loading="lazy"
                   />
                 </button>
               ))}

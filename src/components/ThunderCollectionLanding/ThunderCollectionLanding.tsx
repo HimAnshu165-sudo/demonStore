@@ -41,7 +41,8 @@ export function ThunderCollectionLanding() {
             width={750}
             height={750}
             className={styles.productImage}
-            priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 750px"
+            loading="lazy"
           />
         </div>
 
@@ -93,6 +94,7 @@ export function ThunderCollectionLanding() {
           subtitle="EDITORIAL CAMPAIGN // HOODIES • TEES • SHOES • JACKETS • COATS • CARGOS"
           eyebrow="LOOKBOOK // 2026 CAMPAIGN"
           showExploreLink={true}
+          preloadFirstFew={false}
         />
       </div>
 
@@ -140,6 +142,8 @@ export function ThunderCollectionLanding() {
                       width={450}
                       height={450}
                       className={styles.cardImage}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                      loading="lazy"
                     />
                   </div>
 

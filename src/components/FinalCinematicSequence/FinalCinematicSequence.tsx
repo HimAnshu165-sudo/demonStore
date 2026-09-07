@@ -56,31 +56,31 @@ export function FinalCinematicSequence({ onComplete }: FinalCinematicSequencePro
       {/* Frame 1: Chamber Settles */}
       <div
         className={`${styles.sceneLayer} ${isFrame1 ? styles.sceneActive : ''}`}
-        style={{ backgroundImage: "url('/assets/castle/06-demon-chamber.png')" }}
+        style={{ backgroundImage: "url('/assets/castle/06-demon-chamber.webp')" }}
       />
 
       {/* Frame 2: Zenitsu Appears */}
       <div
         className={`${styles.sceneLayer} ${isFrame2 ? styles.sceneActive : ''}`}
-        style={{ backgroundImage: "url('/assets/cinematic/01-zenitsu-step-in.jpg')" }}
+        style={{ backgroundImage: "url('/assets/cinematic/01-zenitsu-step-in.webp')" }}
       />
 
       {/* Frame 3: Eyes Open */}
       <div
         className={`${styles.sceneLayer} ${isFrame3 ? styles.sceneActive : ''}`}
-        style={{ backgroundImage: "url('/assets/cinematic/02-zenitsu-eyes-open.jpg')" }}
+        style={{ backgroundImage: "url('/assets/cinematic/02-zenitsu-eyes-open.webp')" }}
       />
 
       {/* Frame 4 & 5: Thunder Breathing & Final Form */}
       <div
         className={`${styles.sceneLayer} ${isFrame4 || isFrame5 ? styles.sceneActive : ''}`}
-        style={{ backgroundImage: "url('/assets/cinematic/03-zenitsu-thunder-stance.jpg')" }}
+        style={{ backgroundImage: "url('/assets/cinematic/03-zenitsu-thunder-stance.webp')" }}
       />
 
       {/* Frame 6 & 7: Godlike Speed & Final Strike */}
       <div
         className={`${styles.sceneLayer} ${isFrame6 || isFrame7 ? styles.sceneActive : ''}`}
-        style={{ backgroundImage: "url('/assets/cinematic/04-zenitsu-final-strike.jpg')" }}
+        style={{ backgroundImage: "url('/assets/cinematic/04-zenitsu-final-strike.webp')" }}
       />
 
       {/* Speed Lines */}

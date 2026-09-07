@@ -69,6 +69,8 @@ export function CartDrawer() {
                   width={72}
                   height={90}
                   className={styles.itemThumb}
+                  sizes="72px"
+                  loading="lazy"
                 />
 
                 <div className={styles.itemDetails}>

@@ -68,7 +68,7 @@ export default function ShopPage() {
       {/* Structured Clean Uniform Catalog Grid */}
       <div className={styles.structuredCatalog}>
         {filteredProducts.length > 0 ? (
-          filteredProducts.map((p) => (
+          filteredProducts.map((p, idx) => (
             <article key={p.id} className={styles.productCard}>
               <Link href={`/product/${p.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div className={styles.imageFrame}>
@@ -81,7 +81,8 @@ export default function ShopPage() {
                     height={600}
                     className={styles.itemImage}
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    loading="lazy"
+                    priority={idx === 0}
+                    loading={idx === 0 ? 'eager' : 'lazy'}
                   />
                 </div>
 

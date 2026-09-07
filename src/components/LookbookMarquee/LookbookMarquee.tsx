@@ -12,6 +12,7 @@ interface LookbookMarqueeProps {
   subtitle?: string;
   eyebrow?: string;
   showExploreLink?: boolean;
+  preloadFirstFew?: boolean;
 }
 
 export function LookbookMarquee({
@@ -19,6 +20,7 @@ export function LookbookMarquee({
   subtitle = 'EDITORIAL CAMPAIGN // 2026 DROP 001',
   eyebrow = 'LOOKBOOK // EDITORIAL',
   showExploreLink = true,
+  preloadFirstFew = false,
 }: LookbookMarqueeProps) {
   // We duplicate the items array once to create a mathematically seamless infinite loop
   const seamlessItems: LookbookCardItem[] = [
@@ -69,6 +71,7 @@ export function LookbookMarquee({
         <div className={styles.marqueeTrack}>
           {seamlessItems.map((item, index) => {
             const aspectClass = getAspectClass(item.aspectClass);
+            const isPriority = preloadFirstFew && index < 2;
 
             return (
               <Link
@@ -85,7 +88,9 @@ export function LookbookMarquee({
                     width={600}
                     height={750}
                     className={styles.cardImage}
-                    priority={index < 4}
+                    sizes="(max-width: 768px) 300px, 450px"
+                    priority={isPriority}
+                    loading={isPriority ? 'eager' : 'lazy'}
                   />
                 </div>
 

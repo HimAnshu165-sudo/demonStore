@@ -95,6 +95,8 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                     width={320}
                     height={320}
                     className={styles.resultImage}
+                    sizes="80px"
+                    loading="lazy"
                   />
                 </div>
                 <div className={styles.resultMeta}>
