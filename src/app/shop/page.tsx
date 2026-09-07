@@ -1,30 +1,95 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+<<<<<<< HEAD
 import { CATEGORIES, CategoryFilter, getProductsByCategory, PRODUCTS } from '@/data/products';
+=======
+import { CATEGORIES, CategoryFilter } from '@/data/products';
+import { Product } from '@/types';
+import { FooterCinematic } from '@/components/FooterCinematic/FooterCinematic';
+>>>>>>> 8d79f4760ef8574b10739193bea24d2a26fb722c
 import { useCart } from '@/context/CartContext';
 import { ArrowRight, ShoppingBag } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import styles from './Shop.module.css';
 
+<<<<<<< HEAD
 const FooterCinematic = dynamic(
   () => import('@/components/FooterCinematic/FooterCinematic').then((m) => m.FooterCinematic),
   { ssr: false }
 );
+=======
+function filterProductsByCategory(products: Product[], category: CategoryFilter | string): Product[] {
+  if (!category || category === 'ALL') {
+    return products;
+  }
+  const normalized = category.toUpperCase();
+  return products.filter((p) => {
+    if (normalized === 'HOODIES') return p.category === 'Hoodies';
+    if (normalized === 'T-SHIRTS' || normalized === 'TEES') return p.category === 'T-Shirts';
+    if (normalized === 'SHOES' || normalized === 'FOOTWEAR') return p.category === 'Shoes';
+    if (normalized === 'JACKETS' || normalized === 'OUTERWEAR') return p.category === 'Jackets';
+    if (normalized === 'COATS') return p.category === 'Coats';
+    if (normalized === 'CARGOS' || normalized === 'BOTTOMS') return p.category === 'Cargos';
+    return p.category?.toUpperCase() === normalized;
+  });
+}
+>>>>>>> 8d79f4760ef8574b10739193bea24d2a26fb722c
 
 export default function ShopPage() {
   const { addToCart } = useCart();
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>('ALL');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function fetchProducts() {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const res = await fetch('/api/products');
+        if (!res.ok) {
+          throw new Error('Failed to load products from archive');
+        }
+        const data = await res.json();
+        if (isMounted) {
+          if (data.success && Array.isArray(data.products)) {
+            setProducts(data.products);
+          } else {
+            setProducts([]);
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching products in ShopPage:', err);
+        if (isMounted) {
+          setError(err instanceof Error ? err.message : 'Failed to load products');
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    fetchProducts();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const filteredProducts = useMemo(() => {
-    return getProductsByCategory(activeCategory);
-  }, [activeCategory]);
+    return filterProductsByCategory(products, activeCategory);
+  }, [products, activeCategory]);
 
-  const handleQuickAdd = (e: React.MouseEvent, prod: typeof PRODUCTS[0]) => {
+  const handleQuickAdd = (e: React.MouseEvent, prod: Product) => {
     e.preventDefault();
-    const defaultSize = prod.sizes[0] || 'L';
+    const defaultSize = prod.sizes?.[0] || 'L';
     addToCart(prod, defaultSize, 1);
   };
 
@@ -41,14 +106,14 @@ export default function ShopPage() {
           SHOP<br />THE COLLECTION
         </h1>
         <p className={styles.shopSubtitle}>
-          ARCHITECTURAL HEAVYWEIGHT STREETWEAR, FOOTWEAR & GEAR // {PRODUCTS.length} OBJECTS
+          ARCHITECTURAL HEAVYWEIGHT STREETWEAR, FOOTWEAR & GEAR // {products.length} OBJECTS
         </p>
       </header>
 
       {/* Category Filter Tabs */}
       <nav className={styles.filterNav} aria-label="Category Filters">
         {CATEGORIES.map((cat) => {
-          const count = getProductsByCategory(cat).length;
+          const count = filterProductsByCategory(products, cat).length;
           const isActive = activeCategory === cat;
 
           return (
@@ -67,6 +132,7 @@ export default function ShopPage() {
 
       {/* Structured Clean Uniform Catalog Grid */}
       <div className={styles.structuredCatalog}>
+<<<<<<< HEAD
         {filteredProducts.length > 0 ? (
           filteredProducts.map((p, idx) => (
             <article key={p.id} className={styles.productCard}>
@@ -84,6 +150,32 @@ export default function ShopPage() {
                     priority={idx === 0}
                     loading={idx === 0 ? 'eager' : 'lazy'}
                   />
+=======
+        {isLoading ? (
+          <div className={styles.emptyState}>
+            <p>LOADING ARCHIVE COLLECTION...</p>
+          </div>
+        ) : error ? (
+          <div className={styles.emptyState}>
+            <p>UNABLE TO RETRIEVE ARCHIVE OBJECTS. PLEASE REFRESH.</p>
+          </div>
+        ) : filteredProducts.length > 0 ? (
+          filteredProducts.map((p) => (
+            <article key={p.id || p.slug} className={styles.productCard}>
+              <Link href={`/product/${p.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                <div className={styles.imageFrame}>
+                  {p.rank && <div className={styles.rankBadge}>{p.rank}</div>}
+                  {p.category && <div className={styles.categoryBadge}>{p.category}</div>}
+                  {p.images && p.images[0] && (
+                    <Image
+                      src={p.images[0]}
+                      alt={p.name}
+                      width={600}
+                      height={600}
+                      className={styles.itemImage}
+                    />
+                  )}
+>>>>>>> 8d79f4760ef8574b10739193bea24d2a26fb722c
                 </div>
 
                 <div className={styles.itemMeta}>
@@ -93,7 +185,7 @@ export default function ShopPage() {
                   <div className={styles.itemPriceRow}>
                     <span className={styles.itemPrice}>{p.formattedPrice}</span>
                     <span className={styles.itemSpecs}>
-                      {p.gsm > 0 ? `${p.gsm} GSM // ` : ''}{p.fit}
+                      {p.gsm && p.gsm > 0 ? `${p.gsm} GSM // ` : ''}{p.fit}
                     </span>
                   </div>
                 </div>

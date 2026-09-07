@@ -1,38 +1,86 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { CATEGORIES, CategoryFilter, getProductsByCategory, PRODUCTS } from '@/data/products';
+import { CATEGORIES, CategoryFilter } from '@/data/products';
+import { Product } from '@/types';
 import { useCart } from '@/context/CartContext';
 import { LookbookMarquee } from '@/components/LookbookMarquee/LookbookMarquee';
 import { FooterCinematic } from '@/components/FooterCinematic/FooterCinematic';
 import { ArrowRight, ShoppingBag } from 'lucide-react';
 import styles from './ThunderCollectionLanding.module.css';
 
+function filterProductsByCategory(products: Product[], category: CategoryFilter | string): Product[] {
+  if (!category || category === 'ALL') {
+    return products;
+  }
+  const normalized = category.toUpperCase();
+  return products.filter((p) => {
+    if (normalized === 'HOODIES') return p.category === 'Hoodies';
+    if (normalized === 'T-SHIRTS' || normalized === 'TEES') return p.category === 'T-Shirts';
+    if (normalized === 'SHOES' || normalized === 'FOOTWEAR') return p.category === 'Shoes';
+    if (normalized === 'JACKETS' || normalized === 'OUTERWEAR') return p.category === 'Jackets';
+    if (normalized === 'COATS') return p.category === 'Coats';
+    if (normalized === 'CARGOS' || normalized === 'BOTTOMS') return p.category === 'Cargos';
+    return p.category?.toUpperCase() === normalized;
+  });
+}
+
 export function ThunderCollectionLanding() {
   const { addToCart } = useCart();
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>('ALL');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const heroProduct = PRODUCTS.find((p) => p.slug === 'tanjiro-hinokami-kagura-flame-hoodie') || PRODUCTS[0];
+  useEffect(() => {
+    let isMounted = true;
+
+    fetch('/api/products')
+      .then((res) => res.json())
+      .then((data) => {
+        if (isMounted && data.success && Array.isArray(data.products)) {
+          setProducts(data.products);
+        }
+      })
+      .catch((err) => {
+        console.error('Error fetching products for landing:', err);
+      })
+      .finally(() => {
+        if (isMounted) setIsLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  const heroProduct = useMemo(() => {
+    if (products.length === 0) return null;
+    return products.find((p) => p.slug === 'tanjiro-hinokami-kagura-flame-hoodie') || products[0];
+  }, [products]);
 
   const handleAddHero = () => {
-    addToCart(heroProduct, 'L', 1);
+    if (heroProduct) {
+      const defaultSize = heroProduct.sizes?.[0] || 'L';
+      addToCart(heroProduct, defaultSize, 1);
+    }
   };
 
-  const handleQuickAdd = (e: React.MouseEvent, prod: typeof PRODUCTS[0]) => {
+  const handleQuickAdd = (e: React.MouseEvent, prod: Product) => {
     e.preventDefault();
-    const defaultSize = prod.sizes[0] || 'L';
+    const defaultSize = prod.sizes?.[0] || 'L';
     addToCart(prod, defaultSize, 1);
   };
 
   const filteredProducts = useMemo(() => {
-    return getProductsByCategory(activeCategory);
-  }, [activeCategory]);
+    return filterProductsByCategory(products, activeCategory);
+  }, [products, activeCategory]);
 
   return (
     <section id="collection-landing" className={styles.collectionContainer}>
       {/* 1. Hero Drop Showcase */}
+<<<<<<< HEAD
       <div className={styles.heroDropBanner}>
         <div className={styles.productShowcase}>
           <Image
@@ -49,43 +97,64 @@ export function ThunderCollectionLanding() {
         <div className={styles.dropMeta}>
           <div className={styles.dropTag}>
             <span>⚡</span> NEW DROP // ARCHIVE 001
+=======
+      {heroProduct && (
+        <div className={styles.heroDropBanner}>
+          <div className={styles.productShowcase}>
+            {heroProduct.images && heroProduct.images[0] && (
+              <Image
+                src={heroProduct.images[0]}
+                alt={heroProduct.name}
+                width={750}
+                height={750}
+                className={styles.productImage}
+                priority
+              />
+            )}
+>>>>>>> 8d79f4760ef8574b10739193bea24d2a26fb722c
           </div>
 
-          <h1 className={styles.dropTitle}>
-            SOLAR FLAME<br />COLLECTION
-          </h1>
-
-          <p className={styles.dropSubtitle}>
-            HINOKAMI KAGURA // ヒノカミ神楽 円舞
-          </p>
-
-          <p className={styles.dropDesc}>
-            {heroProduct.description}
-          </p>
-
-          <div className={styles.specsList}>
-            <div className={styles.specItem}>
-              <span className={styles.specLabel}>FABRIC</span>
-              <span className={styles.specValue}>{heroProduct.gsm} GSM FRENCH TERRY</span>
+          <div className={styles.dropMeta}>
+            <div className={styles.dropTag}>
+              <span>⚡</span> NEW DROP // ARCHIVE 001
             </div>
-            <div className={styles.specItem}>
-              <span className={styles.specLabel}>EMBROIDERY</span>
-              <span className={styles.specValue}>METALLIC & PUFF INK</span>
-            </div>
-            <div className={styles.specItem}>
-              <span className={styles.specLabel}>FIT</span>
-              <span className={styles.specValue}>OVERSIZED BOXY</span>
-            </div>
-          </div>
 
-          <div className={styles.priceAction}>
-            <div className={styles.priceTag}>{heroProduct.formattedPrice}</div>
-            <button className={styles.primaryCta} onClick={handleAddHero}>
-              ACQUIRE PIECE ⚡
-            </button>
+            <h1 className={styles.dropTitle}>
+              SOLAR FLAME<br />COLLECTION
+            </h1>
+
+            <p className={styles.dropSubtitle}>
+              HINOKAMI KAGURA // ヒノカミ神楽 円舞
+            </p>
+
+            <p className={styles.dropDesc}>
+              {heroProduct.description}
+            </p>
+
+            <div className={styles.specsList}>
+              <div className={styles.specItem}>
+                <span className={styles.specLabel}>FABRIC</span>
+                <span className={styles.specValue}>{heroProduct.gsm || 520} GSM FRENCH TERRY</span>
+              </div>
+              <div className={styles.specItem}>
+                <span className={styles.specLabel}>EMBROIDERY</span>
+                <span className={styles.specValue}>METALLIC & PUFF INK</span>
+              </div>
+              <div className={styles.specItem}>
+                <span className={styles.specLabel}>FIT</span>
+                <span className={styles.specValue}>{heroProduct.fit || 'OVERSIZED BOXY'}</span>
+              </div>
+            </div>
+
+            <div className={styles.priceAction}>
+              <div className={styles.priceTag}>{heroProduct.formattedPrice}</div>
+              <button className={styles.primaryCta} onClick={handleAddHero}>
+                ACQUIRE PIECE ⚡
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* 2. Seamless Infinite Lookbook Showcase Marquee */}
       <div className={styles.lookbookBreakout}>
@@ -104,14 +173,14 @@ export function ThunderCollectionLanding() {
           <div className={styles.sectionEyebrow}>INFINITY CASTLE STREETWEAR ARCHIVE</div>
           <h2 className={styles.sectionTitle}>THE COMPLETE COLLECTION</h2>
           <p className={styles.sectionSubtitle}>
-            HEAVYWEIGHT TEXTILES, FOOTWEAR & ARCHITECTURAL APPAREL // 28 OBJECTS
+            HEAVYWEIGHT TEXTILES, FOOTWEAR & ARCHITECTURAL APPAREL // {products.length} OBJECTS
           </p>
         </div>
 
         {/* Category Filter Navigation */}
         <nav className={styles.filterNav} aria-label="Product Category Filter">
           {CATEGORIES.map((cat) => {
-            const count = getProductsByCategory(cat).length;
+            const count = filterProductsByCategory(products, cat).length;
             const isActive = activeCategory === cat;
 
             return (
@@ -130,11 +199,16 @@ export function ThunderCollectionLanding() {
 
         {/* Dynamic Products Grid */}
         <div className={styles.productsGrid}>
-          {filteredProducts.length > 0 ? (
+          {isLoading ? (
+            <div className={styles.emptyState}>
+              <p>LOADING ARCHIVE COLLECTION...</p>
+            </div>
+          ) : filteredProducts.length > 0 ? (
             filteredProducts.map((prod) => (
-              <article key={prod.id} className={styles.productCard}>
+              <article key={prod.id || prod.slug} className={styles.productCard}>
                 <Link href={`/product/${prod.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <div className={styles.cardImageWrapper}>
+<<<<<<< HEAD
                     <span className={styles.cardCategoryBadge}>{prod.category}</span>
                     <Image
                       src={prod.images[0]}
@@ -145,6 +219,18 @@ export function ThunderCollectionLanding() {
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       loading="lazy"
                     />
+=======
+                    {prod.category && <span className={styles.cardCategoryBadge}>{prod.category}</span>}
+                    {prod.images && prod.images[0] && (
+                      <Image
+                        src={prod.images[0]}
+                        alt={prod.name}
+                        width={450}
+                        height={450}
+                        className={styles.cardImage}
+                      />
+                    )}
+>>>>>>> 8d79f4760ef8574b10739193bea24d2a26fb722c
                   </div>
 
                   <div className={styles.cardInfo}>

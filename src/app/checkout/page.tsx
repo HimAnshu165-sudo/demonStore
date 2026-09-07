@@ -14,6 +14,16 @@ export default function CheckoutPage() {
   const { user } = useAuth();
   const [submitted, setSubmitted] = useState(false);
   const [orderCode, setOrderCode] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  // Form states
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [streetAddress, setStreetAddress] = useState('');
+  const [city, setCity] = useState('');
+  const [postalCode, setPostalCode] = useState('');
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -55,8 +65,9 @@ export default function CheckoutPage() {
   const total = subtotal + shippingCost;
   const formattedTotal = `₹${total.toLocaleString('en-IN')}`;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+<<<<<<< HEAD
     const generatedCode = `DC-${Math.floor(10000 + Math.random() * 90000)}`;
     setOrderCode(generatedCode);
 
@@ -103,6 +114,57 @@ export default function CheckoutPage() {
 
     setSubmitted(true);
     clearCart();
+=======
+    if (cart.length === 0) return;
+
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    try {
+      const orderPayload = {
+        customer: {
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          email: email.trim(),
+        },
+        shippingAddress: {
+          streetAddress: streetAddress.trim(),
+          city: city.trim(),
+          postalCode: postalCode.trim(),
+          country: 'Japan',
+        },
+        items: cart.map((item) => ({
+          slug: item.product.slug,
+          productId: item.product.id,
+          selectedSize: item.selectedSize,
+          quantity: item.quantity,
+        })),
+      };
+
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderPayload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || 'Failed to place order. Please try again.');
+      }
+
+      setOrderCode(data.order.orderId);
+      setSubmitted(true);
+      clearCart();
+    } catch (err) {
+      console.error('Checkout error:', err);
+      setErrorMessage(err instanceof Error ? err.message : 'An error occurred during acquisition.');
+    } finally {
+      setIsSubmitting(false);
+    }
+>>>>>>> 8d79f4760ef8574b10739193bea24d2a26fb722c
   };
 
   return (
@@ -143,9 +205,15 @@ export default function CheckoutPage() {
                   <input
                     required
                     placeholder="Tanjuro"
+<<<<<<< HEAD
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     className={styles.minimalInput}
+=======
+                    className={styles.minimalInput}
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+>>>>>>> 8d79f4760ef8574b10739193bea24d2a26fb722c
                   />
                 </div>
                 <div className={styles.fieldWrapper}>
@@ -153,9 +221,15 @@ export default function CheckoutPage() {
                   <input
                     required
                     placeholder="Kamado"
+<<<<<<< HEAD
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     className={styles.minimalInput}
+=======
+                    className={styles.minimalInput}
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+>>>>>>> 8d79f4760ef8574b10739193bea24d2a26fb722c
                   />
                 </div>
                 <div className={`${styles.fieldWrapper} ${styles.fullCol}`}>
@@ -164,9 +238,15 @@ export default function CheckoutPage() {
                     type="email"
                     required
                     placeholder="recipient@infinitycastle.jp"
+<<<<<<< HEAD
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className={styles.minimalInput}
+=======
+                    className={styles.minimalInput}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+>>>>>>> 8d79f4760ef8574b10739193bea24d2a26fb722c
                   />
                 </div>
               </div>
@@ -184,9 +264,15 @@ export default function CheckoutPage() {
                   <input
                     required
                     placeholder="Nakano 4-Chome 10-1"
+<<<<<<< HEAD
                     value={street}
                     onChange={(e) => setStreet(e.target.value)}
                     className={styles.minimalInput}
+=======
+                    className={styles.minimalInput}
+                    value={streetAddress}
+                    onChange={(e) => setStreetAddress(e.target.value)}
+>>>>>>> 8d79f4760ef8574b10739193bea24d2a26fb722c
                   />
                 </div>
                 <div className={styles.fieldWrapper}>
@@ -194,9 +280,15 @@ export default function CheckoutPage() {
                   <input
                     required
                     placeholder="Tokyo"
+<<<<<<< HEAD
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                     className={styles.minimalInput}
+=======
+                    className={styles.minimalInput}
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+>>>>>>> 8d79f4760ef8574b10739193bea24d2a26fb722c
                   />
                 </div>
                 <div className={styles.fieldWrapper}>
@@ -204,9 +296,15 @@ export default function CheckoutPage() {
                   <input
                     required
                     placeholder="164-0001"
+<<<<<<< HEAD
                     value={postalCode}
                     onChange={(e) => setPostalCode(e.target.value)}
                     className={styles.minimalInput}
+=======
+                    className={styles.minimalInput}
+                    value={postalCode}
+                    onChange={(e) => setPostalCode(e.target.value)}
+>>>>>>> 8d79f4760ef8574b10739193bea24d2a26fb722c
                   />
                 </div>
               </div>
@@ -234,12 +332,18 @@ export default function CheckoutPage() {
               </div>
             </div>
 
+            {errorMessage && (
+              <div style={{ color: '#ff4d4d', fontSize: '0.85rem', marginBottom: '1rem', letterSpacing: '0.05em' }}>
+                ⚠️ {errorMessage}
+              </div>
+            )}
+
             <button
               type="submit"
               className={styles.confirmOrderCta}
-              disabled={cart.length === 0}
+              disabled={cart.length === 0 || isSubmitting}
             >
-              <span>CONFIRM ACQUISITION — {formattedTotal}</span>
+              <span>{isSubmitting ? 'ENCRYPTING & RECORDING...' : `CONFIRM ACQUISITION — ${formattedTotal}`}</span>
               <span className={styles.ctaLine} />
               <span>→</span>
             </button>
@@ -252,6 +356,7 @@ export default function CheckoutPage() {
             {cart.length > 0 ? (
               <div className={styles.itemsList}>
                 {cart.map((item) => (
+<<<<<<< HEAD
                   <div key={`${item.product.id}-${item.selectedSize}`} className={styles.summaryItem}>
                     <Image
                       src={item.product.images[0]}
@@ -262,6 +367,18 @@ export default function CheckoutPage() {
                       sizes="56px"
                       loading="lazy"
                     />
+=======
+                  <div key={`${item.product.id || item.product.slug}-${item.selectedSize}`} className={styles.summaryItem}>
+                    {item.product.images && item.product.images[0] && (
+                      <Image
+                        src={item.product.images[0]}
+                        alt={item.product.name}
+                        width={56}
+                        height={70}
+                        className={styles.summaryThumb}
+                      />
+                    )}
+>>>>>>> 8d79f4760ef8574b10739193bea24d2a26fb722c
                     <div className={styles.summaryItemInfo}>
                       <div className={styles.summaryItemName}>{item.product.name}</div>
                       <div className={styles.summaryItemMeta}>

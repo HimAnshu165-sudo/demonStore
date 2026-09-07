@@ -24,9 +24,10 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
     setTimeout(() => setAdded(false), 2400);
   };
 
-  const allImages = [...product.images, ...product.lookbookImages].filter(
-    (v, i, a) => a.indexOf(v) === i
-  );
+  const allImages = [
+    ...(product.images || []),
+    ...(product.lookbookImages || []),
+  ].filter((v, i, a) => a.indexOf(v) === i);
 
   return (
     <main className={styles.detailPageContainer}>
