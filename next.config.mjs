@@ -8,6 +8,7 @@ const nextConfig = {
       'lucide-react',
       'framer-motion',
       '@react-three/drei',
+      'three',
     ],
   },
   images: {

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { useScrollProgress } from '@/hooks/useScrollProgress';
 import { EditorialTypography } from '@/components/EditorialTypography/EditorialTypography';
+import { CASTLE_FRAME_COUNT } from '@/three/config';
 
 // Dynamic import with ssr: false eliminates 50,000 lines of Three.js from initial server SSR evaluation
 const CastleWorld = dynamic(
@@ -76,7 +77,24 @@ export default function HomePage() {
   };
 
   return (
-    <main style={{ position: 'relative', minHeight: '600vh', background: '#050507' }}>
+    <main style={{ position: 'relative', minHeight: `${CASTLE_FRAME_COUNT * 100}vh`, background: '#050507' }}>
+      {/* Instant Critical Hero Plate Backdrop (Immediate First Paint prior to JS evaluation) */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          zIndex: 0,
+          pointerEvents: 'none',
+          backgroundImage: "url('/assets/castle/01-entrance.webp')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
+
       {/* Fixed Full-Viewport WebGL Castle World with Procedural Fog Transitions */}
       <CastleWorld scrollProgress={lerpedProgress} />
 
@@ -95,7 +113,7 @@ export default function HomePage() {
 
       {/* Smooth Ecommerce Collection Transition */}
       {showEcommerce && (
-        <div style={{ position: 'relative', zIndex: 50, marginTop: '550vh' }}>
+        <div style={{ position: 'relative', zIndex: 50, marginTop: `${(CASTLE_FRAME_COUNT - 1) * 100 + 50}vh` }}>
           <ThunderCollectionLanding />
         </div>
       )}

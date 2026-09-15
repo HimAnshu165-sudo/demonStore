@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { CASTLE_FRAME_COUNT } from '@/three/config';
 
 export function useScrollProgress() {
   const [progress, setProgress] = useState(0);
@@ -34,8 +35,8 @@ export function useScrollProgress() {
 
     const handleScroll = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop;
-      // Fixed 5 viewports of scroll = 600vh total castle height - 100vh viewport
-      const castleTrackHeight = Math.max(window.innerHeight * 5, 1);
+      // Dynamic viewports of scroll = total castle height - 100vh viewport
+      const castleTrackHeight = Math.max(window.innerHeight * (CASTLE_FRAME_COUNT - 1), 1);
       targetProgress.current = Math.min(Math.max(scrollY / castleTrackHeight, 0), 1);
       startLoop();
     };

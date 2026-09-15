@@ -3,24 +3,18 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-<<<<<<< HEAD
-import { CATEGORIES, CategoryFilter, getProductsByCategory, PRODUCTS } from '@/data/products';
-=======
-import { CATEGORIES, CategoryFilter } from '@/data/products';
+import { CATEGORIES, CategoryFilter, PRODUCTS } from '@/data/products';
 import { Product } from '@/types';
-import { FooterCinematic } from '@/components/FooterCinematic/FooterCinematic';
->>>>>>> 8d79f4760ef8574b10739193bea24d2a26fb722c
 import { useCart } from '@/context/CartContext';
 import { ArrowRight, ShoppingBag } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import styles from './Shop.module.css';
 
-<<<<<<< HEAD
 const FooterCinematic = dynamic(
   () => import('@/components/FooterCinematic/FooterCinematic').then((m) => m.FooterCinematic),
   { ssr: false }
 );
-=======
+
 function filterProductsByCategory(products: Product[], category: CategoryFilter | string): Product[] {
   if (!category || category === 'ALL') {
     return products;
@@ -36,13 +30,12 @@ function filterProductsByCategory(products: Product[], category: CategoryFilter 
     return p.category?.toUpperCase() === normalized;
   });
 }
->>>>>>> 8d79f4760ef8574b10739193bea24d2a26fb722c
 
 export default function ShopPage() {
   const { addToCart } = useCart();
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>('ALL');
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [products, setProducts] = useState<Product[]>(PRODUCTS);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -132,35 +125,16 @@ export default function ShopPage() {
 
       {/* Structured Clean Uniform Catalog Grid */}
       <div className={styles.structuredCatalog}>
-<<<<<<< HEAD
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map((p, idx) => (
-            <article key={p.id} className={styles.productCard}>
-              <Link href={`/product/${p.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                <div className={styles.imageFrame}>
-                  <div className={styles.rankBadge}>{p.rank}</div>
-                  <div className={styles.categoryBadge}>{p.category}</div>
-                  <Image
-                    src={p.images[0]}
-                    alt={p.name}
-                    width={600}
-                    height={600}
-                    className={styles.itemImage}
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    priority={idx === 0}
-                    loading={idx === 0 ? 'eager' : 'lazy'}
-                  />
-=======
         {isLoading ? (
           <div className={styles.emptyState}>
             <p>LOADING ARCHIVE COLLECTION...</p>
           </div>
-        ) : error ? (
+        ) : error && filteredProducts.length === 0 ? (
           <div className={styles.emptyState}>
             <p>UNABLE TO RETRIEVE ARCHIVE OBJECTS. PLEASE REFRESH.</p>
           </div>
         ) : filteredProducts.length > 0 ? (
-          filteredProducts.map((p) => (
+          filteredProducts.map((p, idx) => (
             <article key={p.id || p.slug} className={styles.productCard}>
               <Link href={`/product/${p.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                 <div className={styles.imageFrame}>
@@ -173,9 +147,11 @@ export default function ShopPage() {
                       width={600}
                       height={600}
                       className={styles.itemImage}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      priority={idx === 0}
+                      loading={idx === 0 ? 'eager' : 'lazy'}
                     />
                   )}
->>>>>>> 8d79f4760ef8574b10739193bea24d2a26fb722c
                 </div>
 
                 <div className={styles.itemMeta}>

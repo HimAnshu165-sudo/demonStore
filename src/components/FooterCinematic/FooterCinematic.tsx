@@ -41,7 +41,7 @@ export function FooterCinematic() {
       pulse: Math.random() * Math.PI * 2,
     }));
 
-    let isVisible = true;
+    let isVisible = false;
     let lightningTimer = 0;
     let lightningFlash = 0;
 
@@ -101,7 +101,6 @@ export function FooterCinematic() {
     );
 
     observer.observe(canvas);
-    render();
 
     return () => {
       observer.disconnect();

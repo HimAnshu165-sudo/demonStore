@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { CATEGORIES, CategoryFilter } from '@/data/products';
+import { CATEGORIES, CategoryFilter, PRODUCTS } from '@/data/products';
 import { Product } from '@/types';
 import { useCart } from '@/context/CartContext';
 import { LookbookMarquee } from '@/components/LookbookMarquee/LookbookMarquee';
@@ -30,8 +30,8 @@ function filterProductsByCategory(products: Product[], category: CategoryFilter 
 export function ThunderCollectionLanding() {
   const { addToCart } = useCart();
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>('ALL');
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [products, setProducts] = useState<Product[]>(PRODUCTS);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -39,7 +39,7 @@ export function ThunderCollectionLanding() {
     fetch('/api/products')
       .then((res) => res.json())
       .then((data) => {
-        if (isMounted && data.success && Array.isArray(data.products)) {
+        if (isMounted && data.success && Array.isArray(data.products) && data.products.length > 0) {
           setProducts(data.products);
         }
       })
@@ -80,24 +80,6 @@ export function ThunderCollectionLanding() {
   return (
     <section id="collection-landing" className={styles.collectionContainer}>
       {/* 1. Hero Drop Showcase */}
-<<<<<<< HEAD
-      <div className={styles.heroDropBanner}>
-        <div className={styles.productShowcase}>
-          <Image
-            src={heroProduct.images[0]}
-            alt={heroProduct.name}
-            width={750}
-            height={750}
-            className={styles.productImage}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 750px"
-            loading="lazy"
-          />
-        </div>
-
-        <div className={styles.dropMeta}>
-          <div className={styles.dropTag}>
-            <span>⚡</span> NEW DROP // ARCHIVE 001
-=======
       {heroProduct && (
         <div className={styles.heroDropBanner}>
           <div className={styles.productShowcase}>
@@ -108,10 +90,10 @@ export function ThunderCollectionLanding() {
                 width={750}
                 height={750}
                 className={styles.productImage}
-                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 750px"
+                loading="lazy"
               />
             )}
->>>>>>> 8d79f4760ef8574b10739193bea24d2a26fb722c
           </div>
 
           <div className={styles.dropMeta}>
@@ -208,18 +190,6 @@ export function ThunderCollectionLanding() {
               <article key={prod.id || prod.slug} className={styles.productCard}>
                 <Link href={`/product/${prod.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <div className={styles.cardImageWrapper}>
-<<<<<<< HEAD
-                    <span className={styles.cardCategoryBadge}>{prod.category}</span>
-                    <Image
-                      src={prod.images[0]}
-                      alt={prod.name}
-                      width={450}
-                      height={450}
-                      className={styles.cardImage}
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      loading="lazy"
-                    />
-=======
                     {prod.category && <span className={styles.cardCategoryBadge}>{prod.category}</span>}
                     {prod.images && prod.images[0] && (
                       <Image
@@ -228,9 +198,10 @@ export function ThunderCollectionLanding() {
                         width={450}
                         height={450}
                         className={styles.cardImage}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        loading="lazy"
                       />
                     )}
->>>>>>> 8d79f4760ef8574b10739193bea24d2a26fb722c
                   </div>
 
                   <div className={styles.cardInfo}>

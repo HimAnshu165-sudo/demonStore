@@ -24,6 +24,11 @@
   box-sizing: border-box;
 }
 
+.stageEntrance {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 /* 3 Parallax Depth Planes */
 .farLayer {
   position: absolute;
@@ -407,4 +412,3 @@
     gap: 0.3rem 0.6rem;
   }
 }
-
