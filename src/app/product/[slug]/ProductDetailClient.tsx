@@ -52,6 +52,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
               width={900}
               height={900}
               className={styles.heroImage}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 700px"
               priority
             />
           </div>
@@ -71,6 +72,8 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                     width={80}
                     height={80}
                     className={styles.thumbImg}
+                    sizes="80px"
+                    loading="lazy"
                   />
                 </button>
               ))}
@@ -115,8 +118,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           {/* Add to Bag Editorial CTA */}
           <button onClick={handleAdd} className={styles.addToBagCta}>
             <span>{added ? 'ACQUIRED TO BAG' : 'ADD TO BAG'}</span>
-            <span className={styles.ctaRule} />
-            <span>→</span>
+            <span className={styles.ctaArrow}>→</span>
           </button>
           {added && (
             <div className={styles.addedFeedback}>

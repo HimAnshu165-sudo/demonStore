@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { connectToDatabase } from '@/lib/mongodb';
 import { Product } from '@/models/Product';
+import { PRODUCTS } from '@/data/products';
 
 export const dynamic = 'force-dynamic';
 
@@ -22,12 +23,27 @@ export async function GET(_request: Request, { params }: RouteParams) {
       );
     }
 
-    await connectToDatabase();
+    const normalizedSlug = slug.trim().toLowerCase();
+    let product = null;
 
-    const product = await Product.findOne(
-      { slug: slug.trim().toLowerCase() },
-      { _id: 0, __v: 0 }
-    ).lean();
+    if (process.env.MONGODB_URI) {
+      try {
+        await connectToDatabase();
+        product = await Product.findOne(
+          { slug: normalizedSlug },
+          { _id: 0, __v: 0 }
+        ).lean();
+      } catch (err) {
+        console.warn('MongoDB query failed for slug, falling back to static products:', err);
+      }
+    }
+
+    if (!product) {
+      const fallback = PRODUCTS.find((p) => p.slug.toLowerCase() === normalizedSlug);
+      if (fallback) {
+        product = fallback;
+      }
+    }
 
     if (!product) {
       return NextResponse.json(

@@ -1,0 +1,181 @@
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.7rem;
+  color: #8a8594;
+  letter-spacing: 0.12em;
+  font-family: var(--font-display, 'Cinzel', serif);
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+  transition: color 0.2s ease;
+}
+
+.backLink:hover {
+  color: #f5f5f7;
+}
+
+.trackingCard {
+  background: rgba(14, 11, 18, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 0;
+}
+
+.timeline {
+  padding: 2.5rem 2rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.timelineStep {
+  position: relative;
+}
+
+.connector {
+  width: 2px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 0 0 0 17px;
+  transition: background 0.3s ease;
+}
+
+.connectorActive {
+  background: linear-gradient(to bottom, #e71d36, rgba(231, 29, 54, 0.3));
+}
+
+.stepRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  padding: 0.25rem 0;
+}
+
+.stepIndicator {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4a4556;
+  flex-shrink: 0;
+  background: rgba(8, 6, 12, 0.8);
+  transition: all 0.3s ease;
+}
+
+.stepIndicatorDone {
+  border-color: rgba(231, 29, 54, 0.4);
+  color: #e71d36;
+  background: rgba(231, 29, 54, 0.1);
+}
+
+.stepIndicatorCurrent {
+  border-color: #e71d36;
+  box-shadow: 0 0 12px rgba(231, 29, 54, 0.4);
+  background: rgba(231, 29, 54, 0.15);
+}
+
+.currentPulse {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #e71d36;
+  box-shadow: 0 0 0 0 rgba(231, 29, 54, 0.6);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(231, 29, 54, 0.6); }
+  50% { box-shadow: 0 0 0 8px rgba(231, 29, 54, 0); }
+}
+
+.stepContent {
+  padding-top: 0.4rem;
+}
+
+.stepLabel {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: #4a4556;
+  margin-bottom: 0.2rem;
+  transition: color 0.3s ease;
+}
+
+.stepLabelActive {
+  color: #ffffff;
+}
+
+.stepKanji {
+  font-family: var(--font-kanji, 'Noto Serif JP', serif);
+  font-size: 0.7rem;
+  color: #4a4556;
+  margin-bottom: 0.2rem;
+}
+
+.stepCurrentBadge {
+  display: inline-block;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  font-family: var(--font-display, 'Cinzel', serif);
+  color: #e71d36;
+  background: rgba(231, 29, 54, 0.1);
+  border: 1px solid rgba(231, 29, 54, 0.25);
+  padding: 0.2rem 0.5rem;
+  margin-top: 0.3rem;
+}
+
+/* Summary panel */
+.trackingSummary {
+  padding: 2.5rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.summaryRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.summaryRow:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.summaryRow span:first-child {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  color: #6d6778;
+  text-transform: uppercase;
+}
+
+.summaryRow span:last-child {
+  font-size: 0.82rem;
+  color: #8a8594;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 768px) {
+  .trackingCard {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 1.75rem 1.25rem;
+  }
+
+  .trackingSummary {
+    padding: 1.5rem 1.25rem;
+  }
+}

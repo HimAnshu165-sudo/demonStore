@@ -41,10 +41,13 @@ export function FooterCinematic() {
       pulse: Math.random() * Math.PI * 2,
     }));
 
+    let isVisible = false;
     let lightningTimer = 0;
     let lightningFlash = 0;
 
     const render = () => {
+      if (!isVisible) return;
+
       ctx.clearRect(0, 0, width, height);
 
       // Ambient subtle lightning glow
@@ -82,9 +85,25 @@ export function FooterCinematic() {
       animId = requestAnimationFrame(render);
     };
 
-    render();
+    // Pause rendering when footer is scrolled offscreen
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const nowVisible = entry.isIntersecting;
+        if (nowVisible && !isVisible) {
+          isVisible = true;
+          animId = requestAnimationFrame(render);
+        } else if (!nowVisible && isVisible) {
+          isVisible = false;
+          cancelAnimationFrame(animId);
+        }
+      },
+      { threshold: 0.05 }
+    );
+
+    observer.observe(canvas);
 
     return () => {
+      observer.disconnect();
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(animId);
     };
@@ -166,6 +185,7 @@ export function FooterCinematic() {
               <li><Link href="/shop" className={styles.dirLink}>ALL COLLECTIONS (28 OBJECTS)</Link></li>
               <li><Link href="/lookbook" className={styles.dirLink}>SLAYER ARCHIVES LOOKBOOK</Link></li>
               <li><Link href="/world" className={styles.dirLink}>PHILOSOPHY & MANIFESTO</Link></li>
+              <li><Link href="/admin" className={styles.dirLink}>CITADEL ADMIN // 無限城</Link></li>
             </ul>
           </div>
 

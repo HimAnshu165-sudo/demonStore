@@ -27,7 +27,7 @@ interface ChapterDef {
 }
 
 const CHAPTERS_EDITORIAL: ChapterDef[] = [
-  // 01: ENTRANCE (0.00 to 0.18)
+  // 01: ENTRANCE (0.00 to 0.28)
   {
     id: 'entrance',
     number: '01',
@@ -46,11 +46,11 @@ const CHAPTERS_EDITORIAL: ChapterDef[] = [
     ],
     ctaText: 'DISCOVER THE WORLD',
     scrollStart: 0.00,
-    scrollPeak: 0.04,
-    scrollEnd: 0.18,
+    scrollPeak: 0.06,
+    scrollEnd: 0.28,
     stageClass: styles.stageEntrance,
   },
-  // 02: MAIN CASTLE HALL (0.16 to 0.38)
+  // 02: MAIN CASTLE HALL (0.20 to 0.58)
   {
     id: 'main-hall',
     number: '02',
@@ -67,12 +67,12 @@ const CHAPTERS_EDITORIAL: ChapterDef[] = [
       { label: 'DROP', value: '001' },
     ],
     ctaText: 'EXPLORE SANCTUM',
-    scrollStart: 0.16,
-    scrollPeak: 0.26,
-    scrollEnd: 0.38,
+    scrollStart: 0.20,
+    scrollPeak: 0.38,
+    scrollEnd: 0.58,
     stageClass: styles.stageMainHall,
   },
-  // 03: INFINITE CORRIDOR (0.36 to 0.58)
+  // 03: INFINITE CORRIDOR (0.50 to 0.84)
   {
     id: 'infinite-corridor',
     number: '03',
@@ -89,57 +89,15 @@ const CHAPTERS_EDITORIAL: ChapterDef[] = [
       { label: 'STITCH', value: 'REINFORCED TAPE' },
     ],
     ctaText: 'VIEW PASSAGE',
-    scrollStart: 0.36,
-    scrollPeak: 0.46,
-    scrollEnd: 0.58,
+    scrollStart: 0.50,
+    scrollPeak: 0.68,
+    scrollEnd: 0.84,
     stageClass: styles.stageCorridor,
   },
-  // 04: FLOATING STAIRCASE (0.56 to 0.76)
-  {
-    id: 'floating-staircase',
-    number: '04',
-    name: 'ASCEND',
-    japanese: '浮遊階段 // 雫',
-    watermark: '昇',
-    watermarkPos: styles.kanjiRight,
-    mainTitle: ['THE UPPER', 'MOON COLLECTION'],
-    secondaryTitle: 'ZERO-GRAVITY ASCENSION',
-    editorialBody: 'Structured hybrid construction combining traditional Japanese draped sleeves with modern flight outerwear.',
-    metadata: [
-      { label: 'FABRIC', value: '500 GSM FRENCH TERRY' },
-      { label: 'CUT', value: 'OVERSIZED KIMONO' },
-      { label: 'EDITION', value: 'LIMITED DROP' },
-    ],
-    ctaText: 'ASCEND COLLECTION',
-    scrollStart: 0.56,
-    scrollPeak: 0.66,
-    scrollEnd: 0.76,
-    stageClass: styles.stageStaircase,
-  },
-  // 05: VERTICAL VOID (0.74 to 0.90)
-  {
-    id: 'vertical-void',
-    number: '05',
-    name: 'THE VOID',
-    japanese: '虚空 // 階梯',
-    watermark: '虚',
-    watermarkPos: styles.kanjiCenter,
-    mainTitle: ['BETWEEN', 'WORLDS.'],
-    secondaryTitle: 'ABYSSAL PERSPECTIVE',
-    editorialBody: 'A quiet suspension over the infinite vertical chasm.',
-    metadata: [
-      { label: 'ELEVATION', value: '-145.00M' },
-      { label: 'TONE', value: 'PITCH OBSIDIAN' },
-    ],
-    scrollStart: 0.74,
-    scrollPeak: 0.82,
-    scrollEnd: 0.90,
-    stageClass: styles.stageVoid,
-  },
-  // 06: DEMON CHAMBER (0.88 to 1.00)
+  // 04: DEMON CHAMBER (0.80 to 1.00)
   {
     id: 'demon-chamber',
-    number: '06',
+    number: '04',
     name: 'THE FINAL CHAMBER',
     japanese: '終焉 // 玉座',
     watermark: '雷',
@@ -152,8 +110,8 @@ const CHAPTERS_EDITORIAL: ChapterDef[] = [
       { label: 'STATUS', value: 'LIVE NOW' },
     ],
     ctaText: 'ENTER THE DROP',
-    scrollStart: 0.88,
-    scrollPeak: 0.96,
+    scrollStart: 0.80,
+    scrollPeak: 0.94,
     scrollEnd: 1.00,
     stageClass: styles.stageChamber,
   },
@@ -172,7 +130,16 @@ export function EditorialTypography({ scrollProgress, onExploreClick }: Editoria
       let opacity = 0;
       let progressOffset = 0;
 
-      if (scrollProgress >= scrollStart && scrollProgress <= scrollEnd) {
+      if (ch.id === 'entrance') {
+        if (scrollProgress <= scrollPeak) {
+          opacity = 1.0;
+          progressOffset = 0;
+        } else if (scrollProgress <= scrollEnd) {
+          const ratio = (scrollProgress - scrollPeak) / Math.max(scrollEnd - scrollPeak, 0.001);
+          opacity = Math.cos((ratio * Math.PI) / 2);
+          progressOffset = -ratio * 36;
+        }
+      } else if (scrollProgress >= scrollStart && scrollProgress <= scrollEnd) {
         if (scrollProgress <= scrollPeak) {
           const ratio = (scrollProgress - scrollStart) / Math.max(scrollPeak - scrollStart, 0.001);
           opacity = Math.sin((ratio * Math.PI) / 2);
@@ -209,7 +176,8 @@ export function EditorialTypography({ scrollProgress, onExploreClick }: Editoria
       onExploreClick();
     } else {
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const nextTarget = Math.min(scrollProgress + 0.18, 1.0) * maxScroll;
+      const step = 1 / Math.max(CHAPTERS_EDITORIAL.length - 1, 1);
+      const nextTarget = Math.min(scrollProgress + step, 1.0) * maxScroll;
       window.scrollTo({ top: nextTarget, behavior: 'smooth' });
     }
   };

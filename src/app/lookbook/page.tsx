@@ -4,8 +4,13 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { LookbookMarquee } from '@/components/LookbookMarquee/LookbookMarquee';
-import { FooterCinematic } from '@/components/FooterCinematic/FooterCinematic';
+import dynamic from 'next/dynamic';
 import styles from './Lookbook.module.css';
+
+const FooterCinematic = dynamic(
+  () => import('@/components/FooterCinematic/FooterCinematic').then((m) => m.FooterCinematic),
+  { ssr: false }
+);
 
 const LOOKBOOK_ITEMS = [
   {
@@ -98,6 +103,7 @@ export default function LookbookPage() {
           subtitle="CONTINUOUS EDITORIAL CAMPAIGN TRACK"
           eyebrow="LIVE GALLERY // VOLUME 01"
           showExploreLink={false}
+          preloadFirstFew={true}
         />
       </div>
 
@@ -111,7 +117,9 @@ export default function LookbookPage() {
                 width={1200}
                 height={800}
                 className={styles.lookImg}
-                priority={idx < 2}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 70vw, 1200px"
+                priority={idx === 0}
+                loading={idx === 0 ? 'eager' : 'lazy'}
               />
             </div>
 

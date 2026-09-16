@@ -94,60 +94,38 @@ const FogShaderMaterial = {
   `,
 };
 
-// 5 Transition Fog Boundaries between the 6 Scene Plates
+// 3 Transition Fog Boundaries between the 4 Scene Plates (01 -> 02 -> 03 -> 06)
 const TRANSITION_BOUNDARIES = [
-  // 1: Entrance -> Main Hall (Peak scroll ~0.18, Z = -35)
+  // 1: Entrance -> Main Hall (Peak scroll ~0.26, Z = -34)
   {
     index: 0,
-    scrollCenter: 0.18,
-    scrollSpan: 0.14,
+    scrollCenter: 0.26,
+    scrollSpan: 0.16,
     position: [0, -1, -34],
     rotation: [0, 0, 0],
     scale: [42, 24, 1],
     color: new THREE.Color('#0d0a11'),
     flow: [0.3, 0.1],
   },
-  // 2: Main Hall -> Infinite Corridor (Peak scroll ~0.38, Z = -65)
+  // 2: Main Hall -> Infinite Corridor (Peak scroll ~0.55, Z = -65)
   {
     index: 1,
-    scrollCenter: 0.38,
-    scrollSpan: 0.14,
+    scrollCenter: 0.55,
+    scrollSpan: 0.16,
     position: [-1, 1, -65],
     rotation: [0, 0.04, 0],
     scale: [44, 25, 1],
     color: new THREE.Color('#1a080d'), // subtle crimson tint
     flow: [-0.3, 0.15],
   },
-  // 3: Infinite Corridor -> Floating Staircase (Peak scroll ~0.58, Z = -96)
+  // 3: Infinite Corridor -> Demon Chamber (Peak scroll ~0.84, Z = -95)
   {
     index: 2,
-    scrollCenter: 0.58,
-    scrollSpan: 0.14,
-    position: [2, 6, -96],
-    rotation: [0.04, -0.02, 0.02],
-    scale: [46, 26, 1],
-    color: new THREE.Color('#160e08'), // warm amber smoke
-    flow: [0.2, 0.4],
-  },
-  // 4: Floating Staircase -> Vertical Void (Peak scroll ~0.76, Z = -128)
-  {
-    index: 3,
-    scrollCenter: 0.76,
-    scrollSpan: 0.14,
-    position: [-1, -6, -128],
-    rotation: [-0.06, 0.02, -0.01],
-    scale: [50, 28, 1],
-    color: new THREE.Color('#090b1c'), // bluish cold void mist
-    flow: [0.1, -0.4],
-  },
-  // 5: Vertical Void -> Demon Chamber (Peak scroll ~0.90, Z = -161)
-  {
-    index: 4,
-    scrollCenter: 0.90,
-    scrollSpan: 0.14,
-    position: [0, 0, -161],
+    scrollCenter: 0.84,
+    scrollSpan: 0.16,
+    position: [0, 0, -95],
     rotation: [0, 0, 0],
-    scale: [52, 29, 1],
+    scale: [50, 28, 1],
     color: new THREE.Color('#2e040a'), // deep sanguine red mist
     flow: [0.0, 0.3],
   },
@@ -231,18 +209,12 @@ function CameraAttachedFogLayer({ scrollProgress }: { scrollProgress: number }) 
 
     // Evolve fog color smoothly based on current environment
     const uCol = materialRef.current.uniforms.uColor.value as THREE.Color;
-    if (scrollProgress < 0.25) {
+    if (scrollProgress < 0.30) {
       // Entrance & Main Hall: Dark charcoal
       uCol.lerp(new THREE.Color('#0a080d'), 0.08);
-    } else if (scrollProgress < 0.55) {
-      // Corridors: Dark crimson charcoal
-      uCol.lerp(new THREE.Color('#14060a'), 0.08);
     } else if (scrollProgress < 0.72) {
-      // Staircase: Warm amber haze
-      uCol.lerp(new THREE.Color('#140c06'), 0.08);
-    } else if (scrollProgress < 0.86) {
-      // Vertical Void: Bluish abyss mist
-      uCol.lerp(new THREE.Color('#060818'), 0.08);
+      // Infinite Corridor: Dark crimson charcoal
+      uCol.lerp(new THREE.Color('#14060a'), 0.08);
     } else {
       // Demon Chamber: Sanguine deep red
       uCol.lerp(new THREE.Color('#200308'), 0.08);
@@ -284,7 +256,7 @@ function CameraAttachedFogLayer({ scrollProgress }: { scrollProgress: number }) 
 export function TransitionFog({ scrollProgress }: TransitionFogProps) {
   return (
     <group>
-      {/* 5 Layered 3D Fog Transition Planes at Scene Boundaries */}
+      {/* 3 Layered 3D Fog Transition Planes at Scene Boundaries */}
       {TRANSITION_BOUNDARIES.map((boundary) => (
         <SingleTransitionFogPlane
           key={boundary.index}

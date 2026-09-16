@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { CATEGORIES, CategoryFilter } from '@/data/products';
+import { CATEGORIES, CategoryFilter, PRODUCTS } from '@/data/products';
 import { Product } from '@/types';
 import { useCart } from '@/context/CartContext';
 import { LookbookMarquee } from '@/components/LookbookMarquee/LookbookMarquee';
@@ -30,8 +30,8 @@ function filterProductsByCategory(products: Product[], category: CategoryFilter 
 export function ThunderCollectionLanding() {
   const { addToCart } = useCart();
   const [activeCategory, setActiveCategory] = useState<CategoryFilter>('ALL');
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [products, setProducts] = useState<Product[]>(PRODUCTS);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -39,7 +39,7 @@ export function ThunderCollectionLanding() {
     fetch('/api/products')
       .then((res) => res.json())
       .then((data) => {
-        if (isMounted && data.success && Array.isArray(data.products)) {
+        if (isMounted && data.success && Array.isArray(data.products) && data.products.length > 0) {
           setProducts(data.products);
         }
       })
@@ -90,7 +90,8 @@ export function ThunderCollectionLanding() {
                 width={750}
                 height={750}
                 className={styles.productImage}
-                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 750px"
+                loading="lazy"
               />
             )}
           </div>
@@ -144,6 +145,7 @@ export function ThunderCollectionLanding() {
           subtitle="EDITORIAL CAMPAIGN // HOODIES • TEES • SHOES • JACKETS • COATS • CARGOS"
           eyebrow="LOOKBOOK // 2026 CAMPAIGN"
           showExploreLink={true}
+          preloadFirstFew={false}
         />
       </div>
 
@@ -196,6 +198,8 @@ export function ThunderCollectionLanding() {
                         width={450}
                         height={450}
                         className={styles.cardImage}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                        loading="lazy"
                       />
                     )}
                   </div>

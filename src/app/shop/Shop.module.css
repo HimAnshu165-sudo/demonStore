@@ -7,6 +7,19 @@
   overflow-x: hidden;
 }
 
+@media (max-width: 768px) {
+  .shopContainer {
+    padding: 6rem 1.25rem 0rem 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .shopContainer {
+    padding: 5.5rem 0.85rem 0rem 0.85rem;
+  }
+}
+
+
 .shopBgKanji {
   position: absolute;
   top: 10%;
@@ -71,6 +84,28 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   padding-bottom: 1.5rem;
 }
+
+@media (max-width: 768px) {
+  .filterNav {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.8rem;
+    margin-bottom: 2.5rem;
+    scrollbar-width: none;
+  }
+
+  .filterNav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filterBtn {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
+
 
 .filterBtn {
   background: rgba(255, 255, 255, 0.03);

@@ -1,0 +1,271 @@
+/* ─── Shared Section Header ───────────────────────────────────────────────── */
+.pageHeader {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.pageTagline {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: #e71d36;
+  margin-bottom: 0.5rem;
+}
+
+.taglineDot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #e71d36;
+  box-shadow: 0 0 6px #e71d36;
+}
+
+.pageTitle {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+  margin: 0 0 0.3rem;
+}
+
+.pageSubtitle {
+  font-size: 0.8rem;
+  color: #8a8594;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Info / Error Banners ────────────────────────────────────────────────── */
+.successBanner {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(39, 174, 96, 0.1);
+  border: 1px solid rgba(39, 174, 96, 0.3);
+  color: #6fcf97;
+  padding: 0.75rem 1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.25rem;
+}
+
+.errorBanner {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(231, 29, 54, 0.1);
+  border: 1px solid rgba(231, 29, 54, 0.35);
+  color: #ff99a8;
+  padding: 0.75rem 1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  margin-bottom: 1.25rem;
+}
+
+/* ─── Form Elements ───────────────────────────────────────────────────────── */
+.formGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.formGroupFull {
+  grid-column: 1 / -1;
+}
+
+.label {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  color: #8a8594;
+  text-transform: uppercase;
+}
+
+.input {
+  background: rgba(8, 6, 12, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #f5f5f7;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.85rem;
+  outline: none;
+  width: 100%;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input:focus {
+  border-color: #e71d36;
+  box-shadow: 0 0 8px rgba(231, 29, 54, 0.2);
+}
+
+.inputReadOnly {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ─── Buttons ─────────────────────────────────────────────────────────────── */
+.btnPrimary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #e71d36;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btnPrimary:hover:not(:disabled) {
+  background: #ff2a55;
+  box-shadow: 0 0 18px rgba(231, 29, 54, 0.4);
+}
+
+.btnPrimary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btnSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: #8a8594;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0.75rem 1.5rem;
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnSecondary:hover {
+  color: #f5f5f7;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.btnDanger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: #ff556e;
+  border: 1px solid rgba(231, 29, 54, 0.3);
+  padding: 0.6rem 1rem;
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnDanger:hover {
+  background: rgba(231, 29, 54, 0.08);
+  border-color: rgba(231, 29, 54, 0.5);
+}
+
+/* ─── Empty State ─────────────────────────────────────────────────────────── */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 2rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.emptyIcon {
+  color: rgba(231, 29, 54, 0.3);
+  margin-bottom: 1.5rem;
+}
+
+.emptyTitle {
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  margin-bottom: 0.6rem;
+}
+
+.emptySubtitle {
+  font-size: 0.8rem;
+  color: #6d6778;
+  max-width: 360px;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+/* ─── Loading Skeleton ────────────────────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 2px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ─── Card ────────────────────────────────────────────────────────────────── */
+.card {
+  background: rgba(14, 11, 18, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 1.75rem;
+  transition: border-color 0.2s ease;
+}
+
+.card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ─── Status Pill ─────────────────────────────────────────────────────────── */
+.statusPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  font-family: var(--font-display, 'Cinzel', serif);
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  border-radius: 2px;
+}
+
+.statusProcessing  { background: rgba(255, 159, 67, 0.15); color: #ff9f43; border: 1px solid rgba(255, 159, 67, 0.3); }
+.statusConfirmed   { background: rgba(52, 152, 219, 0.15); color: #5dade2; border: 1px solid rgba(52, 152, 219, 0.3); }
+.statusShipped     { background: rgba(142, 68, 173, 0.15); color: #a569bd; border: 1px solid rgba(142, 68, 173, 0.3); }
+.statusDelivered   { background: rgba(39, 174, 96, 0.15);  color: #6fcf97; border: 1px solid rgba(39, 174, 96, 0.3);  }
+.statusCancelled   { background: rgba(231, 29, 54, 0.15);  color: #ff99a8; border: 1px solid rgba(231, 29, 54, 0.3);  }
+.paymentPaid       { background: rgba(39, 174, 96, 0.15);  color: #6fcf97; border: 1px solid rgba(39, 174, 96, 0.3);  }
+.paymentPending    { background: rgba(255, 159, 67, 0.15); color: #ff9f43; border: 1px solid rgba(255, 159, 67, 0.3); }
+.paymentFailed     { background: rgba(231, 29, 54, 0.15);  color: #ff99a8; border: 1px solid rgba(231, 29, 54, 0.3);  }
+
+@media (max-width: 768px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+  .formGroupFull {
+    grid-column: 1;
+  }
+}

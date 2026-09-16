@@ -1,0 +1,85 @@
+.skeletonPulse {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.03) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.8s infinite;
+  border-radius: 2px;
+}
+
+.cardSkeleton {
+  background: rgba(14, 11, 18, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 1.5rem;
+  height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cardTopSkeleton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.titleSkeleton {
+  width: 90px;
+  height: 14px;
+}
+
+.iconSkeleton {
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+}
+
+.valueSkeleton {
+  width: 140px;
+  height: 34px;
+}
+
+.subtextSkeleton {
+  width: 110px;
+  height: 12px;
+}
+
+/* Table Skeleton */
+.tableSkeleton {
+  background: rgba(14, 11, 18, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  width: 100%;
+  overflow: hidden;
+}
+
+.tableHeaderSkeleton {
+  display: flex;
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  gap: 1.5rem;
+}
+
+.tableRowSkeleton {
+  display: flex;
+  align-items: center;
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  gap: 1.5rem;
+}
+
+.tableCellSkeleton {
+  height: 16px;
+  flex: 1;
+}
+
+@keyframes skeletonShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

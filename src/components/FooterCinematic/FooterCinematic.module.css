@@ -9,6 +9,21 @@
   color: #ffffff;
 }
 
+@media (max-width: 768px) {
+  .footerContainer {
+    padding: 5rem 1.25rem 3rem 1.25rem;
+    margin-top: 5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footerContainer {
+    padding: 4rem 1rem 2.5rem 1rem;
+    margin-top: 4rem;
+  }
+}
+
+
 /* Background Animated Canvas & Ambient Light */
 .canvasBackground {
   position: absolute;
@@ -274,6 +289,19 @@
   gap: 1.5rem;
 }
 
+@media (max-width: 600px) {
+  .bottomRow {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 1.2rem;
+  }
+
+  .ascendBtn {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
 .copyright {
   font-family: var(--font-space), monospace;
   font-size: 0.72rem;
@@ -303,3 +331,4 @@
   box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
   transform: translateY(-2px);
 }
+

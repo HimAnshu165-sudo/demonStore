@@ -1,9 +1,31 @@
 import type { Metadata } from 'next';
+import { Cinzel, Space_Grotesk, Noto_Serif_JP } from 'next/font/google';
 import './globals.css';
+import { AuthProvider } from '@/context/AuthContext';
 import { CartProvider } from '@/context/CartContext';
-import { Navigation } from '@/components/Navigation/Navigation';
-import { CartDrawer } from '@/components/CartDrawer/CartDrawer';
-import { CustomCursor } from '@/components/CustomCursor/CustomCursor';
+import { WishlistProvider } from '@/context/WishlistContext';
+import { ClientOverlays } from '@/components/ClientOverlays/ClientOverlays';
+
+const cinzel = Cinzel({
+  subsets: ['latin'],
+  weight: ['400', '600', '800', '900'],
+  variable: '--font-display',
+  display: 'swap',
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-sans',
+  display: 'swap',
+});
+
+const notoSerifJP = Noto_Serif_JP({
+  subsets: ['latin'],
+  weight: ['300', '400', '600', '900'],
+  variable: '--font-kanji',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://infinitycastle.streetwear'),
@@ -13,7 +35,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'INFINITY CASTLE // 無限城',
     description: 'Immersive Japanese Gothic Streetwear Universe',
-    images: ['/assets/castle/01-entrance.png'],
+    images: ['/assets/castle/01-entrance.webp'],
   },
 };
 
@@ -23,14 +45,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${cinzel.variable} ${spaceGrotesk.variable} ${notoSerifJP.variable}`}>
+      <head>
+        {/* Priority 1 Hero Castle Plate Preload */}
+        <link
+          rel="preload"
+          as="image"
+          href="/assets/castle/01-entrance.webp"
+          type="image/webp"
+          fetchPriority="high"
+        />
+      </head>
       <body>
-        <CartProvider>
-          <CustomCursor />
-          <Navigation />
-          {children}
-          <CartDrawer />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <WishlistProvider>
+              <ClientOverlays>
+                {children}
+              </ClientOverlays>
+            </WishlistProvider>
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );
